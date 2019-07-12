@@ -1,0 +1,172 @@
+snippet __ "_{}" iA
+_\{${0:${VISUAL}}\}
+endsnippet
+
+snippet ^^ "^{}" iA
+^\{${0:${VISUAL}}\}
+endsnippet
+
+snippet == " &= (alignment)" A
+&=
+endsnippet
+
+# TODO: add math context()
+
+snippet "\\?te" "\text" r
+\\text\{${0:${VISUAL}}\}
+endsnippet
+
+snippet "\\?nc" "\newcommand" br
+\\newcommand\{$1\}\{$2\} $0
+endsnippet
+
+snippet "\\?rnc" "\renewcommand" br
+\\renewcommand\{$1\}\{$2\} $0
+endsnippet
+
+snippet "\\?ci(te?)?" "\ci[te]" r
+\\cite\{$0\}
+endsnippet
+
+snippet "\\?ci(te?)?p" "\ci[te]p" r
+\\citep\{$0\}
+endsnippet
+
+
+# environments
+# ------------
+
+snippet ben "\begin ... \end"
+\\begin\{${1:env}\}
+	${0:${VISUAL}}
+\\end\{$1\}
+endsnippet
+ 
+snippet fig "\begin{figure}" b
+\\begin\{figure\}[${1:htpb}]
+	\\centering
+	\\includegraphics\{${2:path/to/file}\}
+	\\caption\{${3:caption text}\}
+	\\label\{fig:${4:label}\}
+\\end\{figure\}
+$0
+endsnippet
+# [TODO] add options, eg. [width=0.6\textwidth] after \includegraphics.
+
+
+# matrices
+# --------
+
+global !p
+
+import re
+
+def create_row_vec(snip):
+
+	""" creates a row vector via \matrix environment.  """
+
+	# search for (optional) number supplied
+	ncol = re.search('\d', snip.buffer[snip.line])
+	if ncol == None or ncol == 0: 
+		# if no number or invalid number supplied
+		ncol = 1
+	else:
+		ncol = ncol.group(0)
+		ncol = int(ncol)
+
+	# erase current line
+	snip.buffer[snip.line] = ''
+
+	mat_str = "\\begin\{${1:p}matrix\}\n" + \
+	          "\t" + str_row_inner(ncol, starttabnum=2) + "\n" + \
+			  "\\end{$1matrix\}"
+	snip.expand_anon(mat_str)
+
+
+def str_row_inner(ncol, starttabnum=1):
+
+	""" creates the body inside \begin{matrix} and \end{matrix} 
+	 
+	 	$1 & $2 & ... & $n
+	"""
+
+	tabnums = [ i + starttabnum for i in range(ncol) ]
+	tabstops = ['$' + str(n) for n in tabnums ] 	# [$1, $2, ..., $n]
+	return ' & '.join(tabstops)
+
+	
+def create_col_vec(snip):
+	nrow = re.search('\d', snip.buffer[snip.line])
+	if nrow == None or nrow == 0:
+		nrow = 1
+	else:
+		nrow = nrow.group(0)
+		nrow = int(nrow)
+
+	snip.buffer[snip.line] = ''
+
+	mat_str = "\\begin\{${1:p}matrix\}\n" + \
+	          "\t" + str_col_inner(nrow, starttabnum=2) + "\n" + \
+			  "\\end{$1matrix\}"
+	snip.expand_anon(mat_str)
+
+def str_col_inner(nrow, starttabnum=1):
+
+	tabnums = [ i + starttabnum for i in range(nrow) ]
+	tabstops = ['$' + str(n) for n in tabnums ] 	# [$1, $2, ..., $n]
+	return ' \\\\\\\\ '.join(tabstops) 				# [$1 \\ $2 \\ ... \\ $n]
+
+def create_matrix(snip):
+	nrow_ncol = snip.buffer[snip.line].split("by")
+	nrow = nrow_ncol[0]
+	ncol = nrow_ncol[1]
+	
+	nrow = int(nrow)
+	ncol = int(ncol)
+
+	snip.buffer[snip.line] = ''
+
+	mat_str = "\\begin\{${1:p}matrix\}\n" + \
+	          "\t" + str_matrix_inner(nrow, ncol, starttabnum=2) + "\n" + \
+			  "\\end{$1matrix\}"
+	snip.expand_anon(mat_str)
+
+def str_matrix_inner(nrow, ncol, starttabnum=1, shiftwidth=1):
+	
+	""" creates the body inside \begin{matrix} and \end{matrix} 
+	 
+	 	$n & $n & ... & $n \\
+	 	$n & $n & ... & $n \\
+		... 
+	 	$n & $n & ... & $n
+	"""
+
+	starttabnums = [i*ncol + starttabnum for i in range(nrow)]
+	rowstrs = [ str_row_inner(ncol, stnum) for stnum in starttabnums ]
+	sep = ' \\\\\\\\\n' + shiftwidth *'\t'
+	return sep.join(rowstrs)
+
+
+endglobal
+
+post_jump "create_matrix(snip)"
+snippet "mat(?:r(?:ix?)?)?(\d)\D(\d)" ".?mat[rix] mxn" rb
+`!p snip.rv = match.group(1) + 'by' + match.group(2)  # ok!`
+endsnippet
+
+# [TODO] same indentation for each row
+# [TODO] add options for [pbB...]matrix
+# [TODO] allow expansions within line
+# 		eg. via snip.snippet_start / _end
+
+
+
+post_jump "create_row_vec(snip)" 
+snippet "rowv(?:ec?)?(\d)?" "row vector with optional number of components" rb
+`!p snip.rv = match.group(1)`
+endsnippet
+
+post_jump "create_col_vec(snip)" 
+snippet "colv(?:ec?)?(\d)?" "col vector with optional number of components" rb
+`!p snip.rv = match.group(1)`
+endsnippet

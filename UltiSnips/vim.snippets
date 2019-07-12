@@ -1,0 +1,34 @@
+snippet "fu?nc?" "function" rb
+function! ${1:name}($2)
+	${3:${VISUAL:"body}}
+endfunction
+endsnippet
+
+snippet if "if" b
+if $1
+	${2:${VISUAL:}}
+endif
+endsnippet
+
+snippet ifel "if..else" b
+if $1
+	${2:${VISUAL:}}
+else
+	$3
+endif
+endsnippet
+
+snippet el?if? "elseif" b
+elseif $1
+	${2:${VISUAL:}}
+endsnippet
+
+snippet el "else" b
+else $1
+	${2:${VISUAL:}}
+endsnippet
+
+snippet <> "<|>" iA
+<${1:${VISUAL}}>
+endsnippet
+

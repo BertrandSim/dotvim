@@ -1,0 +1,66 @@
+snippet >> "magrittrpipe" A
+%>%
+endsnippet
+
+snippet __ "rassign" A
+<-
+endsnippet
+
+# trigger with `fun` or `fn`
+snippet "fu?n" "function" r
+function(${1}) \{
+	${2:${VISUAL:}}
+\}
+endsnippet
+
+snippet ret "return" 
+return( ${1:${VISUAL}} )
+endsnippet
+
+snippet so "source" b
+source(${2:"./$1"})
+endsnippet
+
+
+# control flow {{{1 
+
+snippet for "for loop"
+for ($1) {
+	${2:${VISUAL}}
+}
+endsnippet
+
+snippet while "while loop"
+while ($1) {
+	${2:${VISUAL}}
+}
+endsnippet
+
+snippet ifel "if .. else"
+if ($1) {
+	${2:${VISUAL}}
+} else {
+	$3
+}
+endsnippet
+
+snippet if "if block"
+if ($1) {
+	${2:${VISUAL}}
+}
+endsnippet
+
+snippet elif "else if block"
+else if ($1) {
+	${2:${VISUAL}}
+}
+endsnippet
+
+snippet else "else block"
+else {
+	${1:${VISUAL}}
+}
+endsnippet
+
+
+# vim: foldmethod=marker : ts=2 : sts=0 : sw=0 : noet

@@ -1,0 +1,19 @@
+# snippets for making snippets
+# Talk about recursion xD
+
+
+snippet snip "Ultisnips snippet definition." bs
+`!p snip.rv = "snippet"` ${1:Trigger_word} "${2:Description}" ${3:biwr}
+${4:${VISUAL}}
+`!p snip.rv = "endsnippet"`
+$0
+endsnippet
+
+snippet VIS "{VISUAL}" i
+\$\{VISUAL${1::default_text}\}$0
+endsnippet
+
+snippet VIST "{VISUAL} with transformation" i
+\$\{VISUAL${1::${2:default}/${3:search}/${4:replace}/${5:option}}\}$0
+endsnippet
+
