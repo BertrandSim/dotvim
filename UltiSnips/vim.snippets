@@ -6,26 +6,32 @@ endsnippet
 
 snippet if "if" b
 if $1
-	${2:${VISUAL:}}
+	${2:${VISUAL}}
 endif
 endsnippet
 
 snippet ifel "if..else" b
 if $1
-	${2:${VISUAL:}}
+	${2:${VISUAL}}
 else
 	$3
 endif
 endsnippet
 
-snippet el?if? "elseif" b
+snippet "el?if?" "elseif" br
 elseif $1
-	${2:${VISUAL:}}
+	${2:${VISUAL}}
 endsnippet
 
 snippet el "else" b
 else $1
-	${2:${VISUAL:}}
+	${2:${VISUAL}}
+endsnippet
+
+snippet "ifh(as?)?p" "if has('patch-n.n.nnn')" br
+if has('patch-${1:n.n.nnn}')
+	${2:${VISUAL}}
+endif
 endsnippet
 
 snippet <> "<|>" iA

@@ -452,7 +452,12 @@ function! AddCommentOp(type)
   endif
 
   let minindent = GetMinIndent( range(startline, endline) )
-  let minsw = minindent / shiftwidth()   " min shiftwidth, integer division
+  if has('patch-7.3.694')
+	let minsw = minindent / shiftwidth()   " min shiftwidth, integer division
+  else
+	let shiftwidth_ = &sw == 0 ? &ts : &sw
+	let minsw = minindent / shiftwidth_
+  endif
 
   execute "silent" . startline.','.endline . repeat('<', minsw)
   execute "silent" . startline.','.endline . 'normal 0i'.comleader."\<Esc>"
@@ -706,7 +711,12 @@ augroup ft_r
 
   " add comment leader when pressing <CR>, allow autoformat with gq, 
   " don't automatically break lines, remove comment leader when joining lines
-  autocmd Filetype r setlocal formatoptions=rqlj
+
+  if has('patch-7.3.550')
+    autocmd Filetype r setlocal formatoptions=rqlj
+  else
+    autocmd Filetype r setlocal formatoptions=rql
+  endif
 augroup END
 
 
