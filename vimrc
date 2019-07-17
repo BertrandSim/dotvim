@@ -806,6 +806,45 @@ endif
 
 set diffopt+=vertical	  " when starting diffmode, use vertical splits by default, such as with :diffsplit
 
+" custom text objects {{{1
+" -------------------
+" TODO: save gv register for onoremap's
+
+" inner line text object
+" selects entire line without surrounding whitespace
+vnoremap il :norm g_v^<CR>
+onoremap il :norm vil<CR>
+
+" 'a everything' or 'absolutely everything' text object
+" selects entire buffer
+vnoremap ae :normal GVgg<CR>
+onoremap ae :normal Vae<CR>
+
+" 'R function'
+" autocmd FileType R xnoremap af :call SelectRFunc()
+autocmd FileType R xnoremap af :call SelectRFuncHeader()<CR>
+autocmd Filetype R onoremap af :normal vaf<CR>
+
+function! SelectRFuncHeader()
+  " TODO: save search register
+  let patternFuncStart =
+		\'\v\w+\s*'.
+		\'\V<-\|='.
+		\'\v\_s*function\s*\('
+		" <name>
+		" <- or =
+		" function(
+  exec 'normal ?'.patternFuncStart."\<CR>"
+		\'gn'.
+		\'%'
+		" select pattern w cursor on '(' after 'function'
+		" jump to matching ')'
+  " TODO:
+  " check if next char == {
+  " If yes, jump to it, and add {...} to selection
+
+endfunction
+
 " modelines for folding of this file {{{1
 " ----------------------------------
 set modelines=2
