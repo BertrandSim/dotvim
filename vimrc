@@ -294,8 +294,17 @@ set smartcase		" *\c*ase insensitive when search is fully in lowercase, and
 
 set hlsearch		" highlight matches
 
+" search related mappings {{{1
+" -----------------------
+
 " turn off search highlighting with \<space>
-nnoremap <leader><space> :nohlsearch<CR>
+" nnoremap <leader><space> :nohlsearch<CR>
+nnoremap <leader><space> :let @/=""<CR>
+" highlight search matches without jumping to it
+nnoremap <leader>/ :let @/=""<Left>
+
+" enter search with word boundaries /\<words\>
+nnoremap g/ /\<\><Left><Left>
 
 " tabs and spacing {{{1
 " -------------------
@@ -316,6 +325,7 @@ set smarttab			" TAB adds a shiftwidth at the start of a line, and a softtabstop
 set wrap		" wrap lines (display)
 set linebreak	" don't break lines in between words
 if exists("&breakindent") | set breakindent | endif	" wrapped lines preserve indentation
+set showbreak=..	" wrapped lines are prepended with ".."
 
 " mapping to toggle wrap
 noremap <F3> :set wrap!<CR>
