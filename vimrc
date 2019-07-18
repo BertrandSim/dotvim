@@ -98,6 +98,9 @@ if has('packages')
   packadd vim-angry        	" function argument text object
   packadd auto-pairs       	" jiangmiao/auto-pairs
   packadd vim-easy-align   	" junegunn/vim-easy-align
+  packadd vim-textobj-user-0.7.6	"kana/text-obj-user
+	packadd vim-textobj-entire
+	packadd vim-textobj-line
 
 " elseif " using pathogen plugin manager,
 " execute pathogen#infect()
@@ -106,7 +109,7 @@ else
   set runtimepath+=~/.vim/pack/bundle/start/vim-solarized8
   set runtimepath+=~/.vim/pack/bundle/start/vim-unimpaired
   set runtimepath+=~/.vim/pack/bundle/start/vim-markdown-folding
-  if (version >= 704)
+  if v:version >= 704
 	set runtimepath+=~/.vim/pack/bundle/start/ultisnips    " -3.1
   endif
   set runtimepath+=~/.vim/pack/bundle/start/vim-surround-2.1\ -\ usr
@@ -119,6 +122,11 @@ else
   set runtimepath+=~/.vim/pack/bundle/opt/vim-angry
   set runtimepath+=~/.vim/pack/bundle/opt/auto-pairs
   set runtimepath+=~/.vim/pack/bundle/opt/vim-easy-align
+  if v:version >= 704
+	set runtimepath+=~/.vim/pack/bundle/opt/vim-textobj-user-0.7.6
+	set runtimepath+=~/.vim/pack/text-obj/opt/vim-textobj-entire
+	set runtimepath+=~/.vim/pack/text-obj/opt/vim-textobj-line
+  endif
 
 
 endif
@@ -812,36 +820,57 @@ set diffopt+=vertical	  " when starting diffmode, use vertical splits by default
 
 " inner line text object
 " selects entire line without surrounding whitespace
-vnoremap il :norm g_v^<CR>
-onoremap il :norm vil<CR>
+" vnoremap il :norm g_v^<CR>
+" onoremap il :norm vil<CR>
 
 " 'a everything' or 'absolutely everything' text object
 " selects entire buffer
-vnoremap ae :normal GVgg<CR>
-onoremap ae :normal Vae<CR>
+" vnoremap ae :normal GVgg<CR>
+" onoremap ae :normal Vae<CR>
 
 " 'R function'
 " autocmd FileType R xnoremap af :call SelectRFunc()
-autocmd FileType R xnoremap af :call SelectRFuncHeader()<CR>
+autocmd FileType R xnoremap af :call SelectRFunc()<CR>
 autocmd Filetype R onoremap af :normal vaf<CR>
 
-function! SelectRFuncHeader()
+function! SelectRFunc()
+  " TODO: check if cursor pos is within start/end
   " TODO: save search register
+  " TODO: restore cursor position
+
   let patternFuncStart =
 		\'\v\w+\s*'.
-		\'\V<-\|='.
+		\'\V\(<-\|=\)'.
 		\'\v\_s*function\s*\('
 		" <name>
 		" <- or =
 		" function(
   exec 'normal ?'.patternFuncStart."\<CR>"
-		\'gn'.
-		\'%'
+  let funcstartpos = getpos('.')
+
+  exec 'normal '.'gn'.'%'
 		" select pattern w cursor on '(' after 'function'
 		" jump to matching ')'
-  " TODO:
+
   " check if next char == {
+  call search('\S') 
+  let nextchar = getline('.')[col('.')-1]
+  while (nextchar ==# '#')	" skip comment. search the next line.
+    call search('^\s*\zs\S')
+    let nextchar = getline('.')[col('.')-1]
+  endwhile
+  
   " If yes, jump to it, and add {...} to selection
+  if (nextchar ==# '{')
+    exec 'normal %'
+    let funcendpos = getpos('.')
+
+	" call setpos("'e", funcendpos)
+    " call setpos('.', funcstartpos)
+	" exec 'normal v`e'
+  else
+	exec "normal \<Esc>"
+  endif
 
 endfunction
 
