@@ -829,14 +829,68 @@ set diffopt+=vertical	  " when starting diffmode, use vertical splits by default
 " onoremap ae :normal Vae<CR>
 
 " 'R function'
-" autocmd FileType R xnoremap af :call SelectRFunc()
-autocmd FileType R xnoremap af :call SelectRFunc()<CR>
-autocmd Filetype R onoremap af :normal vaf<CR>
+" autocmd FileType R xnoremap af :call SelectRFunc1()<CR>
+" autocmd Filetype R onoremap af :normal vaf<CR>
+
+" function! SelectRFunc1()
+"   " TODO: check if cursor pos is within start/end
+"   " TODO: save search register
+"   " TODO: restore cursor position
+" 
+"   let patternFuncStart =
+" 		\'\v\w+\s*'.
+" 		\'\V\(<-\|=\)'.
+" 		\'\v\_s*function\s*\('
+" 		" <name>
+" 		" <- or =
+" 		" function(
+"   exec 'normal ?'.patternFuncStart."\<CR>"
+"   let funcstartpos = getpos('.')
+" 
+"   exec 'normal '.'gn'.'%'
+" 		" select pattern w cursor on '(' after 'function'
+" 		" jump to matching ')'
+" 
+"   " check if next char == {
+"   call search('\S') 
+"   let nextchar = getline('.')[col('.')-1]
+"   while (nextchar ==# '#')	" skip comment. search the next line.
+"     call search('^\s*\zs\S')
+"     let nextchar = getline('.')[col('.')-1]
+"   endwhile
+"   
+"   " If yes, jump to it, and add {...} to selection
+"   if (nextchar ==# '{')
+"     exec 'normal %'
+"     let funcendpos = getpos('.')
+" 
+" 	" call setpos("'e", funcendpos)
+"     " call setpos('.', funcstartpos)
+" 	" exec 'normal v`e'
+"   else
+" 	exec "normal \<Esc>"
+"   endif
+" 
+" endfunction
+
+" vim-textobj-user objects {{{1
+" ------------------------
+
+" R function textobj-user
+
+call textobj#user#plugin('rfunc', {
+	  \   '-': {
+	  \     'select-a-function': 'SelectRFunc',
+	  \     'select-a': 'af',
+	  \   },
+	  \ })
+	" \     'select-i-function': 'CurrentLineI',
+	" \     'select-i': 'il',
+
 
 function! SelectRFunc()
+  " for textobj-user
   " TODO: check if cursor pos is within start/end
-  " TODO: save search register
-  " TODO: restore cursor position
 
   let patternFuncStart =
 		\'\v\w+\s*'.
@@ -845,16 +899,19 @@ function! SelectRFunc()
 		" <name>
 		" <- or =
 		" function(
-  exec 'normal ?'.patternFuncStart."\<CR>"
+
+  if !search(patternFuncStart, 'bczW')	" search backwards, place cursor on start of match
+    return 0	" if not found, text object does not exist	
+  endif
   let funcstartpos = getpos('.')
 
-  exec 'normal '.'gn'.'%'
-		" select pattern w cursor on '(' after 'function'
-		" jump to matching ')'
+  call search(patternFuncStart, 'cez')    " move to end of 'function('
+  exec 'normal %'
+  " jump to matching ')'
 
   " check if next char == {
   call search('\S') 
-  let nextchar = getline('.')[col('.')-1]
+  let nextchar = getline('.')[col('.')-1]	" get char under cursor
   while (nextchar ==# '#')	" skip comment. search the next line.
     call search('^\s*\zs\S')
     let nextchar = getline('.')[col('.')-1]
@@ -864,14 +921,22 @@ function! SelectRFunc()
   if (nextchar ==# '{')
     exec 'normal %'
     let funcendpos = getpos('.')
+	return ['v', funcstartpos, funcendpos]
 
-	" call setpos("'e", funcendpos)
-    " call setpos('.', funcstartpos)
-	" exec 'normal v`e'
   else
-	exec "normal \<Esc>"
+	return 0
+
   endif
 
+endfunction
+
+function PosCompare(p1, p2)
+  " compares if one position is later than the other
+  " returns -1 ( p1 < p2 ), +1 (p1 > p2), or 0 (p1 == p2)
+  " p1 and p2 are positions, in the same format as the output for getpos()
+  if     p1[1] < p2[1] || (p1[1] == p2[1] && p1[2] < p2[2]) | return -1
+  elseif p1[1] > p2[1] || (p1[1] == p2[1] && p1[2] > p2[2]) | return  1
+  else														| return  0 | endif
 endfunction
 
 " modelines for folding of this file {{{1
