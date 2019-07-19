@@ -890,22 +890,21 @@ call textobj#user#plugin('rfunc', {
 
 function! SelectRFunc()
   " for textobj-user
-  " TODO: check if cursor pos is within start/end
+  " TODO: support nested R functions: outerfunc {... innerfunc {...} <cursor> ...}
 
+  let curpos_save = getpos('.')
   let patternFuncStart =
-		\'\v\w+\s*'.
-		\'\V\(<-\|=\)'.
-		\'\v\_s*function\s*\('
-		" <name>
-		" <- or =
+		\'\v(\w+\s*(\<\-|\=)\_s*)?'.
+		\   'function\s*\('
+		" optional: <name> <- or =
 		" function(
 
-  if !search(patternFuncStart, 'bczW')	" search backwards, place cursor on start of match
+  if !search(patternFuncStart, 'bcW')	" search backwards, place cursor on start of match
     return 0	" if not found, text object does not exist	
   endif
   let funcstartpos = getpos('.')
 
-  call search(patternFuncStart, 'cez')    " move to end of 'function('
+  call search(patternFuncStart, 'ce')    " move to end of 'function('
   exec 'normal %'
   " jump to matching ')'
 
@@ -921,7 +920,15 @@ function! SelectRFunc()
   if (nextchar ==# '{')
     exec 'normal %'
     let funcendpos = getpos('.')
-	return ['v', funcstartpos, funcendpos]
+
+    " check if cursor pos is within start/end of function found
+	" if yes, good (return list for vim-textobj-user). Otherwise, return 0 (ie. no match)
+	if PosCompare(curpos_save, funcstartpos) >= 0 && 
+	  \PosCompare(curpos_save, funcendpos)   <= 0 
+	  return ['v', funcstartpos, funcendpos]
+	else 
+	  return 0
+	endif
 
   else
 	return 0
@@ -932,10 +939,10 @@ endfunction
 
 function PosCompare(p1, p2)
   " compares if one position is later than the other
-  " returns -1 ( p1 < p2 ), +1 (p1 > p2), or 0 (p1 == p2)
+  " returns -1 ( p1 < p2 ), +1 ( p1 > p2 ), or 0 ( p1 == p2 )
   " p1 and p2 are positions, in the same format as the output for getpos()
-  if     p1[1] < p2[1] || (p1[1] == p2[1] && p1[2] < p2[2]) | return -1
-  elseif p1[1] > p2[1] || (p1[1] == p2[1] && p1[2] > p2[2]) | return  1
+  if     a:p1[1] < a:p2[1] || (a:p1[1] == a:p2[1] && a:p1[2] < a:p2[2]) | return -1
+  elseif a:p1[1] > a:p2[1] || (a:p1[1] == a:p2[1] && a:p1[2] > a:p2[2]) | return  1
   else														| return  0 | endif
 endfunction
 
