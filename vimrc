@@ -74,6 +74,10 @@ set nocompatible
 set encoding=utf-8		" The encoding displayed.
 set fileencoding=utf-8	" The encoding written to file.
 
+filetype plugin indent on
+" turns on filetype detection, and loads filetype-specific plugins and indent files
+" see :help filetype-overview
+
 " File formats {{{1
 " ------------
 " set fileformat=unix
@@ -94,10 +98,11 @@ if has('packages')
 
   " packages in opt:
   packadd Nvim-R           	" jalvesaq/Nvim-R --forked
-  packadd vim-latex-1.10.0 	" vim-latex or latex suite
+  " packadd vim-latex-1.10.0 	" vim-latex or latex suite
   packadd vim-angry        	" function argument text object
   packadd auto-pairs       	" jiangmiao/auto-pairs
   packadd vim-easy-align   	" junegunn/vim-easy-align
+  packadd vimtex			" lervag/vimtex
 
 " elseif " using pathogen plugin manager,
 " execute pathogen#infect()
@@ -115,10 +120,13 @@ else
   if has('patch-8.0.0946')
 	set runtimepath+=~/.vim/pack/bundle/opt/Nvim-R
   endif
-  set runtimepath+=~/.vim/pack/bundle/opt/vim-latex-1.10.0
+  " set runtimepath+=~/.vim/pack/bundle/opt/vim-latex-1.10.0
   set runtimepath+=~/.vim/pack/bundle/opt/vim-angry
   set runtimepath+=~/.vim/pack/bundle/opt/auto-pairs
   set runtimepath+=~/.vim/pack/bundle/opt/vim-easy-align
+  if has('patch-7.4.52')
+    set runtimepath+=~/.vim/pack/bundle/opt/vimtex
+  endif
 
 
 endif
@@ -142,6 +150,19 @@ if exists("g:loaded_easy_align_plugin")
   nmap gA <Plug>(LiveEasyAlign)
   xmap gA <Plug>(LiveEasyAlign)
 endif
+
+
+" vimtex settings
+
+  " viewer
+let g:vimtex_view_general_viewer = 'SumatraPDF'
+let g:vimtex_view_general_options
+	  \ = '-reuse-instance -forward-search @tex @line @pdf'
+let g:vimtex_view_general_options_latexmk = '-reuse-instance'
+
+
+
+
 
 " Nvim-R config {{{1
 " -------------
@@ -674,10 +695,6 @@ nnoremap <leader>zO zMzO
 
 " filetype specifics {{{1
 " ------------------
-filetype plugin indent on
-" turns on filetype detection, and loads filetype-specific plugins and indent files
-" see :help filetype-overview
-
 " augroup ft_md
   " autocmd!
   " Use nested instead of flat folding for markdown files. (Toggle with :FoldToggle)

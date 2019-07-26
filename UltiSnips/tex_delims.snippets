@@ -1,0 +1,18 @@
+global !p
+def match_open_delim(d):
+	if   (d== '(') : return  ')'
+	elif (d== '[') : return  ']'
+	elif (d=='\{') : return '\}'
+	elif (d== '<') : return  '>'
+	else 		   : return d
+
+endglobal
+
+snippet lr "left...right" i
+\\left${1:(} ${2:${VISUAL}} \\right`!p snip.rv=match_open_delim(t[1])`
+endsnippet
+
+snippet blr "bigl...bigr" i
+\\${1:bigl}${2:(} ${3:${VISUAL}} \\${1/l$/r/}`!p snip.rv=match_open_delim(t[2])`
+endsnippet
+

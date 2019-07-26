@@ -1,3 +1,6 @@
+# commonly used math contexts 
+# TODO: add math context()
+
 snippet __ "_{}" iA
 _\{${0:${VISUAL}}\}
 endsnippet
@@ -10,7 +13,21 @@ snippet == " &= (alignment)" A
 &=
 endsnippet
 
-# TODO: add math context()
+snippet // "frac{}{}" iA
+\\frac\{${1:${VISUAL:n}}\}\{${2:dn}\}
+endsnippet
+
+snippet "\\?pp" "partial deriv" ir
+\\frac\{\\partial$2\}\{\\partial $1\} $0
+endsnippet
+
+snippet inv "inverse ^{-1}" i
+^\{-1\}
+endsnippet
+
+
+# common 
+# ------
 
 snippet "\\?te" "\text" r
 \\text\{${0:${VISUAL}}\}
@@ -33,10 +50,10 @@ snippet "\\?ci(te?)?p" "\ci[te]p" r
 endsnippet
 
 
-# environments
+# environments 
 # ------------
 
-snippet ben "\begin ... \end"
+snippet "\\?ben" "\begin ... \end" r
 \\begin\{${1:env}\}
 	${0:${VISUAL}}
 \\end\{$1\}
@@ -54,7 +71,7 @@ endsnippet
 # [TODO] add options, eg. [width=0.6\textwidth] after \includegraphics.
 
 
-# matrices
+# matrices 
 # --------
 
 global !p
