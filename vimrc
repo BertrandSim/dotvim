@@ -669,6 +669,8 @@ nnoremap z<Space> za
 
 " \zo to open _o_nly current fold (close all folds)
 nnoremap <leader>zo zMzv
+" \zO to _O_pen current fold, and other nested folds 
+nnoremap <leader>zO zMzO
 
 " filetype specifics {{{1
 " ------------------
