@@ -128,12 +128,11 @@ endif
 "
 let g:UltiSnipsEditSplit='context'	" Ultisnips: Open snippets file in a horizontal or vertical split, depending on context
 let g:tex_flavor='latex'			" ft of .tex files to 'tex', not 'plaintex'.
-augroup plugconfig
-  autocmd VimEnter * 
-		\if exists('g:AutoPairsLoaded') && g:AutoPairsLoaded == 1
-		\  | let g:AutoPairsCenterLine = 0		" Autopairs: do not re-center screen after pressing <CR>
-		\|endif
-augroup END
+
+if exists('g:AutoPairsLoaded') && g:AutoPairsLoaded == 1
+  let g:AutoPairsCenterLine = 0		" Autopairs: do not re-center screen after pressing <CR>
+  let g:AutoPairsMultilineClose = 0	" Autopairs: do not jump past closing char on another line
+endif
 
 " mappings for easy align plugin
 if exists("g:loaded_easy_align_plugin")
@@ -161,6 +160,9 @@ let R_rconsole_width = 0	" split rconsole window horizontally
 let R_rconsole_height = 15	" num lines in rconsole window
 
 let rout_follow_colorscheme = 1		" highlight R output in current colorscheme
+
+let R_clear_line = 1
+" clears console line with <C-a><C-k> when sending from buffer to terminal
 
 " UI {{{1
 " -------------------
@@ -298,13 +300,20 @@ set hlsearch		" highlight matches
 " -----------------------
 
 " turn off search highlighting with \<space>
-" nnoremap <leader><space> :nohlsearch<CR>
-nnoremap <leader><space> :let @/=""<CR>
+nnoremap <leader><space> :nohlsearch<CR>
+" nnoremap <leader><space> :let @/=""<CR>
 " highlight search matches without jumping to it
 nnoremap <leader>/ :let @/=""<Left>
 
-" enter search with word boundaries /\<words\>
+" enter search with word boundaries \<...\>
 nnoremap g/ /\<\><Left><Left>
+
+" search between marks
+nnoremap m/ /\%>'s\%(\)\%<'e<Left><Left><Left><Left><Left><Left><Left>
+
+" search within visual selection
+vnoremap / <Esc>/\%V\%(\)\%V<Left><Left><Left><Left><Left>
+
 
 " tabs and spacing {{{1
 " -------------------
@@ -659,6 +668,7 @@ endfunction
 	  " \:nohlsearch<CR>
 
 
+
 " folding {{{1
 " -------
 set foldenable		"enable folding
@@ -688,6 +698,10 @@ augroup ft_vim
   autocmd!
   " don't autowrap comments onto newline, or insert comment leader when using o or O.
   autocmd Filetype vim setlocal formatoptions-=c formatoptions-=o
+  autocmd Filetype vim 
+		\if exists('g:AutoPairsLoaded') && g:AutoPairsLoaded == 1
+		\|  let b:AutoPairs = {'(':')'}
+		\|endif
 augroup END
 
 augroup ft_snippets
