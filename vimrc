@@ -884,23 +884,67 @@ call textobj#user#plugin('rfunc', {
 	  \     'select-a': 'af',
 	  \   },
 	  \ })
-	" \     'select-i-function': 'CurrentLineI',
-	" \     'select-i': 'il',
+	" \     'select-i-function': 'func_name',
+	" \     'select-i': 'if',
 
 
 function! SelectRFunc()
-  " for textobj-user
-  " TODO: support nested R functions: outerfunc {... innerfunc {...} <cursor> ...}
+  " For textobj-user
+  " Selects the function on the cursor, or containing the cursor
+  " Supports nested R functions: outerfunc {... innerfunc {...} <cursor> ...}
+
+  let curpos = getpos('.')
+  let searchpos = getpos('.')
+
+  let result = SearchRFunc(searchpos, 'bcW', curpos)	" search backwards, place cursor on start of match
+
+  while	( result[0] == -1 )
+    " result[0] == -1 means found but does not contain searchpos. 
+	" Continue to search as the one found may be nested in another function
+
+	" if continue to search, search backward from start of currently found func
+	let searchpos = result[1]
+	let result = SearchRFunc(searchpos, 'bW', curpos)
+
+  endwhile
+
+  if result[0] == 0 
+	" if not found, text object does not exist
+	let out = 0	
+  else " result[0] == 1 
+	" found and contains searchpos, return it to vim-textobj-usr
+	let out = ['v', result[1], result[2]]	
+  endif
+
+  call setpos('.', curpos)
+  return out
+
+endfunction
+
+function! SearchRFunc(searchpos, flags, curpos)
+  " searches for an r function from searchpos, 
+  " flags are used in search(). These include the search direction (foward or backward).
+  " returns: 
+  "   [ 1, start, end] if found and [start, end] contains curpos,
+  "   [-1, start, end] if found but [start, end] does not contain curpos,
+  "   0 if not found
+
+  " TODO: separate case if nextchar != '{' ?
 
   let curpos_save = getpos('.')
+
+  let patternFuncStart = '\v(\w+\s*(\<\-|\=)\_s*)?'.  'function\s*\('
   let patternFuncStart =
 		\'\v(\w+\s*(\<\-|\=)\_s*)?'.
 		\   'function\s*\('
 		" optional: <name> <- or =
 		" function(
 
-  if !search(patternFuncStart, 'bcW')	" search backwards, place cursor on start of match
-    return 0	" if not found, text object does not exist	
+   
+  call setpos('.', a:searchpos)
+  if !search(patternFuncStart, a:flags)
+	call setpos('.', curpos_save)
+	return 0	
   endif
   let funcstartpos = getpos('.')
 
@@ -912,29 +956,31 @@ function! SelectRFunc()
   call search('\S') 
   let nextchar = getline('.')[col('.')-1]	" get char under cursor
   while (nextchar ==# '#')	" skip comment. search the next line.
-    call search('^\s*\zs\S')
-    let nextchar = getline('.')[col('.')-1]
+	call search('^\s*\zs\S')
+	let nextchar = getline('.')[col('.')-1]
   endwhile
-  
+
   " If yes, jump to it, and add {...} to selection
   if (nextchar ==# '{')
-    exec 'normal %'
-    let funcendpos = getpos('.')
+	exec 'normal %'
+	let funcendpos = getpos('.')
 
-    " check if cursor pos is within start/end of function found
-	" if yes, good (return list for vim-textobj-user). Otherwise, return 0 (ie. no match)
-	if PosCompare(curpos_save, funcstartpos) >= 0 && 
-	  \PosCompare(curpos_save, funcendpos)   <= 0 
-	  return ['v', funcstartpos, funcendpos]
+	" check if cursor pos is within start/end of function found
+	" if yes, good (return 1). Otherwise, return -1.
+	if PosCompare(a:curpos, funcstartpos) >= 0 && 
+	  \PosCompare(a:curpos, funcendpos)   <= 0 
+	  call setpos('.', curpos_save)
+	  return [ 1, funcstartpos, funcendpos]
 	else 
-	  return 0
+	  call setpos('.', curpos_save)
+	  return [-1, funcstartpos, funcendpos]
 	endif
 
   else
+	call setpos('.', curpos_save)
 	return 0
 
   endif
-
 endfunction
 
 function PosCompare(p1, p2)
