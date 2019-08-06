@@ -2,11 +2,11 @@
 # TODO: add math context()
 
 snippet __ "_{}" iA
-_\{${0:${VISUAL}}\}
+_\{${1:${VISUAL}}\}
 endsnippet
 
 snippet ^^ "^{}" iA
-^\{${0:${VISUAL}}\}
+^\{${1:${VISUAL}}\}
 endsnippet
 
 snippet == " &= (alignment)" A
@@ -25,6 +25,18 @@ snippet inv "inverse ^{-1}" i
 ^\{-1\}
 endsnippet
 
+# math mode delims
+# ----------------
+
+snippet mk "$...$" wA
+$${1}$
+endsnippet
+
+snippet dm "\[...\]" wA
+\[
+${1:${VISUAL}}
+.\] $0
+endsnippet
 
 # common 
 # ------
@@ -59,6 +71,9 @@ snippet "\\?ben" "\begin ... \end" r
 \\end\{$1\}
 endsnippet
  
+
+# floats
+# ------
 snippet fig "\begin{figure}" b
 \\begin\{figure\}[${1:htpb}]
 	\\centering
@@ -70,6 +85,21 @@ $0
 endsnippet
 # [TODO] add options, eg. [width=0.6\textwidth] after \includegraphics.
 
+snippet tab "\begin{table}" b
+\begin{table}[${1:htpb!}]
+	\centering
+	\begin{tabular}${2:[${3:rows}]}{${4:cols}}
+		\hline
+		${5:% header row} \\\ [0.5ex]
+		\hline\hline
+		${6:% content} \\\ [1ex]
+		\hline
+	\end{tabular}
+	\caption{${7:caption text}}
+	\label{tab:${8:label}}
+\end{table}
+$0
+endsnippet
 
 # matrices 
 # --------

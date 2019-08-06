@@ -154,10 +154,17 @@ endif
 
 " vimtex settings
 
-  " viewer
+" use Sumatra as pdfviewer
 let g:vimtex_view_general_viewer = 'SumatraPDF'
+" setup forward and backward search
 let g:vimtex_view_general_options
 	  \ = '-reuse-instance -forward-search @tex @line @pdf'
+	  \ . ' -inverse-search "gvim --servername ' . v:servername
+	  \ . ' --remote-send \"^<C-\^>^<C-n^>'
+	  \ . ':drop \%f^<CR^>:\%l^<CR^>:normal\! zzzv^<CR^>'
+	  \ . ':execute ''drop '' . fnameescape(''\%f'')^<CR^>'
+	  \ . ':\%l^<CR^>:normal\! zzzv^<CR^>'
+	  \ . ':call remote_foreground('''.v:servername.''')^<CR^>^<CR^>\""'
 let g:vimtex_view_general_options_latexmk = '-reuse-instance'
 
 
@@ -711,6 +718,30 @@ augroup ft_snippets
   autocmd!
   autocmd Filetype snippets setlocal ts=4 sts=0 sw=0 noet
 augroup END
+
+" augroup ft_tex
+"   autocmd!
+"   " swap [ and {
+"   autocmd Filetype tex
+"    \ if exists("g:AutoPairsLoaded")
+" 	 \| inoremap <buffer> [ <C-R>=AutoPairsInsert('{')<CR>
+" 	 \| inoremap <buffer> ] <C-R>=AutoPairsInsert('}')<CR>
+" 	 \| inoremap <buffer> { <C-R>=AutoPairsInsert('[')<CR>
+" 	 \| inoremap <buffer> } <C-R>=AutoPairsInsert(']')<CR>
+"    \| else
+" 	 \| inoremap <buffer> [ {
+" 	 \| inoremap <buffer> ] }
+" 	 \| inoremap <buffer> { [
+" 	 \| inoremap <buffer> } ]
+"    \| endif
+"   " add \(, \[, \{ pairs
+"   " but does not trigger after typing '\(', as it starts with \ .
+"   autocmd Filetype tex 
+"     \ if exists ("g:AutoPairsLoaded")
+"   	\| let b:AutoPairs = AutoPairsDefine({'\\(':'\\)', '\\[':'\\]', '\\{':'\\}'})
+"     \| endif
+" augroup END
+
 
 " R code {{{2
 " ------
