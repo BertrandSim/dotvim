@@ -1,30 +1,74 @@
-# TODO: use a python dictionary (key:value)
 
-snippet "\\a([^a-zA-Z])" "" rA
-\alpha`!p snip.rv=match.group(1)`
+global !p
+
+# python dictionary that stores shortcuts for greek letters
+# eg. (a: alpha, b: beta) and so on
+
+greekalpha = {
+
+# lower case letters
+  'a':   'alpha',
+  'b':   'beta',
+  'g':   'gamma',
+  'd':   'delta',
+  'e':   'epsilon',
+  've':  'varepsilon',
+  'z':   'zeta',
+  'h':   'eta',
+  'q':   'theta',
+  # 'th':  'theta',
+  'vq':  'vartheta',
+  'i':   'iota',
+  'k':   'kappa',
+  'l':   'lambda',
+  'm':   'mu',
+  'n':   'nu',
+  'c':   'xi',
+  # omicron is simply 'o',
+  'p':   'pi',
+  'vp':  'varpi',
+  'r':   'rho',
+  'vr':  'varrho',
+  's':   'sigma',
+  'vs':  'varsigma',
+  't':   'tau',
+  'u':   'upsilon',
+  'f':   'phi',
+  'ph':  'phi',
+  'vf':  'varphi',
+  'vph': 'varphi',
+  'x':   'chi',
+  'ch':  'chi',
+  'y':   'psi',
+  'ps':  'psi',
+  'w':   'omega',
+
+# Upper case letters
+  'G':  'Gamma',
+  'D':  'Delta',
+  'Q':  'Theta',
+  'L':  'Lambda',
+  'C':  'Xi',
+  'P':  'Pi',
+  'S':  'Sigma',
+  'U':  'Upsilon',
+  'F':  'Phi',
+  'PH': 'Phi',
+  'Y':  'Psi',
+  'W':  'Omega',
+}
+
+endglobal
+
+# quick insert greek alphabets: eg, \a -> \alpha
+# autoexpands after a nonalphabet is typed
+priority 0
+snippet "\\([a-zA-Z])([^a-zA-Z])" "greek alphabets" rA
+\\`!p akey = match.group(1)
+if akey in greekalpha:
+	avalue = greekalpha[akey]
+else:
+	avalue = match.group(1)
+
+snip.rv = avalue + match.group(2)`
 endsnippet
-
-snippet "\\m([^a-zA-Z])" "" rA
-\mu`!p snip.rv=match.group(1)`
-endsnippet
-
-snippet "\\s([^a-zA-Z])" "" rA
-\sigma`!p snip.rv=match.group(1)`
-endsnippet
-
-snippet "\\S([^a-zA-Z])" "" rA
-\Sigma`!p snip.rv=match.group(1)`
-endsnippet
-
-snippet "\\vf([^a-zA-Z])" "" rA
-\varphi`!p snip.rv=match.group(1)`
-endsnippet
-
-snippet "\\f([^a-zA-Z])" "" rA
-\phi`!p snip.rv=match.group(1)`
-endsnippet
-
-snippet "\\b([^a-zA-Z])" "" rA
-\beta`!p snip.rv=match.group(1)`
-endsnippet
-
