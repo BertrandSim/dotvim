@@ -154,7 +154,7 @@ let R_esc_term = 0
 
 " let R_assign = 2 	" type two _'s to get <-
 let R_assign = 0	" disable shortcut for <-.
-" See filetype specifics/Rcode/inoremap for the replacement.
+" See .vim/after/ftplugin/r_conf for the replacement.
 
 " run RStudio console instead of R console :)
 " let R_in_buffer = 0
@@ -356,14 +356,6 @@ noremap <F4> :set list!<CR>
 
 " movement and scrolling {{{1
 " --------------
-
-" j/k to move display lines, and 
-" gj/k to move full lines
-" " nnoremap gj j
-" " nnoremap gk k
-" " nnoremap j gj
-" " nnoremap k gk
-" not used due to using j/k with relative numbers
 
 " move screen lines without a count supplied, and 
 " full lines with a count supplied.
@@ -687,68 +679,15 @@ nnoremap <leader>zo zMzv
 nnoremap <leader>zO zMzO
 
 
-" =======
-" filetype specifics {{{1
-" ------------------
-
-" augroup ft_md
-  " autocmd!
-  " Use nested instead of flat folding for markdown files. (Toggle with :FoldToggle)
-  " autocmd Filetype markdown set foldexpr=NestedMarkdownFolds()
-" augroup END
-
-augroup ft_vim
-  autocmd!
-  " don't autowrap comments onto newline, or insert comment leader when using o or O.
-  autocmd Filetype vim setlocal formatoptions-=c formatoptions-=o
-  autocmd Filetype vim 
-		\if exists('g:AutoPairsLoaded') && g:AutoPairsLoaded == 1
-		\|  let b:AutoPairs = {'(':')'}
-		\|endif
-augroup END
-
-augroup ft_snippets
-  autocmd!
-  autocmd Filetype snippets setlocal ts=4 sts=0 sw=0 noet
-augroup END
-
-" R code {{{2
+" R code folding [TODO] {{{1
 " ------
-augroup ft_r
-  autocmd!
-  autocmd Filetype r setlocal ts=8 sts=0 sw=2 noet sta  " default tabstop, indent by 2 spaces
-  " autocmd Filetype r setlocal shiftwidth=2 tabstop=2 softtabstop=0, expandtab nosmarttab	" tabs and indents are 2 spaces
 
-  " quick assignment <-
-  " autocmd Filetype r inoremap <buffer> __ <-
-  " replaced by ultisnips
-  " see also Nvim-R's R_assign.
-
-  " quick piping %>%
-  " autocmd Filetype r inoremap <buffer> >> %>%
-  " replaced by ultisnips
-
-  " use forward slash '/' when expanding filepaths
-  autocmd Filetype r setlocal shellslash
-
-  " code folding, using native vim's syntax / Nvim-R
-  autocmd Filetype r setlocal foldmethod=syntax
-  " let r_syntax_folding=1
-  let r_syntax_brace_folding=1
-  " or using custom fold expr instead... via plugin [TODO]
-  " autocmd Filetype r setlocal foldmethod=expr
-
-  " add comment leader when pressing <CR>, allow autoformat with gq, 
-  " don't automatically break lines, remove comment leader when joining lines
-
-  if has('patch-7.3.550')
-    autocmd Filetype r setlocal formatoptions=rqlj
-  else
-    autocmd Filetype r setlocal formatoptions=rql
-  endif
-augroup END
-" >>>>>>> master:dot_vim/vimrc
-
+" code folding, using native vim's syntax / Nvim-R
+autocmd Filetype r setlocal foldmethod=syntax
+" let r_syntax_folding=1
+let r_syntax_brace_folding=1
+" or using custom fold expr instead... via plugin [TODO]
+" autocmd Filetype r setlocal foldmethod=expr
 
 " terminal {{{1
 " --------
