@@ -1,4 +1,4 @@
-" Last modified: 2019-07-04
+" Last modified: 2019-07-09
 " -------------------------
 " defaults from windows gvim 8.1 install {{{1
 " --------------------------------------
@@ -71,6 +71,10 @@ m'gv``
 
 set nocompatible
 
+filetype plugin indent on
+" turns on filetype detection, and loads filetype-specific plugins and indent files
+" see :help filetype-overview
+
 set encoding=utf-8		" The encoding displayed.
 set fileencoding=utf-8	" The encoding written to file.
 
@@ -102,6 +106,9 @@ if has('packages')
   packadd vim-angry        	" function argument text object
   packadd auto-pairs       	" jiangmiao/auto-pairs
   packadd vim-easy-align   	" junegunn/vim-easy-align
+  packadd vim-textobj-user-0.7.6	"kana/text-obj-user
+	  packadd vim-textobj-entire
+	  packadd vim-textobj-line
   packadd vimtex			" lervag/vimtex
 
 " elseif " using pathogen plugin manager,
@@ -111,7 +118,7 @@ else
   set runtimepath+=~/.vim/pack/bundle/start/vim-solarized8
   set runtimepath+=~/.vim/pack/bundle/start/vim-unimpaired
   set runtimepath+=~/.vim/pack/bundle/start/vim-markdown-folding
-  if (version >= 704)
+  if v:version >= 704
 	set runtimepath+=~/.vim/pack/bundle/start/ultisnips    " -3.1
   endif
   set runtimepath+=~/.vim/pack/bundle/start/vim-surround-2.1\ -\ usr
@@ -124,6 +131,11 @@ else
   set runtimepath+=~/.vim/pack/bundle/opt/vim-angry
   set runtimepath+=~/.vim/pack/bundle/opt/auto-pairs
   set runtimepath+=~/.vim/pack/bundle/opt/vim-easy-align
+  if v:version >= 704
+	set runtimepath+=~/.vim/pack/bundle/opt/vim-textobj-user-0.7.6
+	set runtimepath+=~/.vim/pack/text-obj/opt/vim-textobj-entire
+	set runtimepath+=~/.vim/pack/text-obj/opt/vim-textobj-line
+  endif
   if has('patch-7.4.52')
     set runtimepath+=~/.vim/pack/bundle/opt/vimtex
   endif
@@ -136,12 +148,11 @@ endif
 "
 let g:UltiSnipsEditSplit='context'	" Ultisnips: Open snippets file in a horizontal or vertical split, depending on context
 let g:tex_flavor='latex'			" ft of .tex files to 'tex', not 'plaintex'.
-augroup plugconfig
-  autocmd VimEnter * 
-		\if exists('g:AutoPairsLoaded') && g:AutoPairsLoaded == 1
-		\  | let g:AutoPairsCenterLine = 0		" Autopairs: do not re-center screen after pressing <CR>
-		\|endif
-augroup END
+
+if exists('g:AutoPairsLoaded') && g:AutoPairsLoaded == 1
+  let g:AutoPairsCenterLine = 0		" Autopairs: do not re-center screen after pressing <CR>
+  let g:AutoPairsMultilineClose = 0	" Autopairs: do not jump past closing char on another line
+endif
 
 " mappings for easy align plugin
 if exists("g:loaded_easy_align_plugin")
@@ -179,7 +190,7 @@ let R_esc_term = 0
 
 " let R_assign = 2 	" type two _'s to get <-
 let R_assign = 0	" disable shortcut for <-.
-" See filetype specifics/Rcode/inoremap for the replacement.
+" See .vim/after/ftplugin/r_conf for the replacement.
 
 " run RStudio console instead of R console :)
 " let R_in_buffer = 0
@@ -189,6 +200,9 @@ let R_rconsole_width = 0	" split rconsole window horizontally
 let R_rconsole_height = 15	" num lines in rconsole window
 
 let rout_follow_colorscheme = 1		" highlight R output in current colorscheme
+
+let R_clear_line = 1
+" clears console line with <C-a><C-k> when sending from buffer to terminal
 
 " UI {{{1
 " -------------------
@@ -326,13 +340,20 @@ set hlsearch		" highlight matches
 " -----------------------
 
 " turn off search highlighting with \<space>
-" nnoremap <leader><space> :nohlsearch<CR>
-nnoremap <leader><space> :let @/=""<CR>
+nnoremap <leader><space> :nohlsearch<CR>
+" nnoremap <leader><space> :let @/=""<CR>
 " highlight search matches without jumping to it
 nnoremap <leader>/ :let @/=""<Left>
 
-" enter search with word boundaries /\<words\>
+" enter search with word boundaries \<...\>
 nnoremap g/ /\<\><Left><Left>
+
+" search between marks
+nnoremap m/ /\%>'s\%(\)\%<'e<Left><Left><Left><Left><Left><Left><Left>
+
+" search within visual selection
+vnoremap / <Esc>/\%V\%(\)\%V<Left><Left><Left><Left><Left>
+
 
 " tabs and spacing {{{1
 " -------------------
@@ -371,14 +392,6 @@ noremap <F4> :set list!<CR>
 
 " movement and scrolling {{{1
 " --------------
-
-" j/k to move display lines, and 
-" gj/k to move full lines
-" " nnoremap gj j
-" " nnoremap gk k
-" " nnoremap j gj
-" " nnoremap k gk
-" not used due to using j/k with relative numbers
 
 " move screen lines without a count supplied, and 
 " full lines with a count supplied.
@@ -687,6 +700,7 @@ endfunction
 	  " \:nohlsearch<CR>
 
 
+
 " folding {{{1
 " -------
 set foldenable		"enable folding
@@ -700,24 +714,8 @@ nnoremap <leader>zo zMzv
 " \zO to _O_pen current fold, and other nested folds 
 nnoremap <leader>zO zMzO
 
-" filetype specifics {{{1
+" tex delims [TODO] {{{1
 " ------------------
-" augroup ft_md
-  " autocmd!
-  " Use nested instead of flat folding for markdown files. (Toggle with :FoldToggle)
-  " autocmd Filetype markdown set foldexpr=NestedMarkdownFolds()
-" augroup END
-
-augroup ft_vim
-  autocmd!
-  " don't autowrap comments onto newline, or insert comment leader when using o or O.
-  autocmd Filetype vim setlocal formatoptions-=c formatoptions-=o
-augroup END
-
-augroup ft_snippets
-  autocmd!
-  autocmd Filetype snippets setlocal ts=4 sts=0 sw=0 noet
-augroup END
 
 " augroup ft_tex
 "   autocmd!
@@ -743,42 +741,15 @@ augroup END
 " augroup END
 
 
-" R code {{{2
+" R code folding [TODO] {{{1
 " ------
-augroup ft_r
-  autocmd!
-  autocmd Filetype r setlocal ts=8 sts=0 sw=2 noet sta  " default tabstop, indent by 2 spaces
-  " autocmd Filetype r setlocal shiftwidth=2 tabstop=2 softtabstop=0, expandtab nosmarttab	" tabs and indents are 2 spaces
 
-  " quick assignment <-
-  " autocmd Filetype r inoremap <buffer> __ <-
-  " replaced by ultisnips
-  " see also Nvim-R's R_assign.
-
-  " quick piping %>%
-  " autocmd Filetype r inoremap <buffer> >> %>%
-  " replaced by ultisnips
-
-  " use forward slash '/' when expanding filepaths
-  autocmd Filetype r setlocal shellslash
-
-  " code folding, using native vim's syntax / Nvim-R
-  autocmd Filetype r setlocal foldmethod=syntax
-  " let r_syntax_folding=1
-  let r_syntax_brace_folding=1
-  " or using custom fold expr instead... via plugin [TODO]
-  " autocmd Filetype r setlocal foldmethod=expr
-
-  " add comment leader when pressing <CR>, allow autoformat with gq, 
-  " don't automatically break lines, remove comment leader when joining lines
-
-  if has('patch-7.3.550')
-    autocmd Filetype r setlocal formatoptions=rqlj
-  else
-    autocmd Filetype r setlocal formatoptions=rql
-  endif
-augroup END
-
+" code folding, using native vim's syntax / Nvim-R
+autocmd Filetype r setlocal foldmethod=syntax
+" let r_syntax_folding=1
+let r_syntax_brace_folding=1
+" or using custom fold expr instead... via plugin [TODO]
+" autocmd Filetype r setlocal foldmethod=expr
 
 " terminal {{{1
 " --------
@@ -855,6 +826,184 @@ if has('patch-7.4.793')
 endif
 
 set diffopt+=vertical	  " when starting diffmode, use vertical splits by default, such as with :diffsplit
+
+" custom text objects {{{1
+" -------------------
+" TODO: save gv register for onoremap's
+
+" inner line text object
+" selects entire line without surrounding whitespace
+" vnoremap il :norm g_v^<CR>
+" onoremap il :norm vil<CR>
+
+" 'a everything' or 'absolutely everything' text object
+" selects entire buffer
+" vnoremap ae :normal GVgg<CR>
+" onoremap ae :normal Vae<CR>
+
+" 'R function'
+" autocmd FileType R xnoremap af :call SelectRFunc1()<CR>
+" autocmd Filetype R onoremap af :normal vaf<CR>
+
+" function! SelectRFunc1()
+"   " TODO: check if cursor pos is within start/end
+"   " TODO: save search register
+"   " TODO: restore cursor position
+" 
+"   let patternFuncStart =
+" 		\'\v\w+\s*'.
+" 		\'\V\(<-\|=\)'.
+" 		\'\v\_s*function\s*\('
+" 		" <name>
+" 		" <- or =
+" 		" function(
+"   exec 'normal ?'.patternFuncStart."\<CR>"
+"   let funcstartpos = getpos('.')
+" 
+"   exec 'normal '.'gn'.'%'
+" 		" select pattern w cursor on '(' after 'function'
+" 		" jump to matching ')'
+" 
+"   " check if next char == {
+"   call search('\S') 
+"   let nextchar = getline('.')[col('.')-1]
+"   while (nextchar ==# '#')	" skip comment. search the next line.
+"     call search('^\s*\zs\S')
+"     let nextchar = getline('.')[col('.')-1]
+"   endwhile
+"   
+"   " If yes, jump to it, and add {...} to selection
+"   if (nextchar ==# '{')
+"     exec 'normal %'
+"     let funcendpos = getpos('.')
+" 
+" 	" call setpos("'e", funcendpos)
+"     " call setpos('.', funcstartpos)
+" 	" exec 'normal v`e'
+"   else
+" 	exec "normal \<Esc>"
+"   endif
+" 
+" endfunction
+
+" vim-textobj-user objects {{{1
+" ------------------------
+
+" R function textobj-user
+
+call textobj#user#plugin('rfunc', {
+	  \   '-': {
+	  \     'select-a-function': 'SelectRFunc',
+	  \     'select-a': 'af',
+	  \   },
+	  \ })
+	" \     'select-i-function': 'func_name',
+	" \     'select-i': 'if',
+
+
+function! SelectRFunc()
+  " For textobj-user
+  " Selects the function on the cursor, or containing the cursor
+  " Supports nested R functions: outerfunc {... innerfunc {...} <cursor> ...}
+
+  let curpos = getpos('.')
+  let searchpos = getpos('.')
+
+  let result = SearchRFunc(searchpos, 'bcW', curpos)	" search backwards, place cursor on start of match
+
+  while	( result[0] == -1 )
+    " result[0] == -1 means found but does not contain searchpos. 
+	" Continue to search as the one found may be nested in another function
+
+	" if continue to search, search backward from start of currently found func
+	let searchpos = result[1]
+	let result = SearchRFunc(searchpos, 'bW', curpos)
+
+  endwhile
+
+  if result[0] == 0 
+	" if not found, text object does not exist
+	let out = 0	
+  else " result[0] == 1 
+	" found and contains searchpos, return it to vim-textobj-usr
+	let out = ['v', result[1], result[2]]	
+  endif
+
+  call setpos('.', curpos)
+  return out
+
+endfunction
+
+function! SearchRFunc(searchpos, flags, curpos)
+  " searches for an r function from searchpos, 
+  " flags are used in search(). These include the search direction (foward or backward).
+  " returns: 
+  "   [ 1, start, end] if found and [start, end] contains curpos,
+  "   [-1, start, end] if found but [start, end] does not contain curpos,
+  "   0 if not found
+
+  " TODO: separate case if nextchar != '{' ?
+
+  let curpos_save = getpos('.')
+
+  let patternFuncStart = '\v(\w+\s*(\<\-|\=)\_s*)?'.  'function\s*\('
+  let patternFuncStart =
+		\'\v(\w+\s*(\<\-|\=)\_s*)?'.
+		\   'function\s*\('
+		" optional: <name> <- or =
+		" function(
+
+   
+  call setpos('.', a:searchpos)
+  if !search(patternFuncStart, a:flags)
+	call setpos('.', curpos_save)
+	return 0	
+  endif
+  let funcstartpos = getpos('.')
+
+  call search(patternFuncStart, 'ce')    " move to end of 'function('
+  exec 'normal %'
+  " jump to matching ')'
+
+  " check if next char == {
+  call search('\S') 
+  let nextchar = getline('.')[col('.')-1]	" get char under cursor
+  while (nextchar ==# '#')	" skip comment. search the next line.
+	call search('^\s*\zs\S')
+	let nextchar = getline('.')[col('.')-1]
+  endwhile
+
+  " If yes, jump to it, and add {...} to selection
+  if (nextchar ==# '{')
+	exec 'normal %'
+	let funcendpos = getpos('.')
+
+	" check if cursor pos is within start/end of function found
+	" if yes, good (return 1). Otherwise, return -1.
+	if PosCompare(a:curpos, funcstartpos) >= 0 && 
+	  \PosCompare(a:curpos, funcendpos)   <= 0 
+	  call setpos('.', curpos_save)
+	  return [ 1, funcstartpos, funcendpos]
+	else 
+	  call setpos('.', curpos_save)
+	  return [-1, funcstartpos, funcendpos]
+	endif
+
+  else
+	call setpos('.', curpos_save)
+	return 0
+
+  endif
+endfunction
+
+function PosCompare(p1, p2)
+  " compares if one position is later than the other
+  " returns -1 ( p1 < p2 ), +1 ( p1 > p2 ), or 0 ( p1 == p2 )
+  " p1 and p2 are positions, in the same format as the output for getpos()
+  if     a:p1[1] < a:p2[1] || (a:p1[1] == a:p2[1] && a:p1[2] < a:p2[2]) | return -1
+  elseif a:p1[1] > a:p2[1] || (a:p1[1] == a:p2[1] && a:p1[2] > a:p2[2]) | return  1
+  else														| return  0 | endif
+endfunction
 
 " modelines for folding of this file {{{1
 " ----------------------------------
