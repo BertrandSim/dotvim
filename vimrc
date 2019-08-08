@@ -1,4 +1,4 @@
-" Last modified: 2019-07-04
+" Last modified: 2019-07-09
 " -------------------------
 " defaults from windows gvim 8.1 install {{{1
 " --------------------------------------
@@ -70,6 +70,10 @@ m'gv``
 " ---------
 
 set nocompatible
+
+filetype plugin indent on
+" turns on filetype detection, and loads filetype-specific plugins and indent files
+" see :help filetype-overview
 
 set encoding=utf-8		" The encoding displayed.
 set fileencoding=utf-8	" The encoding written to file.
@@ -682,11 +686,10 @@ nnoremap <leader>zo zMzv
 " \zO to _O_pen current fold, and other nested folds 
 nnoremap <leader>zO zMzO
 
+
+" =======
 " filetype specifics {{{1
 " ------------------
-filetype plugin indent on
-" turns on filetype detection, and loads filetype-specific plugins and indent files
-" see :help filetype-overview
 
 " augroup ft_md
   " autocmd!
@@ -744,6 +747,7 @@ augroup ft_r
     autocmd Filetype r setlocal formatoptions=rql
   endif
 augroup END
+" >>>>>>> master:dot_vim/vimrc
 
 
 " terminal {{{1
