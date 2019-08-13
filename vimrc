@@ -146,6 +146,9 @@ endif
 " plugin configs {{{1
 " --------------
 "
+" TODO: fork / add configs for unimpaired
+" TODO: fork / add configs for surround.vim, or setup sandwich
+
 let g:UltiSnipsEditSplit='context'	" Ultisnips: Open snippets file in a horizontal or vertical split, depending on context
 let g:tex_flavor='latex'			" ft of .tex files to 'tex', not 'plaintex'.
 
@@ -427,6 +430,10 @@ nnoremap <expr> O '<Esc>O' . repeat('<CR>', v:count1 - 1) . repeat('<Up>', v:cou
 " in insert mode, <BS> ^W etc. is able to delete indents, newlines, 
 " and past the starting place of insertion
 set backspace=indent,eol,start
+
+" Use u for t after an operator (UnTil).
+" A little easier on the hands
+onoremap u t
 
 
 " bracket matching {{{1
@@ -813,10 +820,17 @@ command! -bang WQ wq<bang>
 
 " Copies cur line or visual selection,
 " comments the copied lines above, 
-" positions cursor at the copy below
-nmap <F7> YP<Plug>(AddComment)_j
-vmap <silent> <F7> :copy '><CR>gv<Plug>(VAddComment)
+" positions cursor at the copy below.
+" Requires quick comment.
+nnoremap <silent> <Plug>(CopynComment)  :<C-U>copy  -\|:execute 'normal'."\<Plug>(AddComment)_j"<CR>
+vnoremap <silent> <Plug>(VCopynComment) :     copy '>\|:execute 'normal! gv'\|:execute 'normal'."\<Plug>(VAddComment)"\|
 	  \:call cursor( line("'>") + 1, 0 )<CR>
+
+"cp to copy and comment cur line (normal mode)
+omap <expr> p v:operator ==# 'c' ? "\<Esc>"."\<Plug>(CopynComment)" : 'p'
+"or F7 to copy and comment cur line / visual selection
+nmap <F7> <Plug>(CopynComment)
+vmap <F7> <Plug>(VCopynComment)
 
 
 " misc {{{1
