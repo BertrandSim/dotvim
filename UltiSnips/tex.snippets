@@ -2,11 +2,15 @@
 # TODO: add math context()
 
 snippet __ "_{}" iA
-_{${1:${VISUAL}}}
+_\{${1:${VISUAL}}\}
 endsnippet
 
 snippet ^^ "^{}" iA
-^{${1:${VISUAL}}}
+^\{${1:${VISUAL}}\}
+endsnippet
+
+snippet ,., ",\dots," iA
+, \dots, 
 endsnippet
 
 snippet == " &= (alignment)" A
@@ -14,7 +18,7 @@ snippet == " &= (alignment)" A
 endsnippet
 
 snippet // "frac{}{}" iA
-\frac{${1:${VISUAL:n}}}{${2:dn}}
+\frac\{${1:${VISUAL:n}}\}{${2:dn}}
 endsnippet
 
 snippet "\\?pp" "partial deriv" ir
@@ -26,23 +30,9 @@ snippet inv "inverse ^{-1}" i
 endsnippet
 
 snippet "\\?te" "\text" r
-\text{${1:${VISUAL}}}
+\text\{${1:${VISUAL}}\}
 endsnippet
 
-
-# math mode delims {{{1
-# ----------------
-
-snippet mk "$...$" wA
-$${1:${VISUAL}}$
-endsnippet
-
-snippet dm "\[...\]" wA
-\[
-	${1:${VISUAL}}
-${2:,}\]
-$0
-endsnippet
 
 # common {{{1
 # ------
@@ -68,15 +58,44 @@ snippet "\\?ci(te?)?p" "\ci[te]p" r
 endsnippet
 
 
+# math mode delims {{{1
+# ----------------
+
+snippet mk "$...$" wA
+$${1:${VISUAL}}$
+endsnippet
+
+snippet dm "\[...\]" wA
+\[
+	${1:${VISUAL}}
+${2:,}\]
+$0
+endsnippet
+
 # environments {{{1
 # ------------
 
 snippet "\\?ben" "\begin ... \end" r
 \begin{${1:env}}
-	${0:${VISUAL}}
+	${2:${VISUAL}}
 \end{$1}
+$0
 endsnippet
  
+snippet eq "equation env" b
+\begin{equation}
+	${1:${VISUAL}}
+\end{equation}
+$0
+endsnippet
+
+snippet al "equation align[*]" b
+\begin{align${1:*}}
+	${2:${VISUAL}}
+\end{align$1}
+$0
+endsnippet
+
 
 # floats {{{1
 # ------
