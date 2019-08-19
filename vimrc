@@ -758,6 +758,12 @@ let r_syntax_brace_folding=1
 " or using custom fold expr instead... via plugin [TODO]
 " autocmd Filetype r setlocal foldmethod=expr
 
+" windows {{{1
+" -------
+
+" don't automatically ^W= after splitting or closing a window
+set noequalalways	
+
 " terminal {{{1
 " --------
 
