@@ -802,18 +802,46 @@ nnoremap <silent> <leader>rv
 	  \  nohlsearch \|
 	  \endif<CR>
 
-" typos in commandline {{{1
-" --------------------
+" ex-command typos and shortcuts {{{1
+" ---------------------------
 " changes :W to :w, and others.
-" command! -bang E e<bang>
-command! -bang Q q<bang>
-command! -bang W w<bang>
-command! -bang QA qa<bang>
-command! -bang Qa qa<bang>
-command! -bang Wa wa<bang>
-command! -bang WA wa<bang>
-command! -bang Wq wq<bang>
-command! -bang WQ wq<bang>
+command! -bang          Q q<bang>
+command! -bang -nargs=? W w<bang> <args>
+command! -bang          QA qa<bang>
+command! -bang          Qa qa<bang>
+command! -bang          Wa wa<bang>
+command! -bang          WA wa<bang>
+command! -bang -nargs=? Wq wq<bang> <args>
+command! -bang -nargs=? WQ wq<bang> <args>
+
+" :edit file. May overwrite :Explore
+command! -bang -nargs=* E e<bang> <args>
+
+" :help related
+" May overwrite :Hexplore
+command! -bang -nargs=? -complete=help H h<bang> <args>
+command! -bang -nargs=? -complete=help Vh vert h<bang> <args>
+command! -bang -nargs=? -complete=help VH vert h<bang> <args>
+" overwrites :throw
+command! -bang -nargs=? -complete=help Th tab h<bang> <args>
+command! -bang -nargs=? -complete=help TH tab h<bang> <args>
+command! -bang -nargs=1 -complete=help Hg helpg<bang> <args>
+command! -bang -nargs=1 -complete=help HG helpg<bang> <args> 
+
+
+
+" cmdline + Ultisnips config {{{1
+" --------------------------
+" quick expand snippet via cmdline window
+cnoremap :: <C-r>=&cedit<CR>:call UltiSnips#ExpandSnippet()<CR>
+
+" change <Tab> from cmdline-completion to snippet expansion
+" by unmapping <Tab>.
+augroup cmdline_window
+    autocmd!
+    autocmd CmdWinEnter [:>] silent! iunmap <buffer> <Tab>
+    autocmd CmdWinEnter [:>] silent! nunmap <buffer> <Tab>
+augroup END
 
 
 " copy line(s) and comment {{{1

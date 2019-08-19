@@ -1,0 +1,18 @@
+# snippets for the commandline-window
+# TODO: add cmdline-window context, eg. using getcmdwintype()
+
+# :%s/ , :'<,'>s/ , :s/
+snippet "(%|'\<,'\>|)s/" ":s/ / /g" rbA
+`!p snip.rv=match.group(1)`s/${1:}/${2:}/${3:g}
+endsnippet
+snippet "(%|'\<,'\>|)s" ":s/ / /g" rb
+`!p snip.rv=match.group(1)`s/${1:}/${2:}/${3:g}
+endsnippet
+
+snippet vg "vimgrep + copen list of matches" b
+vimgrep /${1:}/${2:gj} ${3:*} | copen
+endsnippet
+
+snippet lv "lvimgrep + lopen list of matches" b
+lvimgrep /${1:}/${2:gj} ${3:*} | lopen
+endsnippet
