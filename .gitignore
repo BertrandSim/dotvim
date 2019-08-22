@@ -1,7 +1,7 @@
 # unneeded vimfiles
-dot_vim/.netrwhist
-dot_vim/.netrwhist~
-dot_vim/.viminfo
+.netrwhist
+.netrwhist~
+.viminfo
 
 # temporary swap files 
 *.swp
