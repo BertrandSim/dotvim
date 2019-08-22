@@ -149,12 +149,31 @@ endif
 " TODO: fork / add configs for unimpaired
 " TODO: fork / add configs for surround.vim, or setup sandwich
 
-let g:UltiSnipsEditSplit='context'	" Ultisnips: Open snippets file in a horizontal or vertical split, depending on context
 let g:tex_flavor='latex'			" ft of .tex files to 'tex', not 'plaintex'.
+let g:UltiSnipsEditSplit='context'	" Ultisnips: Open snippets file in a horizontal or vertical split, depending on context
 
+
+" snippet operator: " an operator wrapper to {Visual} + UltiSnips#ExpandSnippet()
+nnoremap <leader>so :<C-U>set opfunc=SnippetOp<CR>g@
+
+function! SnippetOp(type)
+  "  an operator wrapper to {Visual} + UltiSnips#ExpandSnippet()
+
+  if     a:type ==# 'char' | let vtype='v'
+  elseif a:type ==# 'line' | let vtype='V'
+  endif
+
+  execute 'normal! `['.vtype.'`]'."\<Esc>"
+  call UltiSnips#SaveLastVisualSelection()
+  normal! gvs
+  startinsert
+endfunction
+
+
+" Autopairs settings
 if exists('g:AutoPairsLoaded') && g:AutoPairsLoaded == 1
-  let g:AutoPairsCenterLine = 0		" Autopairs: do not re-center screen after pressing <CR>
-  let g:AutoPairsMultilineClose = 0	" Autopairs: do not jump past closing char on another line
+  let g:AutoPairsCenterLine = 0		" do not re-center screen after pressing <CR>
+  let g:AutoPairsMultilineClose = 0	" do not jump past closing char on another line
 endif
 
 " mappings for easy align plugin
@@ -206,6 +225,10 @@ let rout_follow_colorscheme = 1		" highlight R output in current colorscheme
 
 let R_clear_line = 1
 " clears console line with <C-a><C-k> when sending from buffer to terminal
+
+" map __ and >> in terminal [Rterm] 
+" see after/ftplugin/r_mappings.vim
+
 
 " UI {{{1
 " -------------------
@@ -708,6 +731,53 @@ endfunction
 
 
 
+" comment a copy {{{1
+
+" Copies cur line or visual selection,
+" comments the copied lines above, and
+" positions cursor at the copy below.
+" Requires quick comment.
+
+" known issue: does not work if _ is remapped.
+
+function! ComACop()
+  let curpos_save = getcurpos()
+  copy -
+  execute 'normal'."\<Plug>(AddComment)" .'_'
+  " restore cursor
+  " curpos_save[1] += 1   " adjust line after changing buffer
+  call setpos('.', curpos_save) 
+  normal! j
+endfunction
+
+function! VComACop()
+  let curpos_save = getcurpos() 
+  let numlines = line("'>") - line("'<") + 1
+  '<,'>copy '<-
+
+  "comment
+  execute 'normal!' ."'<". repeat('k', numlines)
+  execute 'normal' ."\<Plug>(AddComment)" .numlines.'_'
+
+  "restore cursor
+  " curpos_save[1] += numlines
+  call setpos('.', curpos_save)
+  execute 'normal!'.numlines.'j'
+endfunction
+
+" nnoremap <silent> <Plug>(ComACop)  :<C-U>copy  -\|:execute 'normal'."\<Plug>(AddComment)_j"<CR>
+" vnoremap <silent> <Plug>(VComACop) :     copy '>\|:execute 'normal! gv'\|:execute 'normal'."\<Plug>(VAddComment)"\|
+" ^ old ver.
+nnoremap <silent> <Plug>(ComACop)  :<C-U>call ComACop()<CR>
+vnoremap <silent> <Plug>(VComACop) :<C-U>call VComACop()<CR>
+
+"cp to copy and comment cur line (normal mode)
+omap <expr> p v:operator ==# 'c' ? "\<Esc>"."\<Plug>(ComACop)" : 'p'
+"or F7 to copy and comment cur line / visual selection
+nmap <F7> <Plug>(ComACop)
+vmap <F7> <Plug>(VComACop)
+
+
 " folding {{{1
 " -------
 set foldenable		"enable folding
@@ -824,15 +894,14 @@ command! -bang -nargs=? WQ wq<bang> <args>
 command! -bang -nargs=* E e<bang> <args>
 
 " :help related
-" May overwrite :Hexplore
+" :H may overwrite :Hexplore
 command! -bang -nargs=? -complete=help H h<bang> <args>
 command! -bang -nargs=? -complete=help Vh vert h<bang> <args>
 command! -bang -nargs=? -complete=help VH vert h<bang> <args>
-" overwrites :throw
 command! -bang -nargs=? -complete=help Th tab h<bang> <args>
 command! -bang -nargs=? -complete=help TH tab h<bang> <args>
-command! -bang -nargs=1 -complete=help Hg helpg<bang> <args>
-command! -bang -nargs=1 -complete=help HG helpg<bang> <args> 
+command!       -nargs=1 -complete=help Hg helpg <args>
+command!       -nargs=1 -complete=help HG helpg <args> 
 
 
 
@@ -848,23 +917,6 @@ augroup cmdline_window
     autocmd CmdWinEnter [:>] silent! iunmap <buffer> <Tab>
     autocmd CmdWinEnter [:>] silent! nunmap <buffer> <Tab>
 augroup END
-
-
-" copy line(s) and comment {{{1
-
-" Copies cur line or visual selection,
-" comments the copied lines above, 
-" positions cursor at the copy below.
-" Requires quick comment.
-nnoremap <silent> <Plug>(CopynComment)  :<C-U>copy  -\|:execute 'normal'."\<Plug>(AddComment)_j"<CR>
-vnoremap <silent> <Plug>(VCopynComment) :     copy '>\|:execute 'normal! gv'\|:execute 'normal'."\<Plug>(VAddComment)"\|
-	  \:call cursor( line("'>") + 1, 0 )<CR>
-
-"cp to copy and comment cur line (normal mode)
-omap <expr> p v:operator ==# 'c' ? "\<Esc>"."\<Plug>(CopynComment)" : 'p'
-"or F7 to copy and comment cur line / visual selection
-nmap <F7> <Plug>(CopynComment)
-vmap <F7> <Plug>(VCopynComment)
 
 
 " misc {{{1

@@ -12,14 +12,6 @@ else
   autocmd Filetype r setlocal formatoptions=rql
 endif
 
-" quick assignment __ for <-
-" quick piping     >> for %>%
-" if UltiSnips loaded, use that, otherwise, map them
-if !( exists('did_plugin_ultisnips') && exists('g:_uspy') )
-  inoremap <buffer> __ <-
-  " see also Nvim-R's R_assign.
-  inoremap <buffer> >> %>%
-endif
 
 
 " Teardown
@@ -27,9 +19,6 @@ if !exists("b:undo_ftplugin") | let b:undo_ftplugin = '' | endif
 let b:undo_ftplugin .= '|setlocal ts< sts< sw< et< sta< '
 let b:undo_ftplugin .= '|setlocal ssl< '
 let b:undo_ftplugin .= '|setlocal fo<'
-if !( exists('did_plugin_ultisnips') && exists('g:_uspy') )
-  let b:undo_ftplugin .= '|iunmap __ |iunmap >>'
-endif
 
 
 
