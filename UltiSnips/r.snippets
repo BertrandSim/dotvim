@@ -6,6 +6,12 @@ snippet __ "rassign" A
 <-
 endsnippet
 
+# to improve this snippet
+# post_expand ""
+snippet "(\w+)\s*<>" "<>: modify and assign variable" rA
+`!p snip.rv=match.group(1)` <- `!p snip.rv=match.group(1)` ${1:%>%}
+endsnippet
+
 # trigger with `fun` or `fn`
 snippet "fu?n" "function" r
 function(${1}) \{

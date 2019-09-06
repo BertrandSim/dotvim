@@ -63,6 +63,7 @@ endglobal
 # quick insert greek alphabets: eg, \a -> \alpha
 # autoexpands after a nonalphabet is typed
 priority 0
+context "math()"
 snippet "\\([a-zA-Z])([^a-zA-Z])" "greek alphabets" rA
 \\`!p akey = match.group(1)
 if akey in greekalpha:

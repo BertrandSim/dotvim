@@ -1,18 +1,31 @@
 # snippets for the commandline-window
-# TODO: add cmdline-window context, eg. using getcmdwintype()
 
-# :%s/ , :'<,'>s/ , :s/
-snippet "(%|'\<,'\>|)s/" ":s/ / /g" rbA
-`!p snip.rv=match.group(1)`s/${1:}/${2:}/${3:g}
-endsnippet
+global !p
+
+# import snippet helper functions, eg. for jumping and expanding
+from usnip_helpers import *
+
+def cmdlinewin():
+	return vim.eval('getcmdwintype()')
+
+endglobal
+
+# :%s/ / /g , :'<,'>s/ / /g , :s/ / /g
+# puts cursor after the first /
+post_expand "jump_forward(snip, 2)"
+context "cmdlinewin() == ':'"
 snippet "(%|'\<,'\>|)s" ":s/ / /g" rb
-`!p snip.rv=match.group(1)`s/${1:}/${2:}/${3:g}
+${1:`!p snip.rv=match.group(1)`}s${2:/}${3:}$2${4:}$2${5:g}
 endsnippet
 
+# vg --> vimgrep
+context "cmdlinewin() == ':'"
 snippet vg "vimgrep + copen list of matches" b
 vimgrep /${1:}/${2:gj} ${3:*} | copen
 endsnippet
 
+# lv --> lvimgrep
+context "cmdlinewin() == ':'"
 snippet lv "lvimgrep + lopen list of matches" b
-lvimgrep /${1:}/${2:gj} ${3:*} | lopen
+lvimgrep /${1:}/${2:gj} ${3:%} | lopen
 endsnippet

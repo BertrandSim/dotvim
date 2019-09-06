@@ -1,4 +1,7 @@
 global !p
+
+from usnip_tex_contexts import *
+
 def match_open_delim(d):
 	if   (d== '(') : return  ')'
 	elif (d== '[') : return  ']'
@@ -8,11 +11,13 @@ def match_open_delim(d):
 
 endglobal
 
-snippet lr "left...right" i
+context "math()"
+snippet lr "left...right" iA
 \\left${1:(} ${2:${VISUAL}} \\right`!p snip.rv=match_open_delim(t[1])`
 endsnippet
 
-snippet blr "bigl...bigr" i
+context "math()"
+snippet blr "bigl...bigr" iA
 \\${1:bigl}${2:(} ${3:${VISUAL}} \\${1/l$/r/}`!p snip.rv=match_open_delim(t[2])`
 endsnippet
 

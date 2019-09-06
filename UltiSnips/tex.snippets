@@ -1,44 +1,14 @@
-# commonly used math snippets {{{1
-# TODO: add math context()
-
-snippet __ "_{}" iA
-_\{${1:${VISUAL}}\}
-endsnippet
-
-snippet ^^ "^{}" iA
-^\{${1:${VISUAL}}\}
-endsnippet
-
-snippet ,., ",\dots," iA
-, \dots, 
-endsnippet
-
-snippet == " &= (alignment)" A
-&=
-endsnippet
-
-snippet // "frac{}{}" iA
-\frac\{${1:${VISUAL:n}}\}{${2:dn}}
-endsnippet
-
-snippet "\\?pp" "partial deriv" ir
-\frac{\partial$2}{\partial $1} $0
-endsnippet
-
-snippet inv "inverse ^{-1}" i
-^{-1}
-endsnippet
-
-snippet "\\?te" "\text" r
-\text\{${1:${VISUAL}}\}
-endsnippet
-
+global !p
+from usnip_helpers import *
+from usnip_tex_contexts import * 	
+endglobal
 
 # common {{{1
 # ------
 
+post_expand "jump_forward(snip, 2)"
 snippet  "\\?usep" "\usepackage" br
-\usepackage${2:[${3:opt}]}{${1:name}}
+\usepackage${1:[${2:opt}]}{${3:name}}
 endsnippet
 
 snippet "\\?nc" "\newcommand" br
@@ -56,6 +26,103 @@ endsnippet
 snippet "\\?ci(te?)?p" "\ci[te]p" r
 \citep{$0}
 endsnippet
+
+
+# common math snippets {{{1
+
+context "math()"
+snippet __ "_{}" iA
+_\{${1:${VISUAL}}\}
+endsnippet
+
+context "math()"
+snippet ^^ "^{}" iA
+^\{${1:${VISUAL}}\}
+endsnippet
+
+context "math()"
+snippet ,., ",\dots," iA
+, \dots, 
+endsnippet
+
+context "math()"
+snippet == " &= (alignment)" A
+&=
+endsnippet
+
+context "math()"
+snippet \= "next line (\\) and &=" A
+
+\\\\ &=
+endsnippet
+
+context "math()"
+snippet // "frac{}{}" iA
+\frac\{${1:${VISUAL:1}}\}{${2:d}}
+endsnippet
+
+context "math()"
+snippet sm "sum_{}^{}" A
+\sum_{${1:i=1}}^{${2:n}} $3
+endsnippet
+
+context "math()"
+snippet "\\?pp" "partial deriv" ir
+\frac{\partial$2}{\partial $1} $0
+endsnippet
+
+context "math()"
+snippet inv "inverse ^{-1}" i
+^{-1}
+endsnippet
+
+context "math()"
+snippet "\\?te" "\text" r
+\text\{${1:${VISUAL}}\}
+endsnippet
+
+# autosubscripts {{{1
+# --------------
+context "math()"
+snippet '([A-Za-z])(\d)' "auto subscript" wrA
+`!p snip.rv = match.group(1)`_`!p snip.rv = match.group(2)`
+endsnippet
+
+# context "math()"
+# snippet '([A-Za-z])_(\d\d)' "auto subscript2" wrA
+# `!p snip.rv = match.group(1)`_{`!p snip.rv = match.group(2)`}
+# endsnippet
+
+# math accents {{{1
+# ------------
+# TODO: support for greek alphabets.. using TeXMathGreek syn group?
+
+priority 10
+context "math()"
+# \overline{$1}$0
+snippet "bar" "bar" riA
+\bar{$1}$0
+endsnippet
+
+priority 100
+context "math()"
+# \overline{`!p snip.rv=match.group(1)`}
+snippet "([a-zA-Z])bar" "bar" riA
+\bar{`!p snip.rv=match.group(1)`}
+endsnippet
+
+priority 10
+context "math()"
+snippet "hat" "hat" riA
+\hat{$1}$0
+endsnippet
+
+priority 100
+context "math()"
+snippet "([a-zA-Z])hat" "hat" riA
+\hat{`!p snip.rv=match.group(1)`}
+endsnippet
+
 
 
 # math mode delims {{{1
@@ -82,23 +149,32 @@ snippet "\\?ben" "\begin ... \end" r
 $0
 endsnippet
  
-snippet eq "equation env" b
+snippet eq "equation env"
 \begin{equation}
 	${1:${VISUAL}}
 \end{equation}
 $0
 endsnippet
 
-snippet al "equation align[*]" b
+snippet al "equation align[*]"
 \begin{align${1:*}}
 	${2:${VISUAL}}
 \end{align$1}
 $0
 endsnippet
 
+snippet fr "frame" b
+\begin{frame}
+	${1:${VISUAL}}
+\end{frame}
+$0
+endsnippet
+
+
 
 # floats {{{1
 # ------
+post_expand "jump_forward(snip, 1)"
 snippet fig "\begin{figure}" b
 \begin{figure}[${1:htpb}]
 	\centering
@@ -110,6 +186,7 @@ $0
 endsnippet
 # [TODO] add options, eg. [width=0.6\textwidth] after \includegraphics.
 
+post_expand "jump_forward(snip, 3)"
 snippet tab "\begin{table}" b
 \begin{table}[${1:htpb!}]
 	\centering
