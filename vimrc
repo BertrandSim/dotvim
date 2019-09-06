@@ -1,4 +1,4 @@
-" Last modified: 2019-07-09
+" Last modified: 2019-09-06
 " -------------------------
 " defaults from windows gvim 8.1 install {{{1
 " --------------------------------------
@@ -78,10 +78,6 @@ filetype plugin indent on
 set encoding=utf-8		" The encoding displayed.
 set fileencoding=utf-8	" The encoding written to file.
 
-filetype plugin indent on
-" turns on filetype detection, and loads filetype-specific plugins and indent files
-" see :help filetype-overview
-
 " File formats {{{1
 " ------------
 " set fileformat=unix
@@ -150,42 +146,8 @@ endif
 " TODO: fork / add configs for surround.vim, or setup sandwich
 
 let g:tex_flavor='latex'			" ft of .tex files to 'tex', not 'plaintex'.
-let g:UltiSnipsEditSplit='context'	" Ultisnips: Open snippets file in a horizontal or vertical split, depending on context
 
-
-" snippet operator: " an operator wrapper to {Visual} + UltiSnips#ExpandSnippet()
-nnoremap <leader>so :<C-U>set opfunc=SnippetOp<CR>g@
-
-function! SnippetOp(type)
-  "  an operator wrapper to {Visual} + UltiSnips#ExpandSnippet()
-
-  if     a:type ==# 'char' | let vtype='v'
-  elseif a:type ==# 'line' | let vtype='V'
-  endif
-
-  execute 'normal! `['.vtype.'`]'."\<Esc>"
-  call UltiSnips#SaveLastVisualSelection()
-  normal! gvs
-  startinsert
-endfunction
-
-
-" Autopairs settings
-if exists('g:AutoPairsLoaded') && g:AutoPairsLoaded == 1
-  let g:AutoPairsCenterLine = 0		" do not re-center screen after pressing <CR>
-  let g:AutoPairsMultilineClose = 0	" do not jump past closing char on another line
-endif
-
-" mappings for easy align plugin
-if exists("g:loaded_easy_align_plugin")
-  nmap ga <Plug>(EasyAlign)
-  xmap ga <Plug>(EasyAlign)
-  nmap gA <Plug>(LiveEasyAlign)
-  xmap gA <Plug>(LiveEasyAlign)
-endif
-
-
-" vimtex settings
+" vimtex settings {{{2
 
 " use Sumatra as pdfviewer
 let g:vimtex_view_general_viewer = 'SumatraPDF'
@@ -200,11 +162,17 @@ let g:vimtex_view_general_options
 	  \ . ':call remote_foreground('''.v:servername.''')^<CR^>^<CR^>\""'
 let g:vimtex_view_general_options_latexmk = '-reuse-instance'
 
+" [count] tsd/tsD cycles through 
+" \big, \Big, \bigg, \Bigg modifiers
+let g:vimtex_delim_toggle_mod_list = [
+	  \ ['\bigl' , '\bigr'],
+	  \ ['\Bigl' , '\Bigr'],
+	  \ ['\biggl', '\biggr'],
+	  \ ['\Biggl', '\Biggr'],
+	  \]
 
-
-
-
-" Nvim-R config {{{1
+" }}}
+" Nvim-R config {{{2
 " -------------
 let R_esc_term = 0
 " let <Esc> function as expected in a R console / terminal
@@ -228,6 +196,70 @@ let R_clear_line = 1
 
 " map __ and >> in terminal [Rterm] 
 " see after/ftplugin/r_mappings.vim
+
+" }}}
+" Ultsnips config {{{2
+" ---------------
+" mappings
+let g:UltiSnipsExpandTrigger       = '<Tab>'
+let g:UltiSnipsListSnippets        = '<C-Tab>'
+let g:UltiSnipsJumpForwardTrigger  = '<C-j>'
+let g:UltiSnipsJumpBackwardTrigger = '<C-k>'
+
+" unmap ^j, ^k, 
+" can be confusing especially when unsure if in a snippet or not
+inoremap <C-j> <Nop>
+inoremap <C-k> <Nop>
+
+" Open snippets file in a horizontal or vertical split, depending on context
+let g:UltiSnipsEditSplit='context'	
+
+
+" snippet operator: " an operator wrapper to {Visual} + UltiSnips#ExpandSnippet()
+nnoremap <leader><Tab> :<C-U>set opfunc=SnippetOp<CR>g@
+
+function! SnippetOp(type)
+  "  an operator wrapper to {Visual} + UltiSnips#ExpandSnippet()
+
+  if     a:type ==# 'char' | let vtype='v'
+  elseif a:type ==# 'line' | let vtype='V'
+  endif
+
+  execute 'normal! `['.vtype.'`]'."\<Esc>"
+  call UltiSnips#SaveLastVisualSelection()
+  normal! gvs
+  startinsert
+endfunction
+
+" }}}
+" cmdline + Ultisnips config {{{2
+" --------------------------
+" quick expand snippet via cmdline window
+cnoremap :: <C-r>=&cedit<CR>:call UltiSnips#ExpandSnippet()<CR>
+
+" change <Tab> from cmdline-completion to snippet expansion
+" by unmapping <Tab>.
+augroup cmdline_window
+    autocmd!
+    autocmd CmdWinEnter [:>] silent! iunmap <buffer> <Tab>
+    autocmd CmdWinEnter [:>] silent! nunmap <buffer> <Tab>
+augroup END
+
+" }}}
+
+" Autopairs settings
+if exists('g:AutoPairsLoaded') && g:AutoPairsLoaded == 1
+  let g:AutoPairsCenterLine = 0		" do not re-center screen after pressing <CR>
+  let g:AutoPairsMultilineClose = 0	" do not jump past closing char on another line
+endif
+
+" mappings for easy align plugin
+if exists("g:loaded_easy_align_plugin")
+  nmap ga <Plug>(EasyAlign)
+  xmap ga <Plug>(EasyAlign)
+  nmap gA <Plug>(LiveEasyAlign)
+  xmap gA <Plug>(LiveEasyAlign)
+endif
 
 
 " UI {{{1
@@ -564,7 +596,7 @@ endfunction
 function! RemoveComment(startline, endline)
   let comleader = GetCommentLeader()
   execute a:startline . ',' a:endline . 'substitute' . '/' .
-	\ '\v(^\s*)' . escape(comleader,'\/') . '/' .
+	\ '\v(^\s*)' . '\V'.escape(comleader,'\/') . '/' .
 	\ '\1' . '/e'
   nohlsearch
 endfunction
@@ -780,8 +812,8 @@ vmap <F7> <Plug>(VComACop)
 
 " folding {{{1
 " -------
-set foldenable		"enable folding
-set foldlevelstart=5	"fold levels >=5 are unfolded (shown)
+set foldenable			" enable folding
+set foldlevelstart=5	" fold levels >=5 are unfolded (shown)
 
 " z<Space> to open/close folds
 nnoremap z<Space> za
@@ -878,8 +910,11 @@ nnoremap <silent> <leader>rv
 	  \  nohlsearch \|
 	  \endif<CR>
 
-" ex-command typos and shortcuts {{{1
-" ---------------------------
+" ex-commands {{{1
+" -----------
+
+" typos
+" -----
 " changes :W to :w, and others.
 command! -bang          Q q<bang>
 command! -bang -nargs=? W w<bang> <args>
@@ -894,29 +929,16 @@ command! -bang -nargs=? WQ wq<bang> <args>
 command! -bang -nargs=* E e<bang> <args>
 
 " :help related
+" -------------
 " :H may overwrite :Hexplore
 command! -bang -nargs=? -complete=help H h<bang> <args>
 command! -bang -nargs=? -complete=help Vh vert h<bang> <args>
 command! -bang -nargs=? -complete=help VH vert h<bang> <args>
 command! -bang -nargs=? -complete=help Th tab h<bang> <args>
 command! -bang -nargs=? -complete=help TH tab h<bang> <args>
+
 command!       -nargs=1 -complete=help Hg helpg <args>
 command!       -nargs=1 -complete=help HG helpg <args> 
-
-
-
-" cmdline + Ultisnips config {{{1
-" --------------------------
-" quick expand snippet via cmdline window
-cnoremap :: <C-r>=&cedit<CR>:call UltiSnips#ExpandSnippet()<CR>
-
-" change <Tab> from cmdline-completion to snippet expansion
-" by unmapping <Tab>.
-augroup cmdline_window
-    autocmd!
-    autocmd CmdWinEnter [:>] silent! iunmap <buffer> <Tab>
-    autocmd CmdWinEnter [:>] silent! nunmap <buffer> <Tab>
-augroup END
 
 
 " misc {{{1
