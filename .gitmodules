@@ -8,7 +8,7 @@
 	path = pack/bundle/opt/auto-pairs
 	url = https://github.com/jiangmiao/auto-pairs.git
 [submodule "pack/bundle/opt/vim-angry"]
-	path = pack/bundle/opt/vim-angry
+	path = pack/bundle/start/vim-angry
 	url = https://github.com/b4winckler/vim-angry.git
 [submodule "pack/bundle/start/vim-markdown-folding"]
 	path = pack/bundle/start/vim-markdown-folding
@@ -23,11 +23,14 @@
 	path = pack/bundle/opt/vim-easy-align
 	url = https://github.com/junegunn/vim-easy-align.git
 [submodule "pack/text-obj/opt/vim-textobj-entire"]
-	path = pack/text-obj/opt/vim-textobj-entire
+	path = pack/text-obj/start/vim-textobj-entire
 	url = https://github.com/kana/vim-textobj-entire.git
 [submodule "pack/text-obj/opt/vim-textobj-line"]
-	path = pack/text-obj/opt/vim-textobj-line
+	path = pack/text-obj/start/vim-textobj-line
 	url = https://github.com/kana/vim-textobj-line.git
 [submodule "pack/bundle/opt/vimtex"]
-	path = pack/bundle/opt/vimtex
+	path = pack/bundle/start/vimtex
 	url = https://github.com/lervag/vimtex.git
+[submodule "pack/bundle/opt/incsearch.vim"]
+	path = pack/bundle/opt/incsearch.vim
+	url = https://github.com/haya14busa/incsearch.vim.git

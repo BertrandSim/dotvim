@@ -90,22 +90,23 @@ if has('packages')
 " using built-in package manager
 
   " packages in start:
-  "	 lifepillar/vim-solarized8
-  "	 tpope/vim-unimpaired
-  "	 masukmoi/vim-markdown-folding
-  "	 SirVer/ultisnips
-  "  tpope/vim-surround-2.1	" usr changed to use omap for ds,cs, etc.
+  "	 lifepillar/vim-solarized8		" solarized8 colorscheme
+  "	 tpope/vim-unimpaired			" handy pairs of mappings
+  "	 masukmoi/vim-markdown-folding	" expr-folding of markdown files
+  "	 SirVer/ultisnips				" snippets
+  "  tpope/vim-surround-2.1			" surroundings; usr changed to use omap for ds,cs, etc.
+  "  b4winckler/vim-angry			" function argument text object
+  "  lervag/vimtex					" plugin for tex files
+  "  kana/vim-textobj-user				" custom text objects
+  " 	packadd vim-textobj-entire
+  " 	packadd vim-textobj-line
 
   " packages in opt:
-  packadd Nvim-R           	" jalvesaq/Nvim-R --forked
+  packadd Nvim-R           	" jalvesaq/Nvim-R --forked;	interaction between R scripts with R terminal
   " packadd vim-latex-1.10.0 	" vim-latex or latex suite
-  packadd vim-angry        	" function argument text object
-  packadd auto-pairs       	" jiangmiao/auto-pairs
-  packadd vim-easy-align   	" junegunn/vim-easy-align
-  packadd vim-textobj-user-0.7.6	"kana/text-obj-user
-	  packadd vim-textobj-entire
-	  packadd vim-textobj-line
-  packadd vimtex			" lervag/vimtex
+  packadd auto-pairs       	" jiangmiao/auto-pairs;		delims
+  packadd vim-easy-align   	" junegunn/vim-easy-align;	align lines by a char/regex
+  packadd incsearch.vim		" hayabusa/incsearch.vim;	improved / ? incsearch
 
 " elseif " using pathogen plugin manager,
 " execute pathogen#infect()
@@ -118,23 +119,24 @@ else
 	set runtimepath+=~/.vim/pack/bundle/start/ultisnips    " -3.1
   endif
   set runtimepath+=~/.vim/pack/bundle/start/vim-surround-2.1\ -\ usr
+  set runtimepath+=~/.vim/pack/bundle/start/vim-angry
+  set runtimepath+=~/.vim/pack/bundle/start/vim-easy-align
+  if v:version >= 704
+	set runtimepath+=~/.vim/pack/bundle/start/vim-textobj-user-0.7.6
+	set runtimepath+=~/.vim/pack/text-obj/start/vim-textobj-entire
+	set runtimepath+=~/.vim/pack/text-obj/start/vim-textobj-line
+  endif
 
 
   if has('patch-8.0.0946')
 	set runtimepath+=~/.vim/pack/bundle/opt/Nvim-R
   endif
   " set runtimepath+=~/.vim/pack/bundle/opt/vim-latex-1.10.0
-  set runtimepath+=~/.vim/pack/bundle/opt/vim-angry
   set runtimepath+=~/.vim/pack/bundle/opt/auto-pairs
-  set runtimepath+=~/.vim/pack/bundle/opt/vim-easy-align
-  if v:version >= 704
-	set runtimepath+=~/.vim/pack/bundle/opt/vim-textobj-user-0.7.6
-	set runtimepath+=~/.vim/pack/text-obj/opt/vim-textobj-entire
-	set runtimepath+=~/.vim/pack/text-obj/opt/vim-textobj-line
-  endif
   if has('patch-7.4.52')
-    set runtimepath+=~/.vim/pack/bundle/opt/vimtex
+    set runtimepath+=~/.vim/pack/bundle/start/vimtex
   endif
+  set runtimepath+=~/.vim/pack/bundle/opt/incsearch.vim
 
 
 endif
@@ -400,11 +402,36 @@ set hlsearch		" highlight matches
 " turn off search highlighting with \<space>
 nnoremap <leader><space> :nohlsearch<CR>
 " nnoremap <leader><space> :let @/=""<CR>
+
+" incsearch.vim mappings
+if exists("g:loaded_incsearch")
+  map / <Plug>(incsearch-forward)
+  map ? <Plug>(incsearch-backward)
+  map z/ <Plug>(incsearch-stay)
+
+  " let n always search forward, N always backward
+  " let g:incsearch#consistent_n_direction = 1
+endif
+
+" z*, gz*, z#, gz#
+" search word under cursor (like *), but without moving the cursor
+nnoremap <silent>  z* :let @/ = '\<'.expand('<cword>').'\>' \| set hlsearch \|
+	  \ call histadd("/", @/) \| echo @/<CR>
+nnoremap <silent> gz* :let @/ =      expand('<cword>')      \| set hlsearch \|
+	  \ call histadd("/", @/) \| echo @/<CR>
+nnoremap <silent>  z# :let @/ = '\<'.expand('<cword>').'\>' \| set hlsearch \| let v:searchforward=0 \|
+	  \ call histadd("/", @/) \| echo @/<CR>
+nnoremap <silent> gz# :let @/ =      expand('<cword>')      \| set hlsearch \| let v:searchforward=0 \|
+	  \ call histadd("/", @/) \| echo @/<CR>
+
 " highlight search matches without jumping to it
-nnoremap <leader>/ :let @/=""<Left>
+" nnoremap <leader>/ :let @/=""<Left>
+" replaced with incsearch.vim?
 
 " enter search with word boundaries \<...\>
 nnoremap g/ /\<\><Left><Left>
+" nmap <expr> gz/ incsearch#go({'command': '/', 'pattern': '\<', 'is_stay': 1 })
+" nmap <expr> gz/ incsearch#go({'command': '/', 'pattern': '\<\>', 'is_stay': 1 })."\<Left>\<Left>" "doesn't work
 
 " search between marks
 nnoremap m/ /\%>'s\%(\)\%<'e<Left><Left><Left><Left><Left><Left><Left>
@@ -941,6 +968,30 @@ command!       -nargs=1 -complete=help Hg helpg <args>
 command!       -nargs=1 -complete=help HG helpg <args> 
 
 
+" custom text objects {{{1
+" -------------------
+" ported all these to vim-textobj-user
+
+" TODO: save gv register for onoremap's
+
+" inner line text object
+" selects entire line without surrounding whitespace
+" vnoremap il :norm g_v^<CR>
+" onoremap il :norm vil<CR>
+" see vim-textobj-line
+
+" 'a everything' or 'absolutely everything' text object
+" selects entire buffer
+" vnoremap ae :normal GVgg<CR>
+" onoremap ae :normal Vae<CR>
+" see vim-textobj-entire
+
+" 'R function'
+" autocmd FileType R xnoremap af :call SelectRFunc()<CR>
+" autocmd Filetype R onoremap af :normal vaf<CR>
+" see vim-textobj-rfunc (working version, WIP, at time of writing)
+
+
 " misc {{{1
 " ----
 if has('patch-7.4.793')
@@ -949,174 +1000,6 @@ endif
 
 set diffopt+=vertical	  " when starting diffmode, use vertical splits by default, such as with :diffsplit
 
-" custom text objects {{{1
-" -------------------
-" TODO: save gv register for onoremap's
-
-" inner line text object
-" selects entire line without surrounding whitespace
-" vnoremap il :norm g_v^<CR>
-" onoremap il :norm vil<CR>
-
-" 'a everything' or 'absolutely everything' text object
-" selects entire buffer
-" vnoremap ae :normal GVgg<CR>
-" onoremap ae :normal Vae<CR>
-
-" 'R function'
-" autocmd FileType R xnoremap af :call SelectRFunc1()<CR>
-" autocmd Filetype R onoremap af :normal vaf<CR>
-
-" function! SelectRFunc1()
-"   " TODO: check if cursor pos is within start/end
-"   " TODO: save search register
-"   " TODO: restore cursor position
-" 
-"   let patternFuncStart =
-" 		\'\v\w+\s*'.
-" 		\'\V\(<-\|=\)'.
-" 		\'\v\_s*function\s*\('
-" 		" <name>
-" 		" <- or =
-" 		" function(
-"   exec 'normal ?'.patternFuncStart."\<CR>"
-"   let funcstartpos = getpos('.')
-" 
-"   exec 'normal '.'gn'.'%'
-" 		" select pattern w cursor on '(' after 'function'
-" 		" jump to matching ')'
-" 
-"   " check if next char == {
-"   call search('\S') 
-"   let nextchar = getline('.')[col('.')-1]
-"   while (nextchar ==# '#')	" skip comment. search the next line.
-"     call search('^\s*\zs\S')
-"     let nextchar = getline('.')[col('.')-1]
-"   endwhile
-"   
-"   " If yes, jump to it, and add {...} to selection
-"   if (nextchar ==# '{')
-"     exec 'normal %'
-"     let funcendpos = getpos('.')
-" 
-" 	" call setpos("'e", funcendpos)
-"     " call setpos('.', funcstartpos)
-" 	" exec 'normal v`e'
-"   else
-" 	exec "normal \<Esc>"
-"   endif
-" 
-" endfunction
-
-" vim-textobj-user objects {{{1
-" ------------------------
-
-" R function textobj-user
-
-call textobj#user#plugin('rfunc', {
-	  \   '-': {
-	  \     'select-a-function': 'SelectRFunc',
-	  \     'select-a': 'af',
-	  \   },
-	  \ })
-	" \     'select-i-function': 'func_name',
-	" \     'select-i': 'if',
-
-
-function! SelectRFunc()
-  " For textobj-user
-  " Selects the function on the cursor, or containing the cursor
-  " Supports nested R functions: outerfunc {... innerfunc {...} <cursor> ...}
-
-  let curpos = getpos('.')
-  let searchpos = getpos('.')
-
-  let result = SearchRFunc(searchpos, 'bcW', curpos)	" search backwards, place cursor on start of match
-
-  while	( result[0] == -1 )
-    " result[0] == -1 means found but does not contain searchpos. 
-	" Continue to search as the one found may be nested in another function
-
-	" if continue to search, search backward from start of currently found func
-	let searchpos = result[1]
-	let result = SearchRFunc(searchpos, 'bW', curpos)
-
-  endwhile
-
-  if result[0] == 0 
-	" if not found, text object does not exist
-	let out = 0	
-  else " result[0] == 1 
-	" found and contains searchpos, return it to vim-textobj-usr
-	let out = ['v', result[1], result[2]]	
-  endif
-
-  call setpos('.', curpos)
-  return out
-
-endfunction
-
-function! SearchRFunc(searchpos, flags, curpos)
-  " searches for an r function from searchpos, 
-  " flags are used in search(). These include the search direction (foward or backward).
-  " returns: 
-  "   [ 1, start, end] if found and [start, end] contains curpos,
-  "   [-1, start, end] if found but [start, end] does not contain curpos,
-  "   0 if not found
-
-  " TODO: separate case if nextchar != '{' ?
-
-  let curpos_save = getpos('.')
-
-  let patternFuncStart = '\v(\w+\s*(\<\-|\=)\_s*)?'.  'function\s*\('
-  let patternFuncStart =
-		\'\v(\w+\s*(\<\-|\=)\_s*)?'.
-		\   'function\s*\('
-		" optional: <name> <- or =
-		" function(
-
-   
-  call setpos('.', a:searchpos)
-  if !search(patternFuncStart, a:flags)
-	call setpos('.', curpos_save)
-	return 0	
-  endif
-  let funcstartpos = getpos('.')
-
-  call search(patternFuncStart, 'ce')    " move to end of 'function('
-  exec 'normal %'
-  " jump to matching ')'
-
-  " check if next char == {
-  call search('\S') 
-  let nextchar = getline('.')[col('.')-1]	" get char under cursor
-  while (nextchar ==# '#')	" skip comment. search the next line.
-	call search('^\s*\zs\S')
-	let nextchar = getline('.')[col('.')-1]
-  endwhile
-
-  " If yes, jump to it, and add {...} to selection
-  if (nextchar ==# '{')
-	exec 'normal %'
-	let funcendpos = getpos('.')
-
-	" check if cursor pos is within start/end of function found
-	" if yes, good (return 1). Otherwise, return -1.
-	if PosCompare(a:curpos, funcstartpos) >= 0 && 
-	  \PosCompare(a:curpos, funcendpos)   <= 0 
-	  call setpos('.', curpos_save)
-	  return [ 1, funcstartpos, funcendpos]
-	else 
-	  call setpos('.', curpos_save)
-	  return [-1, funcstartpos, funcendpos]
-	endif
-
-  else
-	call setpos('.', curpos_save)
-	return 0
-
-  endif
-endfunction
 
 function PosCompare(p1, p2)
   " compares if one position is later than the other
