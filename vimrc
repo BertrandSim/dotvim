@@ -216,38 +216,8 @@ inoremap <C-k> <Nop>
 " Open snippets file in a horizontal or vertical split, depending on context
 let g:UltiSnipsEditSplit='context'	
 
-
-" snippet operator: " an operator wrapper to {Visual} + UltiSnips#ExpandSnippet()
-nnoremap <leader><Tab> :<C-U>set opfunc=SnippetOp<CR>g@
-
-function! SnippetOp(type)
-  "  an operator wrapper to {Visual} + UltiSnips#ExpandSnippet()
-
-  if     a:type ==# 'char' | let vtype='v'
-  elseif a:type ==# 'line' | let vtype='V'
-  endif
-
-  execute 'normal! `['.vtype.'`]'."\<Esc>"
-  call UltiSnips#SaveLastVisualSelection()
-  normal! gvs
-  startinsert
-endfunction
-
 " }}}
-" cmdline + Ultisnips config {{{2
-" --------------------------
-" quick expand snippet via cmdline window
-cnoremap :: <C-r>=&cedit<CR>:call UltiSnips#ExpandSnippet()<CR>
 
-" change <Tab> from cmdline-completion to snippet expansion
-" by unmapping <Tab>.
-augroup cmdline_window
-    autocmd!
-    autocmd CmdWinEnter [:>] silent! iunmap <buffer> <Tab>
-    autocmd CmdWinEnter [:>] silent! nunmap <buffer> <Tab>
-augroup END
-
-" }}}
 
 " Autopairs settings
 if exists('g:AutoPairsLoaded') && g:AutoPairsLoaded == 1
@@ -348,8 +318,8 @@ if has('gui_running')
   if exists("g:path_to_vimtweak")
 
 	let g:transp_min = 0	 " min allowable transparency; fully opaque
-	let g:transp_max = 220   " max allowable transparency a little less than 255
-	let g:transp_def = 0	 " default transparency: fully opaque
+	let g:transp_max = 220   " max allowable transparency; a little less than 255
+	let g:transp_def = 0	 " default transparency; fully opaque
 
 	function SetTransparency(v)
 	  let g:transp = a:v
@@ -357,7 +327,7 @@ if has('gui_running')
 	  if (g:transp > g:transp_max) | let g:transp = g:transp_max | endif
 
 	  call libcallnr(g:path_to_vimtweak, 'SetAlpha', 255-g:transp)
-	  echo "Transparency"g:transp
+	  echo "Transparency" g:transp
 	endfunction
 
 	function IncreaseTransparency(num)
@@ -396,6 +366,10 @@ set smartcase		" *\c*ase insensitive when search is fully in lowercase, and
 
 set hlsearch		" highlight matches
 
+if has('patch-8.1.1270')
+  set shortmess-=S	" show match position [n/N] when searching
+endif
+
 " search related mappings {{{1
 " -----------------------
 
@@ -405,8 +379,8 @@ nnoremap <leader><space> :nohlsearch<CR>
 
 " incsearch.vim mappings
 if exists("g:loaded_incsearch")
-  map / <Plug>(incsearch-forward)
-  map ? <Plug>(incsearch-backward)
+  " map / <Plug>(incsearch-forward)
+  " map ? <Plug>(incsearch-backward)
   map z/ <Plug>(incsearch-stay)
 
   " let n always search forward, N always backward
@@ -491,7 +465,8 @@ nnoremap , ;
 " edits and inserts {{{1
 " -------------------
 " key combi to escape from insert mode
-inoremap jw <esc>
+" inoremap jk <Esc>
+" replaced by moving <Esc>'s keyboard location
 
 " open line(s) and stay in command mode.
 " the code 2 lines below is a macro with keystrokes o, <esc>, k.
@@ -515,7 +490,7 @@ set backspace=indent,eol,start
 
 " Use u for t after an operator (UnTil).
 " A little easier on the hands
-onoremap u t
+" onoremap u t
 
 
 " bracket matching {{{1
@@ -850,6 +825,67 @@ nnoremap <leader>zo zMzv
 " \zO to _O_pen current fold, and other nested folds 
 nnoremap <leader>zO zMzO
 
+" ex-commands {{{1
+" -----------
+
+" typos
+" -----
+" changes :W to :w, and others.
+command! -bang          Q q<bang>
+command! -bang -nargs=? W w<bang> <args>
+command! -bang          QA qa<bang>
+command! -bang          Qa qa<bang>
+command! -bang          Wa wa<bang>
+command! -bang          WA wa<bang>
+command! -bang -nargs=? Wq wq<bang> <args>
+command! -bang -nargs=? WQ wq<bang> <args>
+
+" :edit file. May overwrite :Explore
+command! -bang -nargs=* E e<bang> <args>
+
+" :help related
+" -------------
+" :H may overwrite :Hexplore
+command! -bang -nargs=? -complete=help H h<bang> <args>
+command! -bang -nargs=? -complete=help Vh vert h<bang> <args>
+command! -bang -nargs=? -complete=help VH vert h<bang> <args>
+command! -bang -nargs=? -complete=help Th tab h<bang> <args>
+command! -bang -nargs=? -complete=help TH tab h<bang> <args>
+
+" cmdline + Ultisnips {{{1
+" -------------------
+" quick expand snippet via cmdline window
+cnoremap :: <C-r>=&cedit<CR>:call UltiSnips#ExpandSnippet()<CR>
+
+" change <Tab> from cmdline-completion to snippet expansion
+" by unmapping <Tab>.
+augroup cmdline_window
+    autocmd!
+    autocmd CmdWinEnter [:>] silent! iunmap <buffer> <Tab>
+    autocmd CmdWinEnter [:>] silent! nunmap <buffer> <Tab>
+augroup END
+
+" see UltiSnips/vim_cmdline.snippets for the snippets themselves
+
+" }}}
+" Ultisnip snippet operator {{{1
+" an operator wrapper to {Visual} + UltiSnips#ExpandSnippet()
+nnoremap <leader><Tab> :<C-U>set opfunc=SnippetOp<CR>g@
+
+function! SnippetOp(type)
+  "  an operator wrapper to {Visual} + UltiSnips#ExpandSnippet()
+
+  if     a:type ==# 'char' | let vtype='v'
+  elseif a:type ==# 'line' | let vtype='V'
+  endif
+
+  execute 'normal! `['.vtype.'`]'."\<Esc>"
+  call UltiSnips#SaveLastVisualSelection()
+  normal! gvs
+  startinsert
+endfunction
+
+" }}}
 " tex delims [TODO] {{{1
 " ------------------
 
@@ -887,11 +923,13 @@ let r_syntax_brace_folding=1
 " or using custom fold expr instead... via plugin [TODO]
 " autocmd Filetype r setlocal foldmethod=expr
 
-" windows {{{1
-" -------
-
+" window splits {{{1
+" -------------
 " don't automatically ^W= after splitting or closing a window
 set noequalalways	
+
+" opens splits below, and vsplits to the right
+set splitbelow splitright
 
 " terminal {{{1
 " --------
@@ -937,37 +975,6 @@ nnoremap <silent> <leader>rv
 	  \  nohlsearch \|
 	  \endif<CR>
 
-" ex-commands {{{1
-" -----------
-
-" typos
-" -----
-" changes :W to :w, and others.
-command! -bang          Q q<bang>
-command! -bang -nargs=? W w<bang> <args>
-command! -bang          QA qa<bang>
-command! -bang          Qa qa<bang>
-command! -bang          Wa wa<bang>
-command! -bang          WA wa<bang>
-command! -bang -nargs=? Wq wq<bang> <args>
-command! -bang -nargs=? WQ wq<bang> <args>
-
-" :edit file. May overwrite :Explore
-command! -bang -nargs=* E e<bang> <args>
-
-" :help related
-" -------------
-" :H may overwrite :Hexplore
-command! -bang -nargs=? -complete=help H h<bang> <args>
-command! -bang -nargs=? -complete=help Vh vert h<bang> <args>
-command! -bang -nargs=? -complete=help VH vert h<bang> <args>
-command! -bang -nargs=? -complete=help Th tab h<bang> <args>
-command! -bang -nargs=? -complete=help TH tab h<bang> <args>
-
-command!       -nargs=1 -complete=help Hg helpg <args>
-command!       -nargs=1 -complete=help HG helpg <args> 
-
-
 " custom text objects {{{1
 " -------------------
 " ported all these to vim-textobj-user
@@ -999,7 +1006,6 @@ if has('patch-7.4.793')
 endif
 
 set diffopt+=vertical	  " when starting diffmode, use vertical splits by default, such as with :diffsplit
-
 
 function PosCompare(p1, p2)
   " compares if one position is later than the other

@@ -3,6 +3,22 @@ from usnip_helpers import *
 from usnip_tex_contexts import * 	
 endglobal
 
+# templates {{{1
+# ---------
+
+snippet \doc "Basic template" b
+\documentclass[${1:opt}]{article}
+
+\usepackage{amsmath, amssymb}
+
+\begin{document}
+
+	$0
+
+\end{document}
+endsnippet
+
+
 # common {{{1
 # ------
 
@@ -27,6 +43,24 @@ snippet "\\?ci(te?)?p" "\ci[te]p" r
 \citep{$0}
 endsnippet
 
+
+# lists {{{1
+# ----- 
+snippet enum "enumerate" b
+\begin{enumerate}
+	\item $0
+\end{enumerate}
+endsnippet
+
+snippet items "itemize" b
+\begin{itemize}
+	\item $0
+\end{itemize}
+endsnippet
+
+snippet it "item" b
+\item $0
+endsnippet
 
 # common math snippets {{{1
 
@@ -123,6 +157,21 @@ snippet "([a-zA-Z])hat" "hat" riA
 \hat{`!p snip.rv=match.group(1)`}
 endsnippet
 
+priority 10
+context "math()"
+snippet "til" "tilde" riA
+\tilde{$1}$0
+endsnippet
+
+priority 100
+context "math()"
+snippet "([a-zA-Z])til" "tilde" riA
+\tilde{`!p snip.rv=match.group(1)`}
+endsnippet
+
+
+
+
 
 
 # math mode delims {{{1
@@ -152,14 +201,14 @@ endsnippet
 snippet eq "equation env"
 \begin{equation}
 	${1:${VISUAL}}
-\end{equation}
+${2:,}\end{equation}
 $0
 endsnippet
 
 snippet al "equation align[*]"
 \begin{align${1:*}}
 	${2:${VISUAL}}
-\end{align$1}
+${3:,}\end{align$1}
 $0
 endsnippet
 

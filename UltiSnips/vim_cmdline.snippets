@@ -29,3 +29,15 @@ context "cmdlinewin() == ':'"
 snippet lv "lvimgrep + lopen list of matches" b
 lvimgrep /${1:}/${2:gj} ${3:%} | lopen
 endsnippet
+
+# hg --> helpgrep
+context "cmdlinewin() == ':'"
+snippet hg "helpgrep + copen list of matches" b
+execute 'tab helpgrep ${1:}' | copen
+endsnippet
+
+# lhg --> lhelpgrep
+context "cmdlinewin() == ':'"
+snippet lh "helpgrep + copen list of matches" b
+execute 'tab lhelpgrep ${1:}' | lopen
+endsnippet
