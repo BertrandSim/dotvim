@@ -166,6 +166,15 @@ let g:vimtex_view_general_options
 	  \ . ':call remote_foreground('''.v:servername.''')^<CR^>^<CR^>\""'
 let g:vimtex_view_general_options_latexmk = '-reuse-instance'
 
+" use single shot compilation instead of continuous mode
+let g:vimtex_compiler_latexmk = { 'continuous':0 }
+
+" \lw to write and compile.
+augroup vimtex_config
+  autocmd!
+  autocmd Filetype tex nnoremap <localleader>lw :silent update \| VimtexCompile <CR>
+augroup END
+
 " [count] tsd/tsD cycles through 
 " \big, \Big, \bigg, \Bigg modifiers
 let g:vimtex_delim_toggle_mod_list = [
