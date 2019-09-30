@@ -198,8 +198,21 @@ let rout_follow_colorscheme = 1		" highlight R output in current colorscheme
 let R_clear_line = 1
 " clears console line with <C-a><C-k> when sending from buffer to terminal
 
+" open documentation in a vertical split
+let R_nvimpager = 'vertical'
+" let R_nvimpager = 'tabnew'	" new tab, without overwriting existing help windows
+
 " map __ and >> in terminal [Rterm] 
 " see after/ftplugin/r_mappings.vim
+
+" keybindings
+" disable comment mappings
+augroup Nvim-R_config
+  autocmd!
+  autocmd filetype R unmap <buffer> <localleader>xx
+  autocmd filetype R unmap <buffer> <localleader>xc
+  autocmd filetype R unmap <buffer> <localleader>xu
+augroup END
 
 " }}}
 " Ultsnips config {{{2
