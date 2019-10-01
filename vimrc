@@ -147,7 +147,7 @@ endif
 " --------------
 "
 " TODO: fork / add configs for unimpaired
-" TODO: fork / add configs for surround.vim, or setup sandwich
+" TODO: setup sandwich
 
 let g:tex_flavor='latex'			" ft of .tex files to 'tex', not 'plaintex'.
 
@@ -183,6 +183,35 @@ let g:vimtex_delim_toggle_mod_list = [
 	  \ ['\biggl', '\biggr'],
 	  \ ['\Biggl', '\Biggr'],
 	  \]
+
+
+" use sandwich.vim-style mappings for ds,cs,ts
+" temporary solution while transiting to sandwich.vim
+" TODO [2019-09-30] 
+augroup vimtex_maps
+  autocmd!
+  autocmd Filetype tex nmap sde <plug>(vimtex-env-delete)
+  autocmd Filetype tex nmap sdc <plug>(vimtex-cmd-delete)
+  autocmd Filetype tex nmap sd$ <plug>(vimtex-env-delete-math)
+  autocmd Filetype tex nmap sdd <plug>(vimtex-delim-delete)
+  autocmd Filetype tex nmap sre <plug>(vimtex-env-change)
+  autocmd Filetype tex nmap src <plug>(vimtex-cmd-change)
+  autocmd Filetype tex nmap sr$ <plug>(vimtex-env-change-math)
+  autocmd Filetype tex nmap srd <plug>(vimtex-delim-change-math)
+  autocmd Filetype tex nmap ste <plug>(vimtex-env-toggle-star)
+  autocmd Filetype tex nmap stc <plug>(vimtex-cmd-toggle-star)
+  autocmd Filetype tex nmap std <plug>(vimtex-delim-toggle-modifier)
+  autocmd Filetype tex xmap std <plug>(vimtex-delim-toggle-modifier)
+  autocmd Filetype tex nmap sTd <plug>(vimtex-delim-toggle-modifier-reverse)
+  autocmd Filetype tex xmap sTd <plug>(vimtex-delim-toggle-modifier-reverse)
+augroup END
+
+" }}}
+" sandwich config {{{2
+" ---------------
+" unmap substitute mapping
+nmap s <Nop>
+xmap s <Nop>
 
 " }}}
 " Nvim-R config {{{2
