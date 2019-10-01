@@ -908,7 +908,7 @@ command! -bang -nargs=? -complete=help TH tab h<bang> <args>
 " cmdline + Ultisnips {{{1
 " -------------------
 " quick expand snippet via cmdline window
-cnoremap :: <C-r>=&cedit<CR>:call UltiSnips#ExpandSnippet()<CR>
+cnoremap ;: <C-r>=&cedit<CR>:call UltiSnips#ExpandSnippet()<CR>
 
 " change <Tab> from cmdline-completion to snippet expansion
 " by unmapping <Tab>.
@@ -923,7 +923,10 @@ augroup END
 " }}}
 " Ultisnip snippet operator {{{1
 " an operator wrapper to {Visual} + UltiSnips#ExpandSnippet()
-nnoremap <leader><Tab> :<C-U>set opfunc=SnippetOp<CR>g@
+nnoremap <leader><Tab>
+	  \ :<C-U>set opfunc=SnippetOp<CR>
+	  \:echo &opfunc<CR>
+	  \g@
 
 function! SnippetOp(type)
   "  an operator wrapper to {Visual} + UltiSnips#ExpandSnippet()
@@ -934,12 +937,13 @@ function! SnippetOp(type)
 
   execute 'normal! `['.vtype.'`]'."\<Esc>"
   call UltiSnips#SaveLastVisualSelection()
-  normal! gvs
-  startinsert
+  " normal! gvs	"
+  " startinsert	" cursor is off by one to the left..
+  call feedkeys('gvs', 'n')
 endfunction
 
 " }}}
-" tex delims [TODO] {{{1
+" tex delims insert [TODO] {{{1
 " ------------------
 
 " augroup ft_tex
