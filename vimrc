@@ -620,12 +620,8 @@ function! AddCommentOp(type)
   endif
 
   let minindent = GetMinIndent( range(startline, endline) )
-  if has('patch-7.3.694')
-	let minsw = minindent / shiftwidth()   " min shiftwidth, integer division
-  else
-	let shiftwidth_ = &sw == 0 ? &ts : &sw
-	let minsw = minindent / shiftwidth_
-  endif
+  let shiftwidth_ =  has('patch-7.3.694') ? shiftwidth() : &sw == 0 ? &ts : &sw
+  let minsw = minindent / shiftwidth_
 
   execute "silent" . startline.','.endline . repeat('<', minsw)
   execute "silent" . startline.','.endline . 'normal 0i'.comleader."\<Esc>"
