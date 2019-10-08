@@ -188,9 +188,8 @@ let g:vimtex_delim_toggle_mod_list = [
 	  \]
 
 
-" use sandwich.vim-style mappings for ds,cs,ts
+" TODO [2019-09-30] use sandwich.vim-style mappings for ds,cs,ts
 " temporary solution while transiting to sandwich.vim
-" TODO [2019-09-30] 
 augroup vimtex_maps
   autocmd!
   autocmd Filetype tex nmap sde <plug>(vimtex-env-delete)
@@ -208,6 +207,12 @@ augroup vimtex_maps
   autocmd Filetype tex nmap sTd <plug>(vimtex-delim-toggle-modifier-reverse)
   autocmd Filetype tex xmap sTd <plug>(vimtex-delim-toggle-modifier-reverse)
 augroup END
+
+let g:vimtex_mappings_disable = {
+  \   'n': ['dse', 'dsc', 'ds$', 'dsd', 'cse', 'csc', 'cs$', 'csd', 'tse', 'tsc', 'tsd', 'tsD'],
+  \   'x': ['tsd', 'tsD']
+  \ }
+
 
 " }}}
 " sandwich config {{{2
