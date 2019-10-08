@@ -83,6 +83,9 @@ set fileencoding=utf-8	" The encoding written to file.
 " set fileformat=unix
 set fileformats=unix,dos
 
+" use '/' for file paths, even on windows (instead of '\')
+set shellslash
+
 " plugins {{{1
 " --------
 

@@ -21,7 +21,7 @@ endsnippet
 # vg --> vimgrep
 context "cmdlinewin() == ':'"
 snippet vg "vimgrep + copen list of matches" b
-vimgrep /${1:}/${2:gj} ${3:*} | copen
+vimgrep /${1:}/${2:gj} ${3:**/*} | copen
 endsnippet
 
 # lv --> lvimgrep
