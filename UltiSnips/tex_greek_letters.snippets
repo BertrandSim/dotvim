@@ -63,14 +63,27 @@ endglobal
 
 # quick insert greek alphabets: eg, \a -> \alpha
 # autoexpands after a nonalphabet is typed
+# priority 0
+# context "math()"
+# snippet "\\([a-zA-Z])([^a-zA-Z])" "greek alphabets" rA
+# \\`!p akey = match.group(1)
+# if akey in greekalpha:
+# 	avalue = greekalpha[akey]
+# else:
+# 	avalue = match.group(1)
+# 
+# snip.rv = avalue + match.group(2)`
+# endsnippet
+
+# quick insert gree[k] alphabets: eg, ka -> \alpha
 priority 0
 context "math()"
-snippet "\\([a-zA-Z])([^a-zA-Z])" "greek alphabets" rA
-\\`!p akey = match.group(1)
+snippet "k([a-zA-Z])" "greek alphabets" rA
+`!p akey = match.group(1)
 if akey in greekalpha:
-	avalue = greekalpha[akey]
+	snip.rv = '\\' + greekalpha[akey]
 else:
-	avalue = match.group(1)
-
-snip.rv = avalue + match.group(2)`
+	snip.rv = match.group(0)
+`
 endsnippet
+
