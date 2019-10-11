@@ -228,9 +228,25 @@ let g:vimtex_mappings_disable = {
 " }}}
 " sandwich config {{{2
 " ---------------
-" unmap substitute mapping
-nmap s <Nop>
-xmap s <Nop>
+if isdirectory($VIMHOME."/pack/bundle/opt/vim-sandwich") || 
+  \isdirectory($VIMHOME."/pack/bundle/start/vim-sandwich")
+
+  " unmap substitute (s) mapping
+  nmap s <Nop>
+  xmap s <Nop>
+
+  " unuse text-obj auto (ib,ab) and query (is, as) mappings
+  let g:textobj_sandwich_no_default_key_mappings = 1
+
+  " use sw / sW to surround inner word
+  " TODO [2019-10-11]: sw add count for number of inner words, 
+  " NOT including whitespace
+  nmap sw saiw
+  nmap sW saiW
+endif
+
+" for further recipes and configs, see 
+" [after]/[ft]plugin/**/*sandwich*
 
 " }}}
 " Nvim-R config {{{2
