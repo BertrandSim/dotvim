@@ -78,13 +78,23 @@ filetype plugin indent on
 set encoding=utf-8		" The encoding displayed.
 set fileencoding=utf-8	" The encoding written to file.
 
+" use '/' for file paths, even on windows (instead of '\')
+set shellslash
+
+" point $VIMHOME to .vim directory 
+" ( = dir containing this vimrc file)
+let $VIMHOME = expand('<sfile>:p:h')
+
+
 " File formats {{{1
 " ------------
 " set fileformat=unix
-set fileformats=unix,dos
+set fileformats=unix,dos	" use unix by default, o/w try dos
 
-" use '/' for file paths, even on windows (instead of '\')
-set shellslash
+" filetypes {{{1
+" ---------
+let g:tex_flavor='latex'			" ft of .tex files to 'tex', not 'plaintex'.
+
 
 " plugins {{{1
 " --------
@@ -100,17 +110,17 @@ if has('packages')
   "  b4winckler/vim-angry			" function argument text object
   "  lervag/vimtex					" plugin for tex files
   "  kana/vim-textobj-user			" custom text objects
-  " 	packadd vim-textobj-entire
-  " 	packadd vim-textobj-line
+  " 	vim-textobj-entire
+  " 	vim-textobj-line
 
   " packages in opt:
-  packadd Nvim-R           	" jalvesaq/Nvim-R --forked;	interaction between R scripts with R terminal
-  " packadd vim-latex-1.10.0 	" vim-latex or latex suite
-  " packadd vim-surround-2.1-usr	" surroundings; usr changed to use omap for ds,cs, etc.
-  packadd auto-pairs       	" jiangmiao/auto-pairs;		delims
-  packadd vim-easy-align   	" junegunn/vim-easy-align;	align lines by a char/regex
-  packadd incsearch.vim		" hayabusa/incsearch.vim;	improved / ? incsearch
-  packadd vim-sandwich		" machakann/vim-sandwich;	surroundings
+  packadd! Nvim-R           	" jalvesaq/Nvim-R --forked;	interaction between R scripts with R terminal
+  " packadd! vim-latex-1.10.0 	" vim-latex or latex suite
+  " packadd! vim-surround-2.1-usr	" surroundings; usr changed to use omap for ds,cs, etc.
+  packadd! auto-pairs       	" jiangmiao/auto-pairs;		delims
+  packadd! vim-easy-align   	" junegunn/vim-easy-align;	align lines by a char/regex
+  packadd! incsearch.vim		" hayabusa/incsearch.vim;	improved / ? incsearch
+  packadd! vim-sandwich		" machakann/vim-sandwich;	surroundings
 
 " elseif " using pathogen plugin manager,
 " execute pathogen#infect()
@@ -152,8 +162,6 @@ endif
 " TODO: fork / add configs for unimpaired
 " TODO: setup sandwich
 
-let g:tex_flavor='latex'			" ft of .tex files to 'tex', not 'plaintex'.
-
 " vimtex settings {{{2
 
 " use Sumatra as pdfviewer
@@ -190,23 +198,26 @@ let g:vimtex_delim_toggle_mod_list = [
 
 " TODO [2019-09-30] use sandwich.vim-style mappings for ds,cs,ts
 " temporary solution while transiting to sandwich.vim
-augroup vimtex_maps
-  autocmd!
-  autocmd Filetype tex nmap sde <plug>(vimtex-env-delete)
-  autocmd Filetype tex nmap sdc <plug>(vimtex-cmd-delete)
-  autocmd Filetype tex nmap sd$ <plug>(vimtex-env-delete-math)
-  autocmd Filetype tex nmap sdd <plug>(vimtex-delim-delete)
-  autocmd Filetype tex nmap sre <plug>(vimtex-env-change)
-  autocmd Filetype tex nmap src <plug>(vimtex-cmd-change)
-  autocmd Filetype tex nmap sr$ <plug>(vimtex-env-change-math)
-  autocmd Filetype tex nmap srd <plug>(vimtex-delim-change-math)
-  autocmd Filetype tex nmap ste <plug>(vimtex-env-toggle-star)
-  autocmd Filetype tex nmap stc <plug>(vimtex-cmd-toggle-star)
-  autocmd Filetype tex nmap std <plug>(vimtex-delim-toggle-modifier)
-  autocmd Filetype tex xmap std <plug>(vimtex-delim-toggle-modifier)
-  autocmd Filetype tex nmap sTd <plug>(vimtex-delim-toggle-modifier-reverse)
-  autocmd Filetype tex xmap sTd <plug>(vimtex-delim-toggle-modifier-reverse)
-augroup END
+if isdirectory($VIMHOME."/pack/bundle/opt/vimtex") || 
+  \isdirectory($VIMHOME."/pack/bundle/start/vimtex")
+  augroup vimtex_maps
+	autocmd!
+	autocmd Filetype tex nmap sde <plug>(vimtex-env-delete)
+	autocmd Filetype tex nmap sdc <plug>(vimtex-cmd-delete)
+	autocmd Filetype tex nmap sd$ <plug>(vimtex-env-delete-math)
+	autocmd Filetype tex nmap sdd <plug>(vimtex-delim-delete)
+	autocmd Filetype tex nmap sre <plug>(vimtex-env-change)
+	autocmd Filetype tex nmap src <plug>(vimtex-cmd-change)
+	autocmd Filetype tex nmap sr$ <plug>(vimtex-env-change-math)
+	autocmd Filetype tex nmap srd <plug>(vimtex-delim-change-math)
+	autocmd Filetype tex nmap ste <plug>(vimtex-env-toggle-star)
+	autocmd Filetype tex nmap stc <plug>(vimtex-cmd-toggle-star)
+	autocmd Filetype tex nmap std <plug>(vimtex-delim-toggle-modifier)
+	autocmd Filetype tex xmap std <plug>(vimtex-delim-toggle-modifier)
+	autocmd Filetype tex nmap sTd <plug>(vimtex-delim-toggle-modifier-reverse)
+	autocmd Filetype tex xmap sTd <plug>(vimtex-delim-toggle-modifier-reverse)
+  augroup END
+endif
 
 let g:vimtex_mappings_disable = {
   \   'n': ['dse', 'dsc', 'ds$', 'dsd', 'cse', 'csc', 'cs$', 'csd', 'tse', 'tsc', 'tsd', 'tsD'],
@@ -253,12 +264,16 @@ let R_nvimpager = 'vertical'
 
 " keybindings
 " disable comment mappings
-augroup Nvim-R_config
-  autocmd!
-  autocmd filetype R unmap <buffer> <localleader>xx
-  autocmd filetype R unmap <buffer> <localleader>xc
-  autocmd filetype R unmap <buffer> <localleader>xu
-augroup END
+if isdirectory($VIMHOME."/pack/bundle/opt/Nvim-R") || 
+  \isdirectory($VIMHOME."/pack/bundle/start/Nvim-R")
+
+  augroup Nvim-R_config
+	autocmd!
+	autocmd filetype R unmap <buffer> <localleader>xx
+	autocmd filetype R unmap <buffer> <localleader>xc
+	autocmd filetype R unmap <buffer> <localleader>xu
+  augroup END
+endif
 
 " }}}
 " Ultsnips config {{{2
@@ -281,13 +296,13 @@ let g:UltiSnipsEditSplit='context'
 
 
 " Autopairs settings
-if exists('g:AutoPairsLoaded') && g:AutoPairsLoaded == 1
-  let g:AutoPairsCenterLine = 0		" do not re-center screen after pressing <CR>
-  let g:AutoPairsMultilineClose = 0	" do not jump past closing char on another line
-endif
+let g:AutoPairsCenterLine = 0		" do not re-center screen after pressing <CR>
+let g:AutoPairsMultilineClose = 0	" do not jump past closing char on another line
 
 " mappings for easy align plugin
-if exists("g:loaded_easy_align_plugin")
+if isdirectory($VIMHOME."/pack/bundle/opt/vim-easy-align") || 
+  \isdirectory($VIMHOME."/pack/bundle/start/vim-easy-align")
+
   nmap ga <Plug>(EasyAlign)
   xmap ga <Plug>(EasyAlign)
   nmap gA <Plug>(LiveEasyAlign)
@@ -439,7 +454,9 @@ nnoremap <leader><space> :nohlsearch<CR>
 " nnoremap <leader><space> :let @/=""<CR>
 
 " incsearch.vim mappings
-if exists("g:loaded_incsearch")
+if isdirectory($VIMHOME."/pack/bundle/opt/incsearch.vim") || 
+  \isdirectory($VIMHOME."/pack/bundle/start/incsearch.vim")
+
   " map / <Plug>(incsearch-forward)
   " map ? <Plug>(incsearch-backward)
   map z/ <Plug>(incsearch-stay)
