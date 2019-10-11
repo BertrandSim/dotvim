@@ -15,10 +15,15 @@ endif
 
 
 " Teardown
-if !exists("b:undo_ftplugin") | let b:undo_ftplugin = '' | endif
-let b:undo_ftplugin .= '|setlocal ts< sts< sw< et< sta< '
-let b:undo_ftplugin .= '|setlocal ssl< '
-let b:undo_ftplugin .= '|setlocal fo<'
+if !exists('b:undo_ftplugin')
+  let b:undo_ftplugin = ''
+else
+  let b:undo_ftplugin .= ' | '
+endif
+
+let b:undo_ftplugin .= 'setlocal ts< sts< sw< et< sta<'
+let b:undo_ftplugin .= ' | setlocal ssl<'
+let b:undo_ftplugin .= ' | setlocal fo<'
 
 
 

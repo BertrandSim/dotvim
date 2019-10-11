@@ -12,3 +12,12 @@ let s:local_recipes = [
   \ ]
 
 call sandwich#util#addlocal(s:local_recipes)
+
+" Teardown
+if !exists('b:undo_ftplugin')
+  let b:undo_ftplugin = ''
+else
+  let b:undo_ftplugin .= ' | '
+endif
+
+let b:undo_ftplugin .= 'call sandwich#util#ftrevert("r") ' 

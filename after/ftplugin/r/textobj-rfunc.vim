@@ -119,10 +119,16 @@ function s:PosCompare(p1, p2)
 endfunction
 
 
-" Teardown
-" TODO b:undo_ftplugin
-" if !exists("b:undo_ftplugin") | let b:undo_ftplugin = '' | endif
-" let b:undo_ftplugin .= 
+" " Teardown
+" " TODO b:undo_ftplugin
+" if !exists('b:undo_ftplugin')
+"   let b:undo_ftplugin = ''
+" else
+"   let b:undo_ftplugin .= ' | '
+" endif
+" 
+" let b:undo_ftplugin .= '...' 
+" let b:undo_ftplugin .= ' | ....'
 
 
 

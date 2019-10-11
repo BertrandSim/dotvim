@@ -87,6 +87,11 @@ xnoremap <silent><expr> <Plug>(textobj-sandwich-tex-mods-i) textobj#sandwich#aut
 xnoremap <silent><expr> <Plug>(textobj-sandwich-tex-mods-a) textobj#sandwich#auto('x', 'a', {'synchro': 0}, b:sandwich_tex_mods_recipes)
 
 
+" Teardown
+if !exists('b:undo_ftplugin')
+  let b:undo_ftplugin = ''
+else
+  let b:undo_ftplugin .= ' | '
+endif
 
-
-
+let b:undo_ftplugin .= 'call sandwich#util#ftrevert("tex")' 

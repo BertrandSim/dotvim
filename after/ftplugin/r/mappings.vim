@@ -25,15 +25,16 @@ if has('terminal') 	" any other conditions to add?
 endif
 
 
-
-
 " Teardown
-if !exists("b:undo_ftplugin") | let b:undo_ftplugin = '' | endif
-
 if !( exists('did_plugin_ultisnips') && exists('g:_uspy') )
-  let b:undo_ftplugin .= '|iunmap __ |iunmap >>'
-endif
 
-" if has('terminal')
-"   let b:undo_ftplugin .= '|tunmap __| tunmap >>'
-" endif
+  " put these outside of if block if there are other things to undo
+  if !exists('b:undo_ftplugin')
+    let b:undo_ftplugin = ''
+  else
+    let b:undo_ftplugin .= ' | '
+  endif
+
+  let b:undo_ftplugin .= 'iunmap __ | iunmap >>'
+
+endif
