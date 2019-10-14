@@ -241,8 +241,8 @@ if isdirectory($VIMHOME."/pack/bundle/opt/vim-sandwich") ||
   " use sw / sW to surround inner word
   " TODO [2019-10-11]: sw add count for number of inner words, 
   " NOT including whitespace
-  nmap sw saiw
-  nmap sW saiW
+  nmap sw <Plug>(operator-sandwich-add)iw
+  nmap sW <Plug>(operator-sandwich-add)iW
 endif
 
 " for further recipes and configs, see 
@@ -554,6 +554,19 @@ nnoremap <expr> k v:count == 0 ? 'gk' : 'k'
 " swap ; and , for f,F,t,T
 nnoremap ; ,
 nnoremap , ;
+
+
+" view help, nomodifiable buffers {{{1
+" -------------------------------
+augroup nomod_maps
+  autocmd!
+  autocmd BufWinEnter,BufRead *
+	\ if !&l:modifiable|
+	\   nnoremap <buffer> d <C-d>|
+	\   nnoremap <buffer> u <C-u>|
+	\   nnoremap <buffer> q :<C-u>q<CR>|
+	\ endif
+augroup END
 
 
 " edits and inserts {{{1
@@ -1064,7 +1077,7 @@ nnoremap <silent> <leader>rv
 	  \:if expand('%:p') ==? expand($MYVIMRC) \|
 	  \  write \|
 	  \  source % \|
-	  \	 edit \|
+	  \  edit \|
 	  \  exec "norm zv" \|
 	  \  nohlsearch \|
 	  \endif<CR>
