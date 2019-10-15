@@ -78,18 +78,23 @@ filetype plugin indent on
 set encoding=utf-8		" The encoding displayed.
 set fileencoding=utf-8	" The encoding written to file.
 
-" use '/' for file paths, even on windows (instead of '\')
-set shellslash
-
-" point $VIMHOME to .vim directory 
-" ( = dir containing this vimrc file)
-let $VIMHOME = expand('<sfile>:p:h')
-
 
 " File formats {{{1
 " ------------
 " set fileformat=unix
 set fileformats=unix,dos	" use unix by default, o/w try dos
+
+" filepaths and dirs {{{1
+" ------------------
+" point $VIMHOME to .vim directory 
+" ( = dir containing this vimrc file)
+let $VIMHOME = expand('<sfile>:p:h')
+
+" use '/' for file paths, even on windows (instead of '\')
+set shellslash
+
+" _c_hange _d_irectory to that of _c_urrent file with :CDC
+command CDC lcd %:p:h
 
 " filetypes {{{1
 " ---------
