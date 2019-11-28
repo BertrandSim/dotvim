@@ -243,11 +243,15 @@ if isdirectory($VIMHOME."/pack/bundle/opt/vim-sandwich") ||
   " unuse text-obj auto (ib,ab) and query (is, as) mappings
   let g:textobj_sandwich_no_default_key_mappings = 1
 
-  " use sw / sW to surround inner word
-  " TODO [2019-10-11]: sw add count for number of inner words, 
+  " use sw / sW to surround(-add) inner w/Word
+  " TODO [2019-10-11]: sw with count for number of inner words, 
   " NOT including whitespace
+  " TODO [2019-11-29]: use custom text-object iw?
   nmap sw <Plug>(operator-sandwich-add)iw
   nmap sW <Plug>(operator-sandwich-add)iW
+
+  " use sl to surround(-add) char
+  nmap sl <Plug>(operator-sandwich-add)l
 endif
 
 " for further recipes and configs, see 
@@ -1104,6 +1108,12 @@ nnoremap <silent> <leader>rv
 " vnoremap ae :normal GVgg<CR>
 " onoremap ae :normal Vae<CR>
 " see vim-textobj-entire
+
+let g:textobj_entire_no_default_key_mappings = 1
+omap aE <Plug>(textobj-entire-a)
+omap iE <Plug>(textobj-entire-i)
+xmap aE <Plug>(textobj-entire-a)
+xmap iE <Plug>(textobj-entire-i)
 
 " 'R function'
 " autocmd FileType R xnoremap af :call SelectRFunc()<CR>
