@@ -3,9 +3,12 @@
 .netrwhist~
 .viminfo
 
-# temporary swap files 
+# temporary vim swap files 
 *.swp
 *.swo
 
 # vim helptags
 **/doc/tags
+
+# python pyc files 
+*.py
