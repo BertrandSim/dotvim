@@ -3,7 +3,7 @@ from usnip_helpers import *
 from usnip_tex_contexts import * 	
 endglobal
 
-# templates {{{1
+# templates ([{1
 # ---------
 
 snippet \doc "Basic template" b
@@ -19,32 +19,55 @@ snippet \doc "Basic template" b
 endsnippet
 
 
-# common {{{1
-# ------
+# preamble ([{1
+# --------
 
 post_expand "jump_forward(snip, 2)"
-snippet  "\\?usep" "\usepackage" br
+snippet  usep "\usepackage" b
 \usepackage${1:[${2:opt}]}{${3:name}}
 endsnippet
 
-snippet "\\?nc" "\newcommand" br
+snippet nc "\newcommand" b
 \newcommand{$1}{$2}
 endsnippet
 
-snippet "\\?rnc" "\renewcommand" br
+snippet rnc "\renewcommand" b
 \renewcommand{$1}{$2}
 endsnippet
 
-snippet "\\?ci(te?)?" "\ci[te]" r
+snippet mo "\DeclareMathOperator{\op}{op}" b
+\DeclareMathOperator{${1:\op}}{${2:`!p snip.rv=t[1].lstrip("\\")`}}
+endsnippet
+
+snippet mos "\DeclareMathOperator*{\op}{op}" b
+\DeclareMathOperator*{${1:\op}}{${2:`!p snip.rv=t[1].lstrip("\\")`}}
+endsnippet
+
+
+# refs ([{1
+# ----
+
+snippet "ci(te?)?" "\ci[te]" r
 \cite{$0}
 endsnippet
 
-snippet "\\?ci(te?)?p" "\ci[te]p" r
+snippet "ci(te?)?p" "\ci[te]p" r
 \citep{$0}
 endsnippet
 
+snippet lab "\label"
+\label{${1:name}}
+endsnippet
 
-# lists {{{1
+priority 2
+context "eq_env()"
+post_expand "jump_forward(snip, 1)"
+snippet lab "\label for numbered equation"
+\label{${1:eq:${2:name}}}
+endsnippet
+
+
+# lists ([{1
 # ----- 
 snippet enum "enumerate" b
 \begin{enumerate}
@@ -62,16 +85,16 @@ snippet it "item" b
 \item $0
 endsnippet
 
-# common math snippets {{{1
+# common math snippets ([{1
 
 context "math()"
 snippet __ "_{}" iA
-_\{${1:${VISUAL}}\}
+_{${1:${VISUAL}}}
 endsnippet
 
 context "math()"
 snippet ^^ "^{}" iA
-^\{${1:${VISUAL}}\}
+^{${1:${VISUAL}}}
 endsnippet
 
 context "math()"
@@ -92,16 +115,29 @@ endsnippet
 
 context "math()"
 snippet // "frac{}{}" iA
-\frac\{${1:${VISUAL:1}}\}{${2:d}}
+\frac{${1:${VISUAL:n}}}{${2:d}}
 endsnippet
 
 context "math()"
-snippet sm "sum_{}^{}" A
+post_expand "jump_forward(snip, 1)"
+priority 10
+snippet 1// "frac{1}{}" A
+\frac{${1:1}}{${2:${VISUAL:d}}}
+endsnippet
+
+context "math()"
+snippet sm "sum without limits" A
+\sum
+endsnippet
+
+# press trigger after sm to include limits
+context "math()"
+snippet \sum "sum_{}^{}"
 \sum_{${1:i=1}}^{${2:n}} $3
 endsnippet
 
 context "math()"
-snippet "\\?pp" "partial deriv" ir
+snippet "pp" "partial deriv" i
 \frac{\partial$2}{\partial $1} $0
 endsnippet
 
@@ -111,23 +147,23 @@ snippet inv "inverse ^{-1}" i
 endsnippet
 
 context "math()"
-snippet "\\?te" "\text" r
-\text\{${1:${VISUAL}}\}
+snippet "te" "\text"
+\text{${1:${VISUAL}}}
 endsnippet
 
-# autosubscripts {{{1
+# math autosubscripts ([{1
 # --------------
-context "math()"
-snippet '([A-Za-z])(\d)' "auto subscript" wrA
-`!p snip.rv = match.group(1)`_`!p snip.rv = match.group(2)`
-endsnippet
+# context "math()"
+# snippet '([A-Za-z])(\d)' "auto subscript" wrA
+# `!p snip.rv = match.group(1)`_`!p snip.rv = match.group(2)`
+# endsnippet
 
 # context "math()"
 # snippet '([A-Za-z])_(\d\d)' "auto subscript2" wrA
 # `!p snip.rv = match.group(1)`_{`!p snip.rv = match.group(2)`}
 # endsnippet
 
-# math accents {{{1
+# math accents ([{1
 # ------------
 
 # accents for \bar, \hat, and \tilde
@@ -139,7 +175,7 @@ priority 10
 context "math()"
 # \overline{$1}$0
 snippet "(?<!\\)bar" "bar" r
-\bar\{${1:${VISUAL}}\}$0
+\bar{${1:${VISUAL}}}$0
 endsnippet
 
 priority 20
@@ -158,7 +194,7 @@ endsnippet
 priority 10
 context "math()"
 snippet "(?<!\\)hat" "hat" r
-\hat\{${1:${VISUAL}}\}$0
+\hat{${1:${VISUAL}}}$0
 endsnippet
 
 priority 20
@@ -177,7 +213,7 @@ endsnippet
 priority 10
 context "math()"
 snippet "(?<!\\)til" "tilde" r
-\tilde\{${1:${VISUAL}}\}$0
+\tilde{${1:${VISUAL}}}$0
 endsnippet
 
 priority 20
@@ -193,7 +229,7 @@ snippet "(\\[a-zA-Z]+)til" "tilde_postfix_\sym" riA
 endsnippet
 
 
-# math mode delims {{{1
+# math mode delims ([{1
 # ----------------
 
 snippet mk "$...$" wA
@@ -207,10 +243,10 @@ ${2:,}\]
 $0
 endsnippet
 
-# environments {{{1
+# environments ([{1
 # ------------
 
-snippet "\\?ben" "\begin ... \end" r
+snippet "(ben|en|env)" "\begin ... \end" r
 \begin{${1:env}}
 	${2:${VISUAL}}
 \end{$1}
@@ -240,7 +276,7 @@ endsnippet
 
 
 
-# floats {{{1
+# floats ([{1
 # ------
 post_expand "jump_forward(snip, 1)"
 snippet fig "\begin{figure}" b
@@ -271,7 +307,7 @@ snippet tab "\begin{table}" b
 $0
 endsnippet
 
-# matrices {{{1
+# matrices ([{1
 # --------
 
 global !p
@@ -388,4 +424,4 @@ snippet "colv(?:ec?)?(\d)?" "col vector with optional number of components" rb
 `!p snip.rv = match.group(1)`
 endsnippet
 
-# vim: set foldmethod=marker:
+# vim: set foldmethod=marker: set foldmarker=([{,}])

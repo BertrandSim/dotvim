@@ -24,3 +24,18 @@ def math():
 		return first != ignore
 	except StopIteration:
 		return False
+
+
+# numbered (labelled) equation environments
+
+texEqZones = ['texMathZoneC', 'texMathZoneE']
+             # equation env ,  align env
+texEqZoneIds = vim.eval('map('+str(texEqZones)+", 'hlID(v:val)')")
+
+def eq_env():
+	synstackids = vim.eval("synstack(line('.'), col('.') - (col('.')>=2 ? 1 : 0))")
+	try:
+		first = next(i for i in reversed(synstackids) if i in texEqZoneIds)
+		return True
+	except StopIteration:
+		return False 

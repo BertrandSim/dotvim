@@ -61,7 +61,7 @@ greekalpha = {
 
 endglobal
 
-# quick insert greek alphabets: eg, \a -> \alpha
+# quick insert gree(k) a(l)phabets: eg, kla -> \alpha
 # autoexpands after a nonalphabet is typed
 # priority 0
 # context "math()"
@@ -78,7 +78,7 @@ endglobal
 # quick insert gree[k] alphabets: eg, ka -> \alpha
 priority 0
 context "math()"
-snippet "k([a-zA-Z])" "greek alphabets" rA
+snippet "kl([a-zA-Z])" "greek alphabets" rA
 `!p akey = match.group(1)
 if akey in greekalpha:
 	snip.rv = '\\' + greekalpha[akey]
