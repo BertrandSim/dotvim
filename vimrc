@@ -243,15 +243,13 @@ if isdirectory($VIMHOME."/pack/bundle/opt/vim-sandwich") ||
   " unuse text-obj auto (ib,ab) and query (is, as) mappings
   let g:textobj_sandwich_no_default_key_mappings = 1
 
-  " use sw / sW to surround(-add) inner w/Word
-  " TODO [2019-10-11]: sw with count for number of inner words, 
-  " NOT including whitespace
-  " TODO [2019-11-29]: use custom text-object iw?
-  nmap sw <Plug>(operator-sandwich-add)iw
-  nmap sW <Plug>(operator-sandwich-add)iW
+  " use [count] sw / sW to surround(-add) inner word/WORD(s)
+  " count excludes non-word/WORD characters
+  nmap sw <Plug>(operator-sandwich-add)<Plug>(operator-sandwich-release-count)<Plug>(iw-words-only)
+  nmap sW <Plug>(operator-sandwich-add)<Plug>(operator-sandwich-release-count)<Plug>(iW-WORDs-only)
 
-  " use sl to surround(-add) char
-  nmap sl <Plug>(operator-sandwich-add)l
+  " use [count] sl to surround(-add) char
+  nmap sl <Plug>(operator-sandwich-add)<Plug>(operator-sandwich-release-count)l
 endif
 
 " for further recipes and configs, see 
