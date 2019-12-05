@@ -11,4 +11,4 @@
 **/doc/tags
 
 # python pyc files 
-*.py
+*.pyc
