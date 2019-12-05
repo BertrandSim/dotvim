@@ -114,14 +114,14 @@ snippet \= "next line (\\) and &=" A
 endsnippet
 
 context "math()"
-snippet // "frac{}{}" iA
+snippet // "frac{}{}" wA
 \frac{${1:${VISUAL:n}}}{${2:d}}
 endsnippet
 
 context "math()"
 post_expand "jump_forward(snip, 1)"
 priority 10
-snippet 1// "frac{1}{}" A
+snippet 1// "frac{1}{}" wA
 \frac{${1:1}}{${2:${VISUAL:d}}}
 endsnippet
 
@@ -144,6 +144,11 @@ endsnippet
 context "math()"
 snippet inv "inverse ^{-1}" i
 ^{-1}
+endsnippet
+
+context "math()"
+snippet bin "binom{}{}"
+\binom{${1:n}}{${2:k}}
 endsnippet
 
 context "math()"
@@ -424,4 +429,4 @@ snippet "colv(?:ec?)?(\d)?" "col vector with optional number of components" rb
 `!p snip.rv = match.group(1)`
 endsnippet
 
-# vim: set foldmethod=marker: set foldmarker=([{,}])
+# vim: foldmethod=marker: foldmarker=([{,}])
