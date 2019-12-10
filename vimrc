@@ -557,6 +557,8 @@ noremap <F4> :set list!<CR>
 " full lines with a count supplied.
 nnoremap <expr> j v:count == 0 ? 'gj' : 'j'
 nnoremap <expr> k v:count == 0 ? 'gk' : 'k'
+vnoremap <expr> j v:count == 0 ? 'gj' : 'j'
+vnoremap <expr> k v:count == 0 ? 'gk' : 'k'
 
 " swap ; and , for f,F,t,T
 nnoremap ; ,
@@ -605,6 +607,14 @@ set backspace=indent,eol,start
 " Use u for t after an operator (UnTil).
 " A little easier on the hands
 " onoremap u t
+
+
+" pasting with selection {{{1
+" ----------------------
+" do not store selected text in register
+" allows pasting multiple times
+vnoremap p <Esc>`>pgv"_d
+vnoremap P <Esc>`>pgv"_d
 
 
 " bracket matching {{{1
