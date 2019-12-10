@@ -1,5 +1,3 @@
-" Last modified: 2019-09-06
-" -------------------------
 " defaults from windows gvim 8.1 install {{{1
 " --------------------------------------
 "version 6.0
@@ -953,7 +951,7 @@ command! -bang -nargs=? Wq wq<bang> <args>
 command! -bang -nargs=? WQ wq<bang> <args>
 
 " :edit file. May overwrite :Explore
-command! -bang -nargs=* E e<bang> <args>
+command! -bang -nargs=* -complete=file E e<bang> <args>
 
 " :help related
 " -------------
@@ -1051,7 +1049,6 @@ set splitbelow splitright
 " --------
 
 if has('terminal')
-
   " key to enter terminal normal mode
   tnoremap <F2> <C-W>N
   " ... and back to terminal job mode
@@ -1063,10 +1060,6 @@ if has('terminal')
 	  autocmd BufWinEnter *  if &buftype ==# 'terminal' | nnoremap <buffer> <F2> i| endif
 	endif
   augroup END
-
-  " ^r to insert register (^w" in terminal job mode)
-  tnoremap <C-r> <C-w>"
-
 endif
 
 
