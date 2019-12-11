@@ -1,5 +1,3 @@
-" Last modified: 2019-09-06
-" -------------------------
 " defaults from windows gvim 8.1 install {{{1
 " --------------------------------------
 "version 6.0
@@ -557,6 +555,8 @@ noremap <F4> :set list!<CR>
 " full lines with a count supplied.
 nnoremap <expr> j v:count == 0 ? 'gj' : 'j'
 nnoremap <expr> k v:count == 0 ? 'gk' : 'k'
+vnoremap <expr> j v:count == 0 ? 'gj' : 'j'
+vnoremap <expr> k v:count == 0 ? 'gk' : 'k'
 
 " swap ; and , for f,F,t,T
 nnoremap ; ,
@@ -605,6 +605,14 @@ set backspace=indent,eol,start
 " Use u for t after an operator (UnTil).
 " A little easier on the hands
 " onoremap u t
+
+
+" pasting with selection {{{1
+" ----------------------
+" do not store selected text in register
+" allows pasting multiple times
+vnoremap p <Esc>`>pgv"_d
+vnoremap P <Esc>`>pgv"_d
 
 
 " bracket matching {{{1
@@ -951,7 +959,7 @@ command! -bang -nargs=? Wq wq<bang> <args>
 command! -bang -nargs=? WQ wq<bang> <args>
 
 " :edit file. May overwrite :Explore
-command! -bang -nargs=* E e<bang> <args>
+command! -bang -nargs=* -complete=file E e<bang> <args>
 
 " :help related
 " -------------
@@ -1049,7 +1057,6 @@ set splitbelow splitright
 " --------
 
 if has('terminal')
-
   " key to enter terminal normal mode
   tnoremap <F2> <C-W>N
   " ... and back to terminal job mode
@@ -1061,10 +1068,6 @@ if has('terminal')
 	  autocmd BufWinEnter *  if &buftype ==# 'terminal' | nnoremap <buffer> <F2> i| endif
 	endif
   augroup END
-
-  " ^r to insert register (^w" in terminal job mode)
-  tnoremap <C-r> <C-w>"
-
 endif
 
 
