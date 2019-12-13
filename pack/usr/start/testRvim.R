@@ -29,6 +29,10 @@ fproj <- fproj_pana
 
 # Sampling P(\Phi | \Pi), N=2----
 ## using the Rejection Sampler
+fn
+function(hello) {
+ some funcs 
+}
 
 Q1 <- diag(3) #WLOG
 Q2 <- list() # list containing Q_{2,t}'s
@@ -81,10 +85,11 @@ print(paste("The proportion accepted is ", prop_accept, "."))
 
   
 ## Sampling, general case ----
-{text)s
-ss}
-sample_rot_img <- fnction(nimages, images, reso=129, endpoints=c(-5,5), interp.method='bicubic',
-                           nsamples, npropose = NULL) awe
+
+sample_rot_img <- function(nimages, images, reso=129, endpoints=c(-5,5), interp.method='bicubic',
+                           nsamples, npropose = NULL) 
+# sample_rot_img <- fnction(nimages, images, reso=129, endpoints=c(-5,5), interp.method='bicubic',
+			  #  nsamples, npropose = NULL) 
 {
   # Inputs
   #   nimages: number of data / projected images
