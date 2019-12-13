@@ -607,14 +607,6 @@ set backspace=indent,eol,start
 " onoremap u t
 
 
-" pasting with selection {{{1
-" ----------------------
-" do not store selected text in register
-" allows pasting multiple times
-vnoremap p <Esc>`>pgv"_d
-vnoremap P <Esc>`>pgv"_d
-
-
 " bracket matching {{{1
 " ----------------
 " change ( to (|), with cursor at |.
