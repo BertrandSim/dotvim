@@ -40,3 +40,6 @@
 [submodule "pack/usr/opt/esv-in-vim"]
 	path = pack/usr/start/esv-in-vim
 	url = git@github.com:BertrandSim/esv-in-vim.git
+[submodule "pack/usr/start/vim-multindent"]
+	path = pack/usr/start/vim-multindent
+	url = git@github.com:BertrandSim/vim-multindent.git
