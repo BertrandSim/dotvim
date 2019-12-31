@@ -12,3 +12,6 @@
 
 # python pyc files 
 *.pyc
+
+# misc
+pack/**/esv-in-vim/esv_api_key
