@@ -1,11 +1,11 @@
 " custom compound recipes
-"   all buns [j]
-"   all brackets [o]
-"   all quotes [u]
+"   all buns [k]
+"   all brackets [j]
+"   all quotes [o]
 
 " custom textobjects
-"   ij, aj; io, ao; iu, au; as above
-"   iq, aq; [q]uery
+"   ik, ak; ij, aj; io, ao; as above
+"   iu, au; q[u]ery
 
 let g:sandwich#recipes = deepcopy(g:sandwich#default_recipes)
 
@@ -16,7 +16,7 @@ let g:sandwich#recipes = deepcopy(g:sandwich#default_recipes)
 let s:group_recipes  = []
 
   " 'ALL recipes' query 
-  " sdj, srj to delete, replace any pairs
+  " sdk, srk to delete, replace any pairs
   " replaces sdb, srb
   " remove 'kind': 'auto' to prevent recursion
 let s:group_recipes += [
@@ -24,7 +24,7 @@ let s:group_recipes += [
   \     'external': ["\<Plug>(textobj-sandwich-auto-i)", "\<Plug>(textobj-sandwich-auto-a)"],
   \     'kind'    : ['delete', 'replace', 'query'],
   \     'noremap' : 0,
-  \     'input'   : ['j'],
+  \     'input'   : ['k'],
   \   }
   \ ]
 
@@ -34,13 +34,13 @@ let s:group_recipes += [
   \     'external': ["\<Plug>(textobj-sandwich-bracket-i)", "\<Plug>(textobj-sandwich-bracket-a)"],
   \     'kind'    : ['delete', 'replace', 'query'],
   \     'noremap' : 0,
-  \     'input'   : ['o'],
+  \     'input'   : ['j'],
   \   },
   \   {
   \     'external': ["\<Plug>(textobj-sandwich-quote-i)", "\<Plug>(textobj-sandwich-quote-a)"],
   \     'kind'    : ['delete', 'replace', 'query'],
   \     'noremap' : 0,
-  \     'input'   : ['u'],
+  \     'input'   : ['o'],
   \   },
   \ ]
 
@@ -97,25 +97,25 @@ onoremap <silent><expr> <Plug>(textobj-sandwich-bracket-a) textobj#sandwich#auto
 onoremap <silent><expr> <Plug>(textobj-sandwich-quote-i) textobj#sandwich#auto('o', 'i', {'synchro': 0}, g:sandwich_quote_recipes)
 onoremap <silent><expr> <Plug>(textobj-sandwich-quote-a) textobj#sandwich#auto('o', 'a', {'synchro': 0}, g:sandwich_quote_recipes)
 
-xmap <silent> ij <Plug>(textobj-sandwich-auto-i)
-xmap <silent> aj <Plug>(textobj-sandwich-auto-a)
-xmap <silent> io <Plug>(textobj-sandwich-bracket-i)
-xmap <silent> ao <Plug>(textobj-sandwich-bracket-a)
-xmap <silent> iu <Plug>(textobj-sandwich-quote-i)
-xmap <silent> au <Plug>(textobj-sandwich-quote-a)
+xmap <silent> ik <Plug>(textobj-sandwich-auto-i)
+xmap <silent> ak <Plug>(textobj-sandwich-auto-a)
+xmap <silent> ij <Plug>(textobj-sandwich-bracket-i)
+xmap <silent> aj <Plug>(textobj-sandwich-bracket-a)
+xmap <silent> io <Plug>(textobj-sandwich-quote-i)
+xmap <silent> ao <Plug>(textobj-sandwich-quote-a)
 
-omap <silent> ij <Plug>(textobj-sandwich-auto-i)
-omap <silent> aj <Plug>(textobj-sandwich-auto-a)
-omap <silent> io <Plug>(textobj-sandwich-bracket-i)
-omap <silent> ao <Plug>(textobj-sandwich-bracket-a)
-omap <silent> iu <Plug>(textobj-sandwich-quote-i)
-omap <silent> au <Plug>(textobj-sandwich-quote-a)
+omap <silent> ik <Plug>(textobj-sandwich-auto-i)
+omap <silent> ak <Plug>(textobj-sandwich-auto-a)
+omap <silent> ij <Plug>(textobj-sandwich-bracket-i)
+omap <silent> aj <Plug>(textobj-sandwich-bracket-a)
+omap <silent> io <Plug>(textobj-sandwich-quote-i)
+omap <silent> ao <Plug>(textobj-sandwich-quote-a)
 
 " query
-xnoremap <silent><expr> iq textobj#sandwich#query('x', 'i')
-xnoremap <silent><expr> aq textobj#sandwich#query('x', 'a')
-onoremap <silent><expr> iq textobj#sandwich#query('o', 'i')
-onoremap <silent><expr> aq textobj#sandwich#query('o', 'a')
+xnoremap <silent><expr> iu textobj#sandwich#query('x', 'i')
+xnoremap <silent><expr> au textobj#sandwich#query('x', 'a')
+onoremap <silent><expr> iu textobj#sandwich#query('o', 'i')
+onoremap <silent><expr> au textobj#sandwich#query('o', 'a')
 
 " }}}
 

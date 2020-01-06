@@ -3,13 +3,13 @@
 " compound recipes for 
 "   commands [c],
 "   tex environments [e]
-"   quotes [u, lq], 
+"   quotes [o, lq], 
 "   math environments $,$$,\(,\[ [$],
 "   math delims [d, dl].
 " for tex delims [] and {}, see bracket recipes in .vim/plugin/sandwich_custom.vim
 
 " custom textobjects
-"   latex quote text-object [iu, au] 
+"   latex quote text-object [io, ao] 
 " for ic, ac; ic, ac; i$, a$; id, ad; see vimtex
 
 
@@ -66,7 +66,7 @@ if !exists('s:local_recipes')
         \   },
 	\ ]
 
-  " compound recipes for quotes [u], math envs [$], and math delims [d]
+  " compound recipes for quotes [o], math envs [$], and math delims [d]
   " remove 'kind': 'auto' as their simple recipes are already included in 'auto'
   " quote tex recipe overwrites global quote recipe, 
   "    as it is added to the back of the list of recipes
@@ -77,7 +77,7 @@ if !exists('s:local_recipes')
 	\     'external': ["\<Plug>(textobj-sandwich-tex-quote-i)", "\<Plug>(textobj-sandwich-tex-quote-a)"],
 	\     'kind'    : ['delete', 'replace', 'query'],
 	\     'noremap' : 0,
-	\     'input'   : ['u', 'lq'],
+	\     'input'   : ['o', 'lq'],
 	\   },
 	\   {
 	\     '__filetype__': 'tex',
@@ -157,10 +157,10 @@ xnoremap <silent><expr> <Plug>(textobj-sandwich-tex-delim-math-a) textobj#sandwi
 
 " textobjects {{{
 
-xmap <silent><buffer> iu <Plug>(textobj-sandwich-tex-quote-i)
-xmap <silent><buffer> au <Plug>(textobj-sandwich-tex-quote-a)
-onoremap <silent><expr><buffer> iu textobj#sandwich#auto('o', 'i', {'synchro': 0}, b:sandwich_tex_quote_recipes)
-onoremap <silent><expr><buffer> au textobj#sandwich#auto('o', 'a', {'synchro': 0}, b:sandwich_tex_quote_recipes)
+xmap <silent><buffer> io <Plug>(textobj-sandwich-tex-quote-i)
+xmap <silent><buffer> ao <Plug>(textobj-sandwich-tex-quote-a)
+onoremap <silent><expr><buffer> io textobj#sandwich#auto('o', 'i', {'synchro': 0}, b:sandwich_tex_quote_recipes)
+onoremap <silent><expr><buffer> ao textobj#sandwich#auto('o', 'a', {'synchro': 0}, b:sandwich_tex_quote_recipes)
 
 " }}}
 

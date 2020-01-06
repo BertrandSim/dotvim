@@ -163,7 +163,7 @@ endif
 " --------------
 "
 " TODO: fork / add configs for unimpaired
-" TODO: setup sandwich
+" TODO [2020-01-02]: setup sandwich exchange / cycle within same recipe group
 
 " vimtex settings {{{2
 
@@ -198,21 +198,20 @@ let g:vimtex_delim_toggle_mod_list = [
 	  \ ['\Biggl', '\Biggr'],
 	  \]
 
-
-" TODO [2019-09-30] use sandwich.vim-style mappings for ds,cs,ts
-" temporary solution while transiting to sandwich.vim
+" Use sandwich.vim-style mappings for ds,cs,ts
+" temporary solution while transiting to sandwich.vim [TODO]
 if isdirectory($VIMHOME."/pack/bundle/opt/vimtex") || 
   \isdirectory($VIMHOME."/pack/bundle/start/vimtex")
   augroup vimtex_maps
 	autocmd!
-	autocmd Filetype tex nmap sde <plug>(vimtex-env-delete)
-	autocmd Filetype tex nmap sdc <plug>(vimtex-cmd-delete)
-	autocmd Filetype tex nmap sd$ <plug>(vimtex-env-delete-math)
-	autocmd Filetype tex nmap sdd <plug>(vimtex-delim-delete)
-	autocmd Filetype tex nmap sre <plug>(vimtex-env-change)
-	autocmd Filetype tex nmap src <plug>(vimtex-cmd-change)
-	autocmd Filetype tex nmap sr$ <plug>(vimtex-env-change-math)
-	autocmd Filetype tex nmap srd <plug>(vimtex-delim-change-math)
+	" autocmd Filetype tex nmap sde <plug>(vimtex-env-delete)
+	" autocmd Filetype tex nmap sdc <plug>(vimtex-cmd-delete)
+	" autocmd Filetype tex nmap sd$ <plug>(vimtex-env-delete-math)
+	" autocmd Filetype tex nmap sdd <plug>(vimtex-delim-delete)
+	autocmd Filetype tex nmap see <plug>(vimtex-env-change)
+	autocmd Filetype tex nmap sec <plug>(vimtex-cmd-change)
+	autocmd Filetype tex nmap se$ <plug>(vimtex-env-change-math)
+	" autocmd Filetype tex nmap sed <plug>(vimtex-delim-change-math)
 	autocmd Filetype tex nmap ste <plug>(vimtex-env-toggle-star)
 	autocmd Filetype tex nmap stc <plug>(vimtex-cmd-toggle-star)
 	autocmd Filetype tex nmap std <plug>(vimtex-delim-toggle-modifier)
@@ -238,20 +237,12 @@ if isdirectory($VIMHOME."/pack/bundle/opt/vim-sandwich") ||
   nmap s <Nop>
   xmap s <Nop>
 
-  " unuse text-obj auto (ib,ab) and query (is, as) mappings
-  let g:textobj_sandwich_no_default_key_mappings = 1
+  " load custom mappings
+  source $VIMHOME/plugin/sandwich_maps.vim
 
-  " use [count] sw / sW to surround(-add) inner word/WORD(s)
-  " count excludes non-word/WORD characters
-  nmap sw <Plug>(operator-sandwich-add)<Plug>(operator-sandwich-release-count)<Plug>(iw-words-only)
-  nmap sW <Plug>(operator-sandwich-add)<Plug>(operator-sandwich-release-count)<Plug>(iW-WORDs-only)
-
-  " use [count] sl to surround(-add) char
-  nmap sl <Plug>(operator-sandwich-add)<Plug>(operator-sandwich-release-count)l
+  " for recipes, text-objects, and other configs, see 
+  " [after]/[ft]plugin/**/*sandwich*
 endif
-
-" for further recipes and configs, see 
-" [after]/[ft]plugin/**/*sandwich*
 
 " }}}
 " Nvim-R config {{{2
