@@ -37,3 +37,9 @@
 [submodule "pack/bundle/opt/vim-sandwich"]
 	path = pack/bundle/opt/vim-sandwich
 	url = https://github.com/machakann/vim-sandwich.git
+[submodule "pack/usr/opt/esv-in-vim"]
+	path = pack/usr/start/esv-in-vim
+	url = git@github.com:BertrandSim/esv-in-vim.git
+[submodule "pack/usr/start/vim-multindent"]
+	path = pack/usr/start/vim-multindent
+	url = git@github.com:BertrandSim/vim-multindent.git

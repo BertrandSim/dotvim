@@ -315,6 +315,8 @@ let g:UltiSnipsEditSplit='context'
 
 " }}}
 
+" for esv_in_vim
+source $VIMHOME/macros/esv_api_key.vim
 
 " Autopairs settings
 let g:AutoPairsCenterLine = 0		" do not re-center screen after pressing <CR>
@@ -605,14 +607,6 @@ set backspace=indent,eol,start
 " Use u for t after an operator (UnTil).
 " A little easier on the hands
 " onoremap u t
-
-
-" pasting with selection {{{1
-" ----------------------
-" do not store selected text in register
-" allows pasting multiple times
-vnoremap p <Esc>`>pgv"_d
-vnoremap P <Esc>`>pgv"_d
 
 
 " bracket matching {{{1
