@@ -4,7 +4,7 @@ TODO (`!v strftime('%Y-%m-%d')`): $0
 endsnippet
 # put date in () instead of default [], to match r syntax highlighting
 
-snippet >> "magrittrpipe" A
+snippet >> "magrittrpipe" iA
 %>%
 endsnippet
 
@@ -41,23 +41,23 @@ endsnippet
 
 # modify variable and replace {{{1
 
-snippet "(\w+)\+\+" "var++" wrA
+snippet "(\w+)\s*\+\+" "var++" wrA
 `!p snip.rv=match.group(1)` <- `!p snip.rv=match.group(1)` + 1
 endsnippet
 
-snippet "(\w+)\+\=" "var+=" wrA
-`!p snip.rv=match.group(1)` <- `!p snip.rv=match.group(1)` + ${1:1}
+snippet "(\w+)\s*\+\=" "var+=" wrA
+`!p snip.rv=match.group(1)` <- `!p snip.rv=match.group(1)` + $0
 endsnippet
 
-snippet "(\w+)\-\-" "var--" wrA
+snippet "(\w+)\s*\-\-" "var--" wrA
 `!p snip.rv=match.group(1)` <- `!p snip.rv=match.group(1)` - 1
 endsnippet
 
-snippet "(\w+)\-\=" "var-=" wrA
-`!p snip.rv=match.group(1)` <- `!p snip.rv=match.group(1)` - ${1:1}
+snippet "(\w+)\s*\-\=" "var-=" wrA
+`!p snip.rv=match.group(1)` <- `!p snip.rv=match.group(1)` - $0
 endsnippet
 
-snippet "(\w+)\>\=" "var>=" wrA
+snippet "(\w+)\s*\%\>\%\=" "var>>=" wrA
 `!p snip.rv=match.group(1)` <- `!p snip.rv=match.group(1)` %>%
 endsnippet
 
