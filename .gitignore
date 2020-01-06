@@ -14,4 +14,4 @@
 *.pyc
 
 # misc
-pack/**/esv-in-vim/esv_api_key
+esv_api_key.vim

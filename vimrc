@@ -315,6 +315,8 @@ let g:UltiSnipsEditSplit='context'
 
 " }}}
 
+" for esv_in_vim
+source $VIMHOME/macros/esv_api_key.vim
 
 " Autopairs settings
 let g:AutoPairsCenterLine = 0		" do not re-center screen after pressing <CR>
