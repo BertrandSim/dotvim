@@ -59,24 +59,22 @@ function! SearchRFunc(searchpos, flags, curpos)
 
   let curpos_save = getpos('.')
 
-  let patternFuncStart = '\v(\w+\s*(\<\-|\=)\_s*)?'.  'function\s*\('
   let patternFuncStart =
-		\'\v(\w+\s*(\<\-|\=)\_s*)?'.
-		\   'function\s*\('
-		" optional: <name> <- or =
-		" function(
+    \'\v(\w+\s*(\<\-|\=)\_s*)?'.
+    \   'function\s*\('
+    " optional: <name> <- or =
+    " function(
 
-   
   call setpos('.', a:searchpos)
-  if !search(patternFuncStart, a:flags)
-	call setpos('.', curpos_save)
-	return 0	
+  if !search(patternFuncStart, a:flags)	" TODO [2019-12-11]:  skip comments / strings
+    call setpos('.', curpos_save)
+    return 0	
   endif
   let funcstartpos = getpos('.')
 
   call search(patternFuncStart, 'ce')    " move to end of 'function('
-  exec 'normal %'
-  " jump to matching ')'
+  " jump to matching ')', skipping comments / strings
+  call searchpair('(','',')', 'W', 's:isRCommentOrString(line("."), col("."))')
 
   " check if next char == {
   call search('\S') 
@@ -88,7 +86,8 @@ function! SearchRFunc(searchpos, flags, curpos)
 
   " If yes, jump to it, and add {...} to selection
   if (nextchar ==# '{')
-	exec 'normal %'
+	" jump to matching '}', skipping comments / strings
+	call searchpair('{','','}', 'W', 's:isRCommentOrString(line("."), col("."))')
 	let funcendpos = getpos('.')
 
 	" check if cursor pos is within start/end of function found
@@ -109,17 +108,22 @@ function! SearchRFunc(searchpos, flags, curpos)
   endif
 endfunction
 
+" helpers {{{1
+
 function s:PosCompare(p1, p2)
   " compares if one position is later than the other
   " returns -1 ( p1 < p2 ), +1 ( p1 > p2 ), or 0 ( p1 == p2 )
   " p1 and p2 are positions, in the same format as the output for getpos()
   if     a:p1[1] < a:p2[1] || (a:p1[1] == a:p2[1] && a:p1[2] < a:p2[2]) | return -1
   elseif a:p1[1] > a:p2[1] || (a:p1[1] == a:p2[1] && a:p1[2] > a:p2[2]) | return  1
-  else														| return  0 | endif
+  else | return  0 | endif
 endfunction
 
+function! s:isRCommentOrString(lnum, cnum)
+  return synIDattr(synID(a:lnum, a:cnum, 0), "name") =~? 'rComment\|rString'
+endfunction
 
-" " Teardown
+" " Teardown {{{1
 " " TODO b:undo_ftplugin
 " if !exists('b:undo_ftplugin')
 "   let b:undo_ftplugin = ''
