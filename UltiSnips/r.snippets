@@ -61,6 +61,12 @@ snippet "(\w+)\s*\%\>\%\=" "var>>=" wrA
 `!p snip.rv=match.group(1)` <- `!p snip.rv=match.group(1)` %>%
 endsnippet
 
+snippet "(\w+)\s*\(\=" "var(=  x <- func(x)" wrA
+`!p snip.rv=match.group(1)` <- ${1:func}(`!p snip.rv=match.group(1)`
+endsnippet
+# if autopairs disabled,
+# `!p snip.rv=match.group(1)` <- ${1:func}(`!p snip.rv=match.group(1)`$2)	
+
 
 # control flow {{{1 
 
