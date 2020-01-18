@@ -395,57 +395,7 @@ if has('gui_running')
   endif
 endif
 
-
-" Transparency for gvim on windows os
-" requires vimtweak.dll to be installed in the folder containing vim.exe
-if has('gui_running')
-  if has('win64')
-	let g:path_to_vimtweak = globpath(&runtimepath, 'vimtweak64.dll')
-  elseif has('win32')
-	let g:path_to_vimtweak = globpath(&runtimepath, 'vimtweak32.dll')
-  endif
-
-  if exists("g:path_to_vimtweak")
-
-	let g:transp_min = 0	 " min allowable transparency; fully opaque
-	let g:transp_max = 220   " max allowable transparency; a little less than 255
-	let g:transp_def = 0	 " default transparency; fully opaque
-
-	function SetTransparency(v)
-	  let g:transp = a:v
-	  if (g:transp < g:transp_min) | let g:transp = g:transp_min | endif
-	  if (g:transp > g:transp_max) | let g:transp = g:transp_max | endif
-
-	  call libcallnr(g:path_to_vimtweak, 'SetAlpha', 255-g:transp)
-	  echo "Transparency" g:transp
-	endfunction
-
-	function IncreaseTransparency(num)
-	  if !exists("g:transp") | let g:transp = g:transp_def | endif
-	  let g:transp += a:num
-	  call SetTransparency(g:transp)
-	endfunction
-
-	function! DecreaseTransparency(num)
-	  if !exists("g:transp") | let g:transp = g:transp_def | endif
-	  let g:transp -= a:num
-	  call SetTransparency(g:transp)
-	endfunction
-
-
-
-	let g:transp_finetick = 10
-	let g:transp_coarsetick = 30
-
-	" nnoremap <leader>+ :call IncreaseTransparency(30)<CR>		" idea without v:count
-	nnoremap <leader>+ :<C-u>call IncreaseTransparency(<C-r>=v:count1 * g:transp_coarsetick<CR>)<CR>
-	nnoremap <leader>- :<C-u>call DecreaseTransparency(<C-r>=v:count1 * g:transp_coarsetick<CR>)<CR>
-	nnoremap <leader>^ :<C-u>call IncreaseTransparency(<C-r>=v:count1 * g:transp_finetick<CR>)<CR>
-	nnoremap <leader>_ :<C-u>call DecreaseTransparency(<C-r>=v:count1 * g:transp_finetick<CR>)<CR>
-	nnoremap <leader>0 :<C-u>call SetTransparency(0)<CR>
-  endif
-
-endif
+" see also plugin for windows transparency in .vim/plugin/
 
 " search options {{{1
 " -------------------
