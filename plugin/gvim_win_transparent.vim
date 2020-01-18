@@ -1,5 +1,10 @@
 " Transparency for gvim on windows os
 " requires vimtweak.dll to be installed in the folder containing vim.exe
+" usage:   
+"   :Transparency [<n>|+<n>|-<n>]
+"   repeat last command with @:
+
+" initial checks
 if has('gui_running')
   if has('win64')
     let s:path_to_vimtweak = globpath(&runtimepath, 'vimtweak64.dll')
@@ -10,12 +15,15 @@ endif
 
 if !exists("s:path_to_vimtweak") | finish | endif
 
-let s:transp_min = 0	 " min allowable transparency; fully opaque
-let s:transp_max = 220   " max allowable transparency; a little less than 255
-let s:transp_def = 0	 " default transparency; fully opaque
+" parameters
+let s:transp = 0		" current transparency; starts at 0 (fully opaque)
+let s:transp_min = 0      	" min allowable transparency; fully opaque
+let s:transp_max = 220    	" max allowable transparency; a little less than 255
+let s:transp_ticksize = 20	" if using +/- without argument, increment/decrement by this amount
 
-function s:setTransparency(v)
-  let s:transp = a:v
+" helper funcs
+function s:setTransparency(num)
+  let s:transp = a:num
   if (s:transp < s:transp_min) | let s:transp = s:transp_min | endif
   if (s:transp > s:transp_max) | let s:transp = s:transp_max | endif
 
@@ -23,27 +31,49 @@ function s:setTransparency(v)
   echo "Transparency" s:transp
 endfunction
 
-function IncreaseTransparency(num)
-  if !exists("s:transp") | let s:transp = s:transp_def | endif
+function s:increaseTransparency(num)
   let s:transp += a:num
-  call SetTransparency(s:transp)
+  call s:setTransparency(s:transp)
 endfunction
 
-function! DecreaseTransparency(num)
-  if !exists("s:transp") | let s:transp = s:transp_def | endif
+function! s:decreaseTransparency(num)
   let s:transp -= a:num
-  call SetTransparency(s:transp)
+  call s:setTransparency(s:transp)
 endfunction
 
+function s:parseTransparency(str)
+  " processes the :Transparency command, with 0 or 1 input args
 
+  if a:str ==# ''
+    " :Transparency without arg; print current transparency value
+    echo "Transparency" s:transp
+    return
 
-let s:transp_finetick = 10
-let s:transp_coarsetick = 30
+  elseif a:str ==# '+'
+    " :Transparency +
+    call s:increaseTransparency(s:transp_ticksize)
+  elseif a:str ==# '-'
+    " :Transparency -
+    call s:decreaseTransparency(s:transp_ticksize)
+  elseif a:str =~ '^+\d\+'
+    " :Transparency +n
+    let amount = str2nr( matchstr(a:str, '\d\+') )
+    call s:increaseTransparency(amount)
+  elseif a:str =~ '^-\d\+'
+    " :Transparency -n
+    let amount = str2nr( matchstr(a:str, '\d\+') )
+    call s:decreaseTransparency(amount)
+  elseif a:str =~ '^\d\+'
+    " :Transparency n
+    let amount = str2nr( matchstr(a:str, '\d\+') )
+    call s:setTransparency(amount)
 
-" nnoremap <leader>+ :call IncreaseTransparency(30)<CR>		" idea without v:count
-nnoremap <leader>+ :<C-u>call IncreaseTransparency(<C-r>=v:count1 * s:transp_coarsetick<CR>)<CR>
-nnoremap <leader>- :<C-u>call DecreaseTransparency(<C-r>=v:count1 * s:transp_coarsetick<CR>)<CR>
-nnoremap <leader>^ :<C-u>call IncreaseTransparency(<C-r>=v:count1 * s:transp_finetick<CR>)<CR>
-nnoremap <leader>_ :<C-u>call DecreaseTransparency(<C-r>=v:count1 * s:transp_finetick<CR>)<CR>
-nnoremap <leader>0 :<C-u>call SetTransparency(0)<CR>
+  else
+    echoerr ":Transparency called with invalid argument(s)"
+    return
 
+  endif
+endfunction
+
+" enduser command
+command! -nargs=? Transparency call s:parseTransparency('<args>') 
