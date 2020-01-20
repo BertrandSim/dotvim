@@ -16,16 +16,16 @@ endif
 if !exists("s:path_to_vimtweak") | finish | endif
 
 " parameters
-let s:transp = 0		" current transparency; starts at 0 (fully opaque)
-let s:transp_min = 0      	" min allowable transparency; fully opaque
-let s:transp_max = 220    	" max allowable transparency; a little less than 255
-let s:transp_ticksize = 20	" if using +/- without argument, increment/decrement by this amount
+let g:transp_default  = get(g:,"transp_default",0)	" starting transparency; starts at 0 (fully opaque) by default
+let g:transp_min      = get(g:,"transp_min",0)      	" min allowable transparency; fully opaque by default
+let g:transp_max      = get(g:,"transp_max",220)	" max allowable transparency; a little less than 255
+let g:transp_ticksize = get(g:,"transp_ticksize",20)	" if using +/- without argument, increment/decrement by this amount
 
 " helper funcs
 function s:setTransparency(num)
   let s:transp = a:num
-  if (s:transp < s:transp_min) | let s:transp = s:transp_min | endif
-  if (s:transp > s:transp_max) | let s:transp = s:transp_max | endif
+  if (s:transp < g:transp_min) | let s:transp = g:transp_min | endif
+  if (s:transp > g:transp_max) | let s:transp = g:transp_max | endif
 
   call libcallnr(s:path_to_vimtweak, 'SetAlpha', 255-s:transp)
   echo "Transparency" s:transp
@@ -51,10 +51,10 @@ function s:parseTransparency(str)
 
   elseif a:str ==# '+'
     " :Transparency +
-    call s:increaseTransparency(s:transp_ticksize)
+    call s:increaseTransparency(g:transp_ticksize)
   elseif a:str ==# '-'
     " :Transparency -
-    call s:decreaseTransparency(s:transp_ticksize)
+    call s:decreaseTransparency(g:transp_ticksize)
   elseif a:str =~ '^+\d\+'
     " :Transparency +n
     let amount = str2nr( matchstr(a:str, '\d\+') )
@@ -74,6 +74,12 @@ function s:parseTransparency(str)
 
   endif
 endfunction
+
+" startup
+let s:transp = g:transp_default		" tracks current transparency
+augroup gvim_transp
+  autocmd VimEnter * silent! call s:setTransparency(s:transp)
+augroup END
 
 " enduser command
 command! -nargs=? Transparency call s:parseTransparency('<args>') 

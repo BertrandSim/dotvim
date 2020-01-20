@@ -323,6 +323,15 @@ if isdirectory($VIMHOME."/pack/bundle/opt/vim-easy-align") ||
   xmap gA <Plug>(LiveEasyAlign)
 endif
 
+" mappings for windows transparency (.vim/plugin/*transparent.vim)
+if has('gui_running') && 
+  \ ( has('win64') || has('win32') )
+  let g:transp_default  = 0
+  let g:transp_ticksize = 20
+  nnoremap <silent> <C-S-Up> :<C-u>Transparency +<CR>
+  nnoremap <silent> <C-S-Down> :<C-u>Transparency -<CR>
+endif
+
 
 " UI {{{1
 " -------------------
@@ -377,25 +386,14 @@ if &term =~ '256color'
 set t_ut=
 endif
 
-" gvim {{{1
-augroup gvimm
-  autocmd!
-  autocmd VimEnter * 
-	  \if has('gui_running')
-	  \  | set guifont=Consolas:h12:cANSI:qDRAFT
-	  \  | set lines=30 columns=120
-	  \|endif
-augroup END
 
-if has('gui_running')
-  if has('win64') || has('win32')
-	set winaltkeys=no
-	" don't use ALT to access the gui menu
-	" use :simalt instead.
-  endif
-endif
+" window splits {{{1
+" -------------
+" don't automatically ^W= after splitting or closing a window
+set noequalalways	
 
-" see also plugin for windows transparency in .vim/plugin/
+" opens splits below, and vsplits to the right
+set splitbelow splitright
 
 " search options {{{1
 " -------------------
@@ -979,14 +977,6 @@ autocmd Filetype r setlocal foldmethod=syntax
 let r_syntax_brace_folding=1
 " or using custom fold expr instead... via plugin [TODO]
 " autocmd Filetype r setlocal foldmethod=expr
-
-" window splits {{{1
-" -------------
-" don't automatically ^W= after splitting or closing a window
-set noequalalways	
-
-" opens splits below, and vsplits to the right
-set splitbelow splitright
 
 " terminal {{{1
 " --------
