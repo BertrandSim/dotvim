@@ -503,6 +503,10 @@ vnoremap <expr> k v:count == 0 ? 'gk' : 'k'
 nnoremap ; ,
 nnoremap , ;
 
+" jump forward and back with mouse buttons
+nnoremap <X1Mouse> <C-O>
+nnoremap <X2Mouse> <C-I>
+
 
 " view help, nomodifiable buffers {{{1
 " -------------------------------
