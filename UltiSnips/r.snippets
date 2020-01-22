@@ -1,3 +1,5 @@
+# common {{{1
+
 priority 1
 snippet todo "todo with timestamp"
 TODO (`!v strftime('%Y-%m-%d')`): $0
@@ -34,10 +36,47 @@ snippet "ex(i(st?)?)?" "exists" wr
 exists("${1:${VISUAL}}")
 endsnippet
 
-# auto-expands on map*~
-snippet "((map|map2|pmap)(_(lgl|chr|int|dbl|raw|dfr|dfc))?)~" "map*( ~ {  })" rA
-`!p snip.rv=match.group(1)`( ~ { ${1:${VISUAL}} })
+
+# control flow {{{1 
+
+snippet for "for loop"
+for ($1) {
+	${2:${VISUAL}}
+}
 endsnippet
+
+snippet while "while loop"
+while ($1) {
+	${2:${VISUAL}}
+}
+endsnippet
+
+snippet ifel "if .. else"
+if ($1) {
+	${2:${VISUAL}}
+} else {
+	$3
+}
+endsnippet
+
+snippet if "if block"
+if ($1) {
+	${2:${VISUAL}}
+}
+endsnippet
+
+snippet ei "else if block"
+else if ($1) {
+	${2:${VISUAL}}
+}
+endsnippet
+
+snippet el "else block"
+else {
+	${1:${VISUAL}}
+}
+endsnippet
+
 
 # modify variable and replace {{{1
 
@@ -68,45 +107,24 @@ endsnippet
 # `!p snip.rv=match.group(1)` <- ${1:func}(`!p snip.rv=match.group(1)`$2)	
 
 
-# control flow {{{1 
+# misc {{{1
 
-snippet for "for loop"
-for ($1) {
-	${2:${VISUAL}}
-}
+# auto-expands on map*~
+snippet "((map|map2|pmap)(_(lgl|chr|int|dbl|raw|dfr|dfc))?)~" "map*( ~ {  })" rA
+`!p snip.rv=match.group(1)`( ~ { ${1:${VISUAL}} })
 endsnippet
 
-snippet while "while loop"
-while ($1) {
-	${2:${VISUAL}}
-}
+# microbenchmark
+snippet mbm "microbenchmark"
+${1:mbm} <- microbenchmark(
+	${2:a} = $3,
+	${4:b} = $5,
+	times=${7:100L}, check=${8:'${9:equivalent}'}
+)
+autoplot($1)
 endsnippet
 
-snippet ifel "if .. else"
-if ($1) {
-	${2:${VISUAL}}
-} else {
-	$3
-}
-endsnippet
 
-snippet if "if block"
-if ($1) {
-	${2:${VISUAL}}
-}
-endsnippet
-
-snippet elif "else if block"
-else if ($1) {
-	${2:${VISUAL}}
-}
-endsnippet
-
-snippet else "else block"
-else {
-	${1:${VISUAL}}
-}
-endsnippet
 
 
 # vim: foldmethod=marker : ts=2 : sts=0 : sw=0 : noet
