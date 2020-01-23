@@ -6,7 +6,7 @@
 	url = https://github.com/BertrandSim/Nvim-R.git
 [submodule "pack/bundle/opt/auto-pairs"]
 	path = pack/bundle/opt/auto-pairs
-	url = https://github.com/jiangmiao/auto-pairs.git
+	url = https://github.com/BertrandSim/auto-pairs.git
 [submodule "pack/bundle/opt/vim-angry"]
 	path = pack/bundle/start/vim-angry
 	url = https://github.com/b4winckler/vim-angry.git

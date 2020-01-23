@@ -313,6 +313,9 @@ source $VIMHOME/macros/esv_api_key.vim
 let g:AutoPairsCenterLine = 0		" do not re-center screen after pressing <CR>
 let g:AutoPairsMultilineClose = 0	" do not jump past closing char on another line
 
+let g:AutoPairsUseInsertedCount = 1	" skip over close delims if open delims were typed previously
+let g:AutoPairsDelRepeatedPairs = 0	" do not delete multiple pairs (eg. [[[|]]]) in a single <BS>
+
 " mappings for easy align plugin
 if isdirectory($VIMHOME."/pack/bundle/opt/vim-easy-align") || 
   \isdirectory($VIMHOME."/pack/bundle/start/vim-easy-align")
