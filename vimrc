@@ -120,7 +120,8 @@ if has('packages')
   packadd! Nvim-R           	" jalvesaq/Nvim-R --forked;	interaction between R scripts with R terminal
   " packadd! vim-latex-1.10.0 	" vim-latex or latex suite
   " packadd! vim-surround-2.1-usr	" surroundings; usr changed to use omap for ds,cs, etc.
-  packadd! auto-pairs       	" jiangmiao/auto-pairs;		delims
+  " packadd! auto-pairs       	" jiangmiao/auto-pairs;		delims
+  packadd! oproot-auto-pairs       	" oproot/auto-pairs;		delims
   packadd! vim-easy-align   	" junegunn/vim-easy-align;	align lines by a char/regex
   packadd! incsearch.vim		" hayabusa/incsearch.vim;	improved / ? incsearch
   packadd! vim-sandwich		" machakann/vim-sandwich;	surroundings
@@ -311,7 +312,9 @@ source $VIMHOME/macros/esv_api_key.vim
 
 " Autopairs settings
 let g:AutoPairsCenterLine = 0		" do not re-center screen after pressing <CR>
-let g:AutoPairsMultilineClose = 0	" do not jump past closing char on another line
+let g:AutoPairsMultilineClose = 0	" do not jump past closing delim on another line
+let g:AutoPairsOnlyBeforeClose = 1	" only insert closing delim when text to the right is closing delim/whitespace/eol
+
 
 " mappings for easy align plugin
 if isdirectory($VIMHOME."/pack/bundle/opt/vim-easy-align") || 
