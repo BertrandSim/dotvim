@@ -120,11 +120,10 @@ if has('packages')
   packadd! Nvim-R           	" jalvesaq/Nvim-R --forked;	interaction between R scripts with R terminal
   " packadd! vim-latex-1.10.0 	" vim-latex or latex suite
   " packadd! vim-surround-2.1-usr	" surroundings; usr changed to use omap for ds,cs, etc.
-  " packadd! auto-pairs       	" jiangmiao/auto-pairs;		delims
-  packadd! oproot-auto-pairs       	" oproot/auto-pairs;		delims
+  packadd! auto-pairs       	" BertrandSim/auto-pairs;	delims, forked from jiangmiao/auto-pairs
   packadd! vim-easy-align   	" junegunn/vim-easy-align;	align lines by a char/regex
   packadd! incsearch.vim		" hayabusa/incsearch.vim;	improved / ? incsearch
-  packadd! vim-sandwich		" machakann/vim-sandwich;	surroundings
+  packadd! vim-sandwich			" machakann/vim-sandwich;	surroundings
 
 " elseif " using pathogen plugin manager,
 " execute pathogen#infect()
