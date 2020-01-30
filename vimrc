@@ -591,13 +591,19 @@ augroup qcomment
 augroup END
 
 
-nmap <leader>c <Plug>(AddComment)
-nmap <leader>x <Plug>(RmComment)
-nmap <leader>bc <Plug>(AddBlockComment)
-nmap <leader>bx <Plug>(RmBlockComment)
-vmap <leader>c <Plug>(VAddComment)
-vmap <leader>x <Plug>(VRmComment)
-vmap <leader>bc <Plug>(VAddBlockComment)
+" cm / cx to comment / uncomment current line
+omap <expr> m v:operator ==# 'c' ? "\<Esc>"."\<Plug>(AddComment)".'_' : 'p'
+omap <expr> x v:operator ==# 'c' ? "\<Esc>"."\<Plug>(RmComment)".'_' : 'p'
+
+" [\cm|\cx|\bm|\bx]{motion} to 
+" comment|uncomment|block comment|block uncomment lines specified by {motion}
+nmap <leader>cm <Plug>(AddComment)
+nmap <leader>cx <Plug>(RmComment)
+nmap <leader>bm <Plug>(AddBlockComment)
+" nmap <leader>bx <Plug>(RmBlockComment)
+vmap <leader>cm <Plug>(VAddComment)
+vmap <leader>cx <Plug>(VRmComment)
+vmap <leader>bm <Plug>(VAddBlockComment)
 " vmap <leader>bx <Plug>(VRmBlockComment)
 
 nnoremap <silent> <Plug>(AddComment) :<C-U>set opfunc=AddCommentOp<CR>g@
@@ -862,9 +868,10 @@ vnoremap <silent> <Plug>(VComACop) :<C-U>call VComACop()<CR>
 
 "cp to copy and comment cur line (normal mode)
 omap <expr> p v:operator ==# 'c' ? "\<Esc>"."\<Plug>(ComACop)" : 'p'
-"or F7 to copy and comment cur line / visual selection
-nmap <F7> <Plug>(ComACop)
-vmap <F7> <Plug>(VComACop)
+"or \cp to copy and comment motion / visual selection
+" TODO [2020-01-30]: operator for comment-a-copy
+" nmap <leader>cp ...
+vmap <leader>cp <Plug>(VComACop)
 
 
 " folding {{{1
