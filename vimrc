@@ -556,21 +556,10 @@ set backspace=indent,eol,start
 
 " bracket matching {{{1
 " ----------------
-" change ( to (|), with cursor at |.
-" see :h i^gU --- does not break undo or . repeat
-" if has('patch-7.4.849')
-  " inoremap ( ()<C-G>U<Left>
-  " inoremap [ []<C-G>U<Left>
-  " inoremap { {}<C-G>U<Left>
-" else
-  " inoremap ( ()<Left>
-  " inoremap [ []<Left>
-  " inoremap { {}<Left>
-" endif
+" with autopairs plugin	(see AutoPairs setting above)
+" and Arpeggio plugin.	(see after/plugin/brackets_arpeggio.vim)
 
-" replaced with autopairs plugin (for now)...
 
-"
 " quick comment {{{1
 " -------------
 
