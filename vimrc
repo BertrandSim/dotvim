@@ -551,7 +551,7 @@ set backspace=indent,eol,start
 
 " Use u for t after an operator (UnTil).
 " A little easier on the hands
-" onoremap u t
+onoremap u t
 
 
 " bracket matching {{{1
