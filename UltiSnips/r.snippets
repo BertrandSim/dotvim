@@ -101,10 +101,10 @@ snippet "(\w+)\s*\%\>\%\=" "var>>=" wrA
 endsnippet
 
 snippet "(\w+)\s*\(\=" "var(=  x <- func(x)" wrA
-`!p snip.rv=match.group(1)` <- ${1:func}(`!p snip.rv=match.group(1)`
+`!p snip.rv=match.group(1)` <- ${1:func}(`!p snip.rv=match.group(1)`$2)	
 endsnippet
-# if autopairs disabled,
-# `!p snip.rv=match.group(1)` <- ${1:func}(`!p snip.rv=match.group(1)`$2)	
+# if autopairs enabled,
+# `!p snip.rv=match.group(1)` <- ${1:func}(`!p snip.rv=match.group(1)`
 
 
 # misc {{{1
