@@ -80,7 +80,7 @@ endsnippet
 
 # modify variable and replace {{{1
 
-snippet "(\w+)\s*\+\+" "var++" wrA
+snippet "(\w+)\+\+" "var++" wrA
 `!p snip.rv=match.group(1)` <- `!p snip.rv=match.group(1)` + 1
 endsnippet
 
@@ -88,7 +88,7 @@ snippet "(\w+)\s*\+\=" "var+=" wrA
 `!p snip.rv=match.group(1)` <- `!p snip.rv=match.group(1)` + $0
 endsnippet
 
-snippet "(\w+)\s*\-\-" "var--" wrA
+snippet "(\w+)\-\-" "var--" wrA
 `!p snip.rv=match.group(1)` <- `!p snip.rv=match.group(1)` - 1
 endsnippet
 
