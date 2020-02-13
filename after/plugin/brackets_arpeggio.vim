@@ -18,7 +18,7 @@ endfunction
 
 
 " map key chords
-" { jk:() , df:{} , fv:[] , jn:<> , fj:'' , dk:"" }
+" { jk:() , df:{} , fj:[] , vn:<> , sk:'' , dk:"", bk:`` }
 
 call arpeggio#load()
 
@@ -40,13 +40,17 @@ Arpeggioinoremap <> <C-r>=UltiSnips#Anon(
 
 Arpeggioimap jk ()
 Arpeggioimap df {}
-Arpeggioimap fv []
-Arpeggioimap jn <>
-Arpeggioinoremap fj <C-r>=UltiSnips#Anon(
+Arpeggioimap fj []
+Arpeggioimap vn <>
+
+Arpeggioinoremap sk <C-r>=UltiSnips#Anon(
   \ "'".'$1'."'"
   \)<CR>
 Arpeggioinoremap dk <C-r>=UltiSnips#Anon(
   \ '"'.'$1'.'"'
+  \)<CR>
+Arpeggioinoremap bk <C-r>=UltiSnips#Anon(
+  \ '\`'.'$1'.'\`'
   \)<CR>
 
 
