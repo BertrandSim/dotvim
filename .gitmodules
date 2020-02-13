@@ -45,4 +45,4 @@
 	url = git@github.com:BertrandSim/vim-multindent.git
 [submodule "pack/bundle/opt/vim-arpeggio"]
 	path = pack/bundle/opt/vim-arpeggio
-	url = https://github.com/kana/vim-arpeggio.git
+	url = git@github.com:BertrandSim/vim-arpeggio.git
