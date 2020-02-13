@@ -11,20 +11,20 @@ function! s:unmapAutoPairsInsert()
   "   filter /\cAutoPairsInsert/ imap <buffer>
   " redir END
 
-  for delim in ['(',')','[',']','{','}','<','>',"'",'"']
+  for delim in ['(',')','[',']','{','}','<','>',"'",'"','`']
     exec 'silent! iunmap <buffer>' delim
   endfor
 endfunction
 
 
-" map key chords
+" map key chords {{{
+" ==================
 " { jk:() , df:{} , fj:[] , vn:<> , sk:'' , dk:"", bk:`` }
 
 call arpeggio#load()
 
-" Arpeggioimap jk ()<C-G>U<Left>	 " if has('patch-7.4.849')
-" Arpeggioimap jk \pair\<C-r>=UltiSnips#ExpandSnippet()<CR>(<C-r>=UltiSnips#JumpForwards()<CR> 
-
+" insert mode
+" -----------
 Arpeggioinoremap () <C-r>=UltiSnips#Anon(
   \ '('.'$1'.')'
   \)<CR>
@@ -53,4 +53,13 @@ Arpeggioinoremap bk <C-r>=UltiSnips#Anon(
   \ '\`'.'$1'.'\`'
   \)<CR>
 
+" terminal mode
+" -------------
+Arpeggiotnoremap jk ()<Left>
+Arpeggiotnoremap df {}<Left>
+Arpeggiotnoremap fj []<Left>
+Arpeggiotnoremap vn <><Left>
+Arpeggiotnoremap sk ''<Left>
+Arpeggiotnoremap dk ""<Left>
+Arpeggiotnoremap bk ``<Left>
 
