@@ -389,6 +389,45 @@ set t_ut=
 endif
 
 
+" tabs and spacing {{{1
+" -------------------
+" set tabstop=4			" number of visual spaces per TABstop
+" set softtabstop=4		" number of spaces inserted per TAB when editing (eg. in insert mode)
+" set shiftwidth=4		" number of spaces for an indent
+" set expandtab			" Tabstops are expanded to spaces
+" set nosmarttab		" disabled. If on, TAB adds a shiftwidth at the start of a line, and a softtabstop elsewhere
+
+set tabstop=8			" number of visual spaces per TABstop
+set softtabstop=0		" number of spaces inserted per TAB when editing (eg. in insert mode) " to be the same as tabstop
+set shiftwidth=2		" number of spaces for an indent
+set noexpandtab			" Tabstops are not expanded to spaces
+set smarttab			" TAB adds a shiftwidth at the start of a line, and a softtabstop elsewhere
+
+" eol and hidden chars {{{1
+" --------------------
+set wrap		" wrap lines (display)
+set linebreak	" don't break lines in between words
+if exists("&breakindent") | set breakindent | endif	" wrapped lines preserve indentation
+set showbreak=..	" wrapped lines are prepended with ".."
+
+" mapping to toggle wrap
+noremap <F3> :set wrap!<CR>
+	        \:set wrap?<CR>
+
+" specify how eol and whitespace chars are displayed
+set listchars=eol:¬,tab:>\ ,trail:_,extends:>,precedes:<,nbsp:~
+if has('patch-7.4.710')
+  set listchars+=space:·
+endif
+
+" mapping to show/hide these characters
+noremap <F4> :set list!<CR>
+	        \:set list?<CR>
+
+" show part of last text line in window
+set display+=lastline	" eg. a very long line that@@@"
+" set display+=truncate
+
 " window splits {{{1
 " -------------
 " don't automatically ^W= after splitting or closing a window
@@ -455,41 +494,6 @@ nnoremap m/ /\%>'s\%(\)\%<'e<Left><Left><Left><Left><Left><Left><Left>
 " search within visual selection
 vnoremap / <Esc>/\%V\%(\)\%V<Left><Left><Left><Left><Left>
 
-
-" tabs and spacing {{{1
-" -------------------
-" set tabstop=4			" number of visual spaces per TABstop
-" set softtabstop=4		" number of spaces inserted per TAB when editing (eg. in insert mode)
-" set shiftwidth=4		" number of spaces for an indent
-" set expandtab			" Tabstops are expanded to spaces
-" set nosmarttab		" disabled. If on, TAB adds a shiftwidth at the start of a line, and a softtabstop elsewhere
-
-set tabstop=8			" number of visual spaces per TABstop
-set softtabstop=0		" number of spaces inserted per TAB when editing (eg. in insert mode) " to be the same as tabstop
-set shiftwidth=2		" number of spaces for an indent
-set noexpandtab			" Tabstops are not expanded to spaces
-set smarttab			" TAB adds a shiftwidth at the start of a line, and a softtabstop elsewhere
-
-" whitespace and eol {{{1
-
-set wrap		" wrap lines (display)
-set linebreak	" don't break lines in between words
-if exists("&breakindent") | set breakindent | endif	" wrapped lines preserve indentation
-set showbreak=..	" wrapped lines are prepended with ".."
-
-" mapping to toggle wrap
-noremap <F3> :set wrap!<CR>
-	        \:set wrap?<CR>
-
-" specify how eol and ws chars are displayed
-set listchars=eol:¬,tab:>\ ,trail:_,extends:>,precedes:<,nbsp:~
-if has('patch-7.4.710')
-  set listchars+=space:·
-endif
-
-" mapping to show/hide these characters
-noremap <F4> :set list!<CR>
-	        \:set list?<CR>
 
 " movement and scrolling {{{1
 " --------------
