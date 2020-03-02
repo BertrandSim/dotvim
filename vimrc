@@ -125,6 +125,7 @@ if has('packages')
   packadd! incsearch.vim		" hayabusa/incsearch.vim;	improved / ? incsearch
   packadd! vim-sandwich			" machakann/vim-sandwich;	surroundings
   packadd! vim-arpeggio			" kana/vim-arpeggio;		key chords
+  packadd! Colorizer			" chrisbra/Colorizer;		show color codes and names in vim
 
 " elseif " using pathogen plugin manager,
 " execute pathogen#infect()
@@ -157,7 +158,7 @@ else
   set runtimepath+=~/.vim/pack/bundle/opt/incsearch.vim
   set runtimepath+=~/.vim/pack/bundle/opt/vim-sandwich
   set runtimepath+=~/.vim/pack/bundle/opt/vim-arpeggio
-
+  set runtimepath+=~/.vim/pack/bundle/opt/Colorizer
 
 endif
 
