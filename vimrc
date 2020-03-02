@@ -428,6 +428,15 @@ noremap <F4> :set list!<CR>
 set display+=lastline	" eg. a very long line that@@@"
 " set display+=truncate
 
+" colors for special chars
+if (g:colors_name =~ 'solarized' && 
+  \ &background ==# 'light' )
+  " meta, special keys, whitespace in list
+  hi SpecialKey guifg=#93a1a1
+  " showbreak, @, >>, eol
+  hi NonText guifg=#93a1a1
+endif
+
 " window splits {{{1
 " -------------
 " don't automatically ^W= after splitting or closing a window
