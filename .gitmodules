@@ -46,3 +46,6 @@
 [submodule "pack/bundle/opt/vim-arpeggio"]
 	path = pack/bundle/opt/vim-arpeggio
 	url = git@github.com:BertrandSim/vim-arpeggio.git
+[submodule "pack/bundle/opt/Colorizer"]
+	path = pack/bundle/opt/Colorizer
+	url = https://github.com/chrisbra/Colorizer.git
