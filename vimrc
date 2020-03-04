@@ -331,8 +331,8 @@ if has('gui_running') &&
   \ ( has('win64') || has('win32') )
   let g:transp_default  = 0
   let g:transp_ticksize = 20
-  nnoremap <silent> <C-S-Up> :<C-u>Transparency +<CR>
-  nnoremap <silent> <C-S-Down> :<C-u>Transparency -<CR>
+  nnoremap <silent> <expr> <C-S-Up>   exists(":Transparency") ? ":\<C-u>Transparency +\<CR>" : ''
+  nnoremap <silent> <expr> <C-S-Down> exists(":Transparency") ? ":\<C-u>Transparency -\<CR>" : ''
 endif
 
 

@@ -13,7 +13,9 @@ if has('gui_running')
   endif
 endif
 
-if !exists("s:path_to_vimtweak") | finish | endif
+if !exists("s:path_to_vimtweak") || s:path_to_vimtweak ==# '' 
+  finish
+endif
 
 " parameters
 let g:transp_default  = get(g:,"transp_default",0)	" starting transparency; starts at 0 (fully opaque) by default
@@ -41,31 +43,31 @@ function! s:decreaseTransparency(num)
   call s:setTransparency(s:transp)
 endfunction
 
-function s:parseTransparency(str)
+function s:parseTransparency(...)
   " processes the :Transparency command, with 0 or 1 input args
 
-  if a:str ==# ''
+  if !a:0
     " :Transparency without arg; print current transparency value
     echo "Transparency" s:transp
     return
 
-  elseif a:str ==# '+'
+  elseif a:1 ==# '+'
     " :Transparency +
     call s:increaseTransparency(g:transp_ticksize)
-  elseif a:str ==# '-'
+  elseif a:1 ==# '-'
     " :Transparency -
     call s:decreaseTransparency(g:transp_ticksize)
-  elseif a:str =~ '^+\d\+'
+  elseif a:1 =~ '^+\d\+'
     " :Transparency +n
-    let amount = str2nr( matchstr(a:str, '\d\+') )
+    let amount = str2nr( matchstr(a:1, '\d\+') )
     call s:increaseTransparency(amount)
-  elseif a:str =~ '^-\d\+'
+  elseif a:1 =~ '^-\d\+'
     " :Transparency -n
-    let amount = str2nr( matchstr(a:str, '\d\+') )
+    let amount = str2nr( matchstr(a:1, '\d\+') )
     call s:decreaseTransparency(amount)
-  elseif a:str =~ '^\d\+'
+  elseif a:1 =~ '^\d\+'
     " :Transparency n
-    let amount = str2nr( matchstr(a:str, '\d\+') )
+    let amount = str2nr( matchstr(a:1, '\d\+') )
     call s:setTransparency(amount)
 
   else
@@ -82,4 +84,4 @@ augroup gvim_transp
 augroup END
 
 " enduser command
-command! -nargs=? Transparency call s:parseTransparency('<args>') 
+command! -nargs=? Transparency call s:parseTransparency(<f-args>)
