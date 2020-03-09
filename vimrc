@@ -446,6 +446,50 @@ set noequalalways
 " opens splits below, and vsplits to the right
 set splitbelow splitright
 
+" movement {{{1
+" --------
+
+" move full lines with a count supplied, and
+"    screen lines without. 
+noremap <expr> j v:count ? 'j' : 'gj'
+noremap <expr> k v:count ? 'k' : 'gk'
+
+" swap ; and , for f,F,t,T
+nnoremap ; ,
+nnoremap , ;
+
+" jump forward and back with mouse buttons
+nnoremap <X1Mouse> <C-O>
+nnoremap <X2Mouse> <C-I>
+
+
+" edits and inserts {{{1
+" -------------------
+" key combi to escape from insert mode
+" inoremap jk <Esc>
+" replaced by moving <Esc>'s keyboard location
+
+" open line(s) and stay in command mode.
+" the code 2 lines below is a macro with keystrokes o, <esc>, k.
+" a macro is used to let the remap work with counts.
+nnoremap <C-n> @="o\ek"<CR>
+nnoremap <C-p> @="O\ej"<CR>
+" could also use [<Space>, ]<Space>, in vim-unimpaired plugin.
+
+" use a count with 'o' or 'O' to specify how many lines to open
+nnoremap <expr> o '<Esc>o' . repeat('<CR>', v:count1 - 1)
+nnoremap <expr> O '<Esc>O' . repeat('<CR>', v:count1 - 1) . repeat('<Up>', v:count1 - 1)
+" [N]O is not . repeatable
+
+" in insert mode, <BS> ^W etc. is able to delete indents, newlines, 
+" and past the starting place of insertion
+set backspace=indent,eol,start
+
+" Use u for t after an operator (UnTil).
+" A little easier on the hands
+onoremap u t
+
+
 " search options {{{1
 " -------------------
 set incsearch		" jump to first search as characters are entered
@@ -505,25 +549,6 @@ nnoremap m/ /\%>'s\%(\)\%<'e<Left><Left><Left><Left><Left><Left><Left>
 vnoremap / <Esc>/\%V\%(\)\%V<Left><Left><Left><Left><Left>
 
 
-" movement and scrolling {{{1
-" --------------
-
-" move screen lines without a count supplied, and 
-" full lines with a count supplied.
-nnoremap <expr> j v:count == 0 ? 'gj' : 'j'
-nnoremap <expr> k v:count == 0 ? 'gk' : 'k'
-vnoremap <expr> j v:count == 0 ? 'gj' : 'j'
-vnoremap <expr> k v:count == 0 ? 'gk' : 'k'
-
-" swap ; and , for f,F,t,T
-nnoremap ; ,
-nnoremap , ;
-
-" jump forward and back with mouse buttons
-nnoremap <X1Mouse> <C-O>
-nnoremap <X2Mouse> <C-I>
-
-
 " view help, nomodifiable buffers {{{1
 " -------------------------------
 augroup nomod_maps
@@ -535,37 +560,6 @@ augroup nomod_maps
 	\   nnoremap <buffer> q :<C-u>q<CR>|
 	\ endif
 augroup END
-
-
-" edits and inserts {{{1
-" -------------------
-" key combi to escape from insert mode
-" inoremap jk <Esc>
-" replaced by moving <Esc>'s keyboard location
-
-" open line(s) and stay in command mode.
-" the code 2 lines below is a macro with keystrokes o, <esc>, k.
-" a macro is used to let the remap work with counts.
-" nnoremap <C-j> @="o\ek"<CR>
-" nnoremap <C-k> @="O\ej"<CR>
-" nnoremap <leader>o @="o\ek"<CR>
-" nnoremap <leader>O @="O\ej"<CR>
-nnoremap <C-n> @="o\ek"<CR>
-nnoremap <C-p> @="O\ej"<CR>
-" could also use [<Space>, ]<Space>, in vim-unimpaired plugin.
-
-" use a count with 'o' or 'O' to specify how many lines to open
-nnoremap <expr> o '<Esc>o' . repeat('<CR>', v:count1 - 1)
-nnoremap <expr> O '<Esc>O' . repeat('<CR>', v:count1 - 1) . repeat('<Up>', v:count1 - 1)
-" [N]O is not . repeatable
-
-" in insert mode, <BS> ^W etc. is able to delete indents, newlines, 
-" and past the starting place of insertion
-set backspace=indent,eol,start
-
-" Use u for t after an operator (UnTil).
-" A little easier on the hands
-onoremap u t
 
 
 " bracket matching {{{1
