@@ -451,8 +451,10 @@ set splitbelow splitright
 
 " move full lines with a count supplied, and
 "    screen lines without. 
-noremap <expr> j v:count ? 'j' : 'gj'
-noremap <expr> k v:count ? 'k' : 'gk'
+nnoremap <expr> j v:count ? 'j' : 'gj'
+nnoremap <expr> k v:count ? 'k' : 'gk'
+vnoremap <expr> j v:count ? 'j' : 'gj'
+vnoremap <expr> k v:count ? 'k' : 'gk'
 
 " swap ; and , for f,F,t,T
 nnoremap ; ,
