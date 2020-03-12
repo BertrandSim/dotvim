@@ -2,13 +2,13 @@
 	path = pack/bundle/start/vim-solarized8
 	url = https://github.com/lifepillar/vim-solarized8.git
 [submodule "pack/bundle/opt/Nvim-R"]
-	path = pack/bundle/opt/Nvim-R
+	path = pack/bundle/start/Nvim-R
 	url = https://github.com/BertrandSim/Nvim-R.git
 [submodule "pack/bundle/opt/auto-pairs"]
 	path = pack/bundle/opt/auto-pairs
 	url = https://github.com/jiangmiao/auto-pairs.git
 [submodule "pack/bundle/opt/vim-angry"]
-	path = pack/bundle/start/vim-angry
+	path = pack/text-obj/start/vim-angry
 	url = https://github.com/b4winckler/vim-angry.git
 [submodule "pack/bundle/start/vim-markdown-folding"]
 	path = pack/bundle/start/vim-markdown-folding
@@ -20,7 +20,7 @@
 	path = pack/bundle/start/ultisnips
 	url = https://github.com/SirVer/ultisnips.git
 [submodule "pack/bundle/opt/vim-easy-align"]
-	path = pack/bundle/opt/vim-easy-align
+	path = pack/bundle/start/vim-easy-align
 	url = https://github.com/junegunn/vim-easy-align.git
 [submodule "pack/text-obj/opt/vim-textobj-entire"]
 	path = pack/text-obj/start/vim-textobj-entire
@@ -35,7 +35,7 @@
 	path = pack/bundle/opt/incsearch.vim
 	url = https://github.com/haya14busa/incsearch.vim.git
 [submodule "pack/bundle/opt/vim-sandwich"]
-	path = pack/bundle/opt/vim-sandwich
+	path = pack/bundle/start/vim-sandwich
 	url = https://github.com/machakann/vim-sandwich.git
 [submodule "pack/usr/opt/esv-in-vim"]
 	path = pack/usr/start/esv-in-vim
@@ -50,8 +50,8 @@
 	path = pack/bundle/opt/Colorizer
 	url = https://github.com/chrisbra/Colorizer.git
 [submodule "pack/bundle/start/tagbar"]
-	path = pack/bundle/start/tagbar
+	path = pack/search-nav/start/tagbar
 	url = https://github.com/majutsushi/tagbar.git
 [submodule "pack/bundle/start/vim-gutentags"]
-	path = pack/bundle/start/vim-gutentags
+	path = pack/search-nav/start/vim-gutentags
 	url = https://github.com/ludovicchabant/vim-gutentags.git

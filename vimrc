@@ -118,24 +118,28 @@ if has('packages')
 " using built-in package manager
 
   " packages in start:
-  "	 lifepillar/vim-solarized8		" solarized8 colorscheme
-  "	 tpope/vim-unimpaired			" handy pairs of mappings
-  "	 masukmoi/vim-markdown-folding	" expr-folding of markdown files
-  "	 SirVer/ultisnips				" snippets
-  "  b4winckler/vim-angry			" function argument text object
-  "  lervag/vimtex					" plugin for tex files
-  "  kana/vim-textobj-user			" custom text objects
-  " 	vim-textobj-entire
-  " 	vim-textobj-line
+  "	  lifepillar/vim-solarized8		" solarized8 colorscheme
+  "	  tpope/vim-unimpaired			" handy pairs of mappings
+  "	  masukmoi/vim-markdown-folding	" expr-folding of markdown files
+  "	  SirVer/ultisnips				" snippets
+  "   jalvesaq/Nvim-R				" --forked; interaction between R scripts with R terminal
+  "   junegunn/vim-easy-align		" align lines by a char/regex
+  "   machakann/vim-sandwich		" surroundings
+  "   lervag/vimtex					" plugin for tex files
+  "   text objects:
+  "     b4winckler/vim-angry			" function argument text object
+  "     kana/vim-textobj-user			" custom text objects
+  "     kana/vim-textobj-entire
+  "     kana/vim-textobj-line
+  "   search and navigation:
+  "     majutsushi/tagbar			" show tags on a side margin
+  "     ludovicchabant/vim-gutentags	" automatically generate tags
 
   " packages in opt:
-  packadd! Nvim-R           	" jalvesaq/Nvim-R --forked;	interaction between R scripts with R terminal
   " packadd! vim-latex-1.10.0 	" vim-latex or latex suite
   " packadd! vim-surround-2.1-usr	" surroundings; usr changed to use omap for ds,cs, etc.
   packadd! auto-pairs       	" BertrandSim/auto-pairs;	delims, forked from jiangmiao/auto-pairs
-  packadd! vim-easy-align   	" junegunn/vim-easy-align;	align lines by a char/regex
   packadd! incsearch.vim		" hayabusa/incsearch.vim;	improved / ? incsearch
-  packadd! vim-sandwich			" machakann/vim-sandwich;	surroundings
   packadd! vim-arpeggio			" kana/vim-arpeggio;		key chords
   packadd! Colorizer			" chrisbra/Colorizer;		show color codes and names in vim
 
@@ -149,26 +153,28 @@ else
   if v:version >= 704
 	set runtimepath+=~/.vim/pack/bundle/start/ultisnips    " -3.1
   endif
-  set runtimepath+=~/.vim/pack/bundle/start/vim-angry
-  set runtimepath+=~/.vim/pack/bundle/start/vim-easy-align
-  if v:version >= 704
-	set runtimepath+=~/.vim/pack/bundle/start/vim-textobj-user-0.7.6
-	set runtimepath+=~/.vim/pack/text-obj/start/vim-textobj-entire
-	set runtimepath+=~/.vim/pack/text-obj/start/vim-textobj-line
-  endif
-
-
   if has('patch-8.0.0946')
-	set runtimepath+=~/.vim/pack/bundle/opt/Nvim-R
+	set runtimepath+=~/.vim/pack/bundle/start/Nvim-R
   endif
-  " set runtimepath+=~/.vim/pack/bundle/opt/vim-latex-1.10.0
-  " set runtimepath+=~/.vim/pack/bundle/opt/vim-surround-2.1-usr
-  set runtimepath+=~/.vim/pack/bundle/opt/auto-pairs
+  set runtimepath+=~/.vim/pack/bundle/start/vim-easy-align
+  set runtimepath+=~/.vim/pack/bundle/start/vim-sandwich
   if has('patch-7.4.52')
     set runtimepath+=~/.vim/pack/bundle/start/vimtex
   endif
+  set runtimepath+=~/.vim/pack/text-obj/start/vim-angry
+  if v:version >= 704
+	set runtimepath+=~/.vim/pack/text-obj/start/vim-textobj-user-0.7.6
+	set runtimepath+=~/.vim/pack/text-obj/start/vim-textobj-entire
+	set runtimepath+=~/.vim/pack/text-obj/start/vim-textobj-line
+  endif
+  set runtimepath+=~/.vim/pack/search-nav/start/tagbar
+  set runtimepath+=~/.vim/pack/search-nav/start/vim-gutentags
+
+
+  " set runtimepath+=~/.vim/pack/bundle/opt/vim-latex-1.10.0
+  " set runtimepath+=~/.vim/pack/bundle/opt/vim-surround-2.1-usr
+  set runtimepath+=~/.vim/pack/bundle/opt/auto-pairs
   set runtimepath+=~/.vim/pack/bundle/opt/incsearch.vim
-  set runtimepath+=~/.vim/pack/bundle/opt/vim-sandwich
   set runtimepath+=~/.vim/pack/bundle/opt/vim-arpeggio
   set runtimepath+=~/.vim/pack/bundle/opt/Colorizer
 
