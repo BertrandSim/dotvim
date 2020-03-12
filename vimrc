@@ -118,10 +118,10 @@ if has('packages')
 " using built-in package manager
 
   " packages in start:
-  "	  lifepillar/vim-solarized8		" solarized8 colorscheme
-  "	  tpope/vim-unimpaired			" handy pairs of mappings
-  "	  masukmoi/vim-markdown-folding	" expr-folding of markdown files
-  "	  SirVer/ultisnips				" snippets
+  "   lifepillar/vim-solarized8		" solarized8 colorscheme
+  "   tpope/vim-unimpaired			" handy pairs of mappings
+  "   masukmoi/vim-markdown-folding	" expr-folding of markdown files
+  "   SirVer/ultisnips				" snippets
   "   jalvesaq/Nvim-R				" --forked; interaction between R scripts with R terminal
   "   junegunn/vim-easy-align		" align lines by a char/regex
   "   machakann/vim-sandwich		" surroundings
