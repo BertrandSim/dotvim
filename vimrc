@@ -94,6 +94,18 @@ set shellslash
 " _c_hange _d_irectory to that of _c_urrent file with :CDC
 command CDC lcd %:p:h
 
+" use wsl as shell {{{1
+" ----------------
+" if has('win32') || has('win64')
+"   set shell=C:/Windows/System32/wsl.exe
+"   set shellpipe=|
+"   set shellredir=>
+"   set shellcmdflag=
+" endif
+
+" alternatively, without the above config,
+" one could use `:!wsl` or `:!wsl [cmd]`. 
+
 " filetypes {{{1
 " ---------
 let g:tex_flavor='latex'			" ft of .tex files to 'tex', not 'plaintex'.
