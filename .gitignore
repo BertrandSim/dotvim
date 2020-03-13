@@ -7,7 +7,8 @@
 *.swp
 *.swo
 
-# vim helptags
+# tags
+tags
 **/doc/tags
 
 # python pyc files 
