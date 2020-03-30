@@ -326,6 +326,30 @@ inoremap <C-k> <Nop>
 let g:UltiSnipsEditSplit='context'	
 
 " }}}
+" lightline config {{{2
+let g:lightline = {
+  \ 'colorscheme' : 'solarized',
+  \ 'component_function': {
+  \   'fileformat'   : 'LightlineFileformat',
+  \   'fileencoding' : 'LightlineFileencoding',
+  \   'filetype'     : 'LightlineFiletype',
+  \ },
+  \ }
+
+" truncate ff, fenc, ft for narrow windows
+function! LightlineFileformat()
+  return winwidth(0) > 70 ? &fileformat : ''
+endfunction
+
+function! LightlineFileencoding()
+  return winwidth(0) > 60 ? (&fenc !=# '' ? &fenc : &enc) : ''
+endfunction
+
+function! LightlineFiletype()
+  return winwidth(0) > 50 ? (&filetype !=# '' ? &filetype : 'no ft') : ''
+endfunction
+
+" }}}
 
 " for esv_in_vim
 source $VIMHOME/macros/esv_api_key.vim

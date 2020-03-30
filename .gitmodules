@@ -55,3 +55,6 @@
 [submodule "pack/bundle/start/vim-gutentags"]
 	path = pack/search-nav/start/vim-gutentags
 	url = https://github.com/ludovicchabant/vim-gutentags.git
+[submodule "pack/bundle/start/lightline.vim"]
+	path = pack/bundle/start/lightline.vim
+	url = https://github.com/itchyny/lightline.vim.git
