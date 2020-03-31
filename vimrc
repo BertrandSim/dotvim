@@ -121,6 +121,7 @@ if has('packages')
   "   lifepillar/vim-solarized8		" solarized8 colorscheme
   "   tpope/vim-unimpaired			" handy pairs of mappings
   "   masukmoi/vim-markdown-folding	" expr-folding of markdown files
+  "   itchyny/lightline.vim			" lean status line
   "   SirVer/ultisnips				" snippets
   "   jalvesaq/Nvim-R				" --forked; interaction between R scripts with R terminal
   "   junegunn/vim-easy-align		" align lines by a char/regex
@@ -150,6 +151,7 @@ else
   set runtimepath+=~/.vim/pack/bundle/start/vim-solarized8
   set runtimepath+=~/.vim/pack/bundle/start/vim-unimpaired
   set runtimepath+=~/.vim/pack/bundle/start/vim-markdown-folding
+  set runtimepath+=~/.vim/pack/bundle/start/lightline.vim
   if v:version >= 704
 	set runtimepath+=~/.vim/pack/bundle/start/ultisnips    " -3.1
   endif
@@ -327,14 +329,22 @@ let g:UltiSnipsEditSplit='context'
 
 " }}}
 " lightline config {{{2
-let g:lightline = {
-  \ 'colorscheme' : 'solarized',
-  \ 'component_function': {
+let g:lightline = {}
+let g:lightline.colorscheme = 'solarized_nomode'
+let g:lightline.active = {
+  \   'left': [ [ 'mode' ],
+  \             [ 'readonly', 'filename', 'modified'] ],
+  \ }
+let g:lightline.inactive = {
+  \   'left': [ [ 'filename_flags' ] ],
+  \ }
+let g:lightline.component_function = {
   \   'fileformat'   : 'LightlineFileformat',
   \   'fileencoding' : 'LightlineFileencoding',
   \   'filetype'     : 'LightlineFiletype',
-  \ },
+  \   'filename_flags' : 'LightlineFilenameFlags',
   \ }
+
 
 " truncate ff, fenc, ft for narrow windows
 function! LightlineFileformat()
@@ -347,6 +357,17 @@ endfunction
 
 function! LightlineFiletype()
   return winwidth(0) > 50 ? (&filetype !=# '' ? &filetype : 'no ft') : ''
+endfunction
+
+" join filename with its modifi(ed|able) flags
+function! LightlineFilenameFlags()
+  let filename = expand('%:t')
+  if filename ==# '' | let filename = '[No Name]' | endif
+  let mods = ''
+  " let mods .= &readonly    ? 'RO' : ''
+  let mods .= &modified    ? '+'  : ''
+  let mods .= !&modifiable ? '-'  : ''
+  return filename . (mods ==# '' ? '' : ' ' . mods)
 endfunction
 
 " }}}
