@@ -58,3 +58,9 @@
 [submodule "pack/bundle/start/lightline.vim"]
 	path = pack/bundle/start/lightline.vim
 	url = https://github.com/itchyny/lightline.vim.git
+[submodule "pack/search-nav/start/nerdtree"]
+	path = pack/search-nav/start/nerdtree
+	url = https://github.com/preservim/nerdtree.git
+[submodule "pack/search-nav/start/ctrlp.vim"]
+	path = pack/search-nav/start/ctrlp.vim
+	url = https://github.com/ctrlpvim/ctrlp.vim.git
