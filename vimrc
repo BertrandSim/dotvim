@@ -520,6 +520,12 @@ set noequalalways
 " opens splits below, and vsplits to the right
 set splitbelow splitright
 
+" use arrow keys to resize splits
+nnoremap <expr> <Right> winnr() == winnr('l') ? ( winnr() == winnr('h') ? '' : "\<C-w>".'<' ) : "\<C-w>".'>'
+nnoremap <expr> <Left>  winnr() == winnr('l') ? ( winnr() == winnr('h') ? '' : "\<C-w>".'>' ) : "\<C-w>".'<'
+nnoremap <expr> <Down>  winnr() == winnr('j') ? ( winnr() == winnr('k') ? '' : "\<C-w>".'-' ) : "\<C-w>".'+'
+nnoremap <expr> <Up>    winnr() == winnr('j') ? ( winnr() == winnr('k') ? '' : "\<C-w>".'+' ) : "\<C-w>".'-'
+
 " movement {{{1
 " --------
 
