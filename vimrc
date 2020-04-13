@@ -372,6 +372,26 @@ endfunction
 
 " }}}
 
+" NERDTree
+nnoremap <silent> <C-n> :<C-u>NERDTreeToggle<CR>
+
+" tagbar
+" for .R files
+let g:tagbar_type_r = {
+    \ 'ctagstype' : 'r',
+    \ 'kinds'     : [
+        \ 'f:Functions',
+        \ 'g:GlobalVariables',
+        \ 'v:FunctionVariables',
+    \ ]
+\ }
+
+" CtrLP
+" basic search modes
+let g:ctrlp_types = ['fil', 'buf', 'mru']
+" add search modes: search tags, tags in buffer(s)
+let g:ctrlp_extensions = ['tag', 'buffertag']
+
 " for esv_in_vim
 source $VIMHOME/macros/esv_api_key.vim
 
@@ -397,17 +417,6 @@ if has('gui_running') &&
   nnoremap <silent> <expr> <C-S-Up>   exists(":Transparency") ? ":\<C-u>Transparency +\<CR>" : ''
   nnoremap <silent> <expr> <C-S-Down> exists(":Transparency") ? ":\<C-u>Transparency -\<CR>" : ''
 endif
-
-" tagbar
-" for .R files
-let g:tagbar_type_r = {
-    \ 'ctagstype' : 'r',
-    \ 'kinds'     : [
-        \ 'f:Functions',
-        \ 'g:GlobalVariables',
-        \ 'v:FunctionVariables',
-    \ ]
-\ }
 
 
 " UI {{{1
@@ -551,11 +560,11 @@ nnoremap <X2Mouse> <C-I>
 " inoremap jk <Esc>
 " replaced by moving <Esc>'s keyboard location
 
-" open line(s) and stay in command mode.
+" open line(s) and stay in normal mode.
 " the code 2 lines below is a macro with keystrokes o, <esc>, k.
 " a macro is used to let the remap work with counts.
-nnoremap <C-n> @="o\ek"<CR>
-nnoremap <C-p> @="O\ej"<CR>
+nnoremap <C-j> @="o\ek"<CR>
+nnoremap <C-k> @="O\ej"<CR>
 " could also use [<Space>, ]<Space>, in vim-unimpaired plugin.
 
 " use a count with 'o' or 'O' to specify how many lines to open
