@@ -410,6 +410,8 @@ if isdirectory($VIMHOME."/pack/bundle/opt/vim-easy-align") ||
   xmap ga <Plug>(EasyAlign)
   nmap gA <Plug>(LiveEasyAlign)
   xmap gA <Plug>(LiveEasyAlign)
+  nmap gX <Plug>(LiveEasyAlign)<C-X>
+  xmap gX <Plug>(LiveEasyAlign)<C-X>
 endif
 
 " mappings for windows transparency (.vim/plugin/*transparent.vim)
