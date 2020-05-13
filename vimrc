@@ -329,6 +329,9 @@ let g:UltiSnipsEditSplit='context'
 
 " }}}
 " lightline config {{{2
+
+set noshowmode
+
 let g:lightline = {}
 let g:lightline.colorscheme = 'solarized_nomode'
 let g:lightline.active = {
