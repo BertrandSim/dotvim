@@ -448,6 +448,7 @@ syntax enable		" enable syntax processing
 " ------------
 " toggle background light/dark
 map <F5> :set background=<C-R>=&background == "dark" ? "light" : "dark"<CR><CR>
+" TODO [2020-05-13]: change statusline and Folded guibg with solarized background swap
 
 colorscheme darkblue		" fallback to preinstalled colorscheme (if others unavailable)
 
@@ -463,6 +464,9 @@ silent! colorscheme solarized8
 
 if g:colors_name == 'solarized8'
   set background=light
+  " use 'base01.5' solarized color to distinguish folded lines
+  " from 'base02' in lightline's statusline
+  highlight Folded guibg=#dcd7c8
 endif
 
 "" }}}
@@ -969,8 +973,9 @@ vmap <leader>cp <Plug>(VComACop)
 
 " folding {{{1
 " -------
-set foldenable			" enable folding
+set foldenable		" enable folding
 set foldlevelstart=5	" fold levels >=5 are unfolded (shown)
+set fillchars+=fold:\ 	" do not fill folding lines with trailing '-'
 
 " z<Space> to open/close folds
 nnoremap z<Space> za
@@ -979,6 +984,7 @@ nnoremap z<Space> za
 nnoremap <leader>zo zMzv
 " \zO to _O_pen current fold, and other nested folds 
 nnoremap <leader>zO zMzO
+
 
 " ex-commands {{{1
 " -----------

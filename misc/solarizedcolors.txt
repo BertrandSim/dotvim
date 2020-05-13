@@ -1,0 +1,24 @@
+Solarized Colorscheme
+
+" COLOR     HEX     L*A*B      RGB         HSB
+" --------- ------- ---------- ----------- -----------
+" base03    #002b36 15 -12 -12   0  43  54 193 100  21	Darkbg
+" base02    #073642 20 -12 -12   7  54  66 192  90  26	Darkbg
+" base01    #586e75 45 -07 -07  88 110 117 194  25  46	Content
+" base00    #657b83 50 -07 -07 101 123 131 195  23  51	Content
+" base0     #839496 60 -06 -03 131 148 150 186  13  59	Content
+" base1     #93a1a1 65 -05 -02 147 161 161 180   9  63	Content
+" base2     #eee8d5 92 -00  10 238 232 213  44  11  93	Lightbg
+" base3     #fdf6e3 97  00  10 253 246 227  44  10  99	Lightbg
+" yellow    #b58900 60  10  65 181 137   0  45 100  71
+" orange    #cb4b16 50  50  55 203  75  22  18  89  80
+" red       #dc322f 50  65  45 220  50  47   1  79  86
+" magenta   #d33682 50  65 -05 211  54 130 331  74  83
+" violet    #6c71c4 50  15 -45 108 113 196 237  45  77
+" blue      #268bd2 55 -10 -45  38 139 210 205  82  82
+" cyan      #2aa198 60 -35 -05  42 161 152 175  74  63
+" green     #859900 60 -20  65 133 153   0  68 100  60
+
+Interpolated colors in Solarized 
+" base01.5  #1f404a 25 -10 -10				for folded text, untested.
+" base1.5   #dcd7c8 86 -00  08				for folded text
