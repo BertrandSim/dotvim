@@ -3,7 +3,7 @@
 	url = https://github.com/lifepillar/vim-solarized8.git
 [submodule "pack/bundle/opt/Nvim-R"]
 	path = pack/bundle/start/Nvim-R
-	url = https://github.com/BertrandSim/Nvim-R.git
+	url = https://github.com/jalvesaq/Nvim-R.git
 [submodule "pack/bundle/opt/auto-pairs"]
 	path = pack/bundle/opt/auto-pairs
 	url = https://github.com/jiangmiao/auto-pairs.git

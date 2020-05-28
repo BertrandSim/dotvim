@@ -123,7 +123,7 @@ if has('packages')
   "   masukmoi/vim-markdown-folding	" expr-folding of markdown files
   "   itchyny/lightline.vim			" lean status line
   "   SirVer/ultisnips				" snippets
-  "   jalvesaq/Nvim-R				" --forked; interaction between R scripts with R terminal
+  "   jalvesaq/Nvim-R				" interaction between R scripts with R terminal
   "   junegunn/vim-easy-align		" align lines by a char/regex
   "   machakann/vim-sandwich		" surroundings
   "   lervag/vimtex					" plugin for tex files
