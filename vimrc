@@ -254,6 +254,11 @@ let g:vimtex_mappings_disable = {
 let g:vimtex_fold_enabled = 1
 " see :h vimtex-folding, :h g:vimtex_fold_types for more
 
+" Disable scanning of included packages / files in ^p ^n completion 
+" this will reduce hang when you first hit ^p or ^n in insert mode
+" but will disable `gf` to .sty, package .cls, or included .tex files.
+" See https://github.com/lervag/vimtex/issues/1681 " and also issue 1358
+let g:vimtex_include_search_enabled = 0
 
 
 " }}}
