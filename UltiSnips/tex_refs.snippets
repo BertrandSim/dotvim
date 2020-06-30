@@ -1,0 +1,39 @@
+global !p
+from usnip_helpers import *
+from usnip_tex_contexts import * 	
+endglobal
+
+
+# snippets for references
+# ( \cite, \label, \ref, )
+# ----
+
+snippet "ci(te?)?" "\ci[te]" r
+\cite{$0}
+endsnippet
+
+snippet "ci(te?)?p" "\ci[te]p" r
+\citep{$0}
+endsnippet
+
+snippet lab "\label"
+\label{${1:name}}
+endsnippet
+
+priority 2
+context "eq_env()"
+post_expand "jump_forward(snip, 1)"
+snippet lab "\label for numbered equation"
+\label{${1:eq:${2:name}}}
+endsnippet
+
+# post_expand "jump_forward(snip, 1)"
+# snippet eref "\eqref{}"
+# \eqref{${1:eq:${2:name}}}
+# endsnippet
+
+post_expand "vim.eval('timer_start(0, {-> feedkeys(\"\<c-x>\<c-o>\", \"in\")})'); jump_forward(snip, 1)"
+snippet eref "\eqref{} with vimtex omnicompletion!"
+\eqref{${1:eq:$2}}
+endsnippet
+# for more details see: https://www.reddit.com/r/vim/comments/ac6cv6/an_ultisnips_functionality/
