@@ -212,7 +212,7 @@ augroup vimtex_config
   autocmd Filetype tex nnoremap <localleader>lw :silent update \| VimtexCompile <CR>
 augroup END
 
-" [count] tsd/tsD cycles through 
+" [count] std/sTd cycles through 
 " \big, \Big, \bigg, \Bigg modifiers
 let g:vimtex_delim_toggle_mod_list = [
 	  \ ['\bigl' , '\bigr'],
@@ -221,7 +221,7 @@ let g:vimtex_delim_toggle_mod_list = [
 	  \ ['\Biggl', '\Biggr'],
 	  \]
 
-" Use sandwich.vim-style mappings for ds,cs,ts
+" Use sandwich.vim-style mappings for ds,cs,ts --> sd, se, st/sT
 " temporary solution while transiting to sandwich.vim [TODO]
 if isdirectory($VIMHOME."/pack/bundle/opt/vimtex") || 
   \isdirectory($VIMHOME."/pack/bundle/start/vimtex")
@@ -248,6 +248,12 @@ let g:vimtex_mappings_disable = {
   \   'n': ['dse', 'dsc', 'ds$', 'dsd', 'cse', 'csc', 'cs$', 'csd', 'tse', 'tsc', 'tsd', 'tsD'],
   \   'x': ['tsd', 'tsD']
   \ }
+
+
+" enable folding of sections/envirs/commands
+let g:vimtex_fold_enabled = 1
+" see :h vimtex-folding, :h g:vimtex_fold_types for more
+
 
 
 " }}}
