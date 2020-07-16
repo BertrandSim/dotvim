@@ -19,7 +19,7 @@ endfunction
 
 " map key chords {{{
 " ==================
-" { jk:() , df:{} , fj:[] , vn:<> , dk:"" , gk:'' , bk:`` }
+" { jk:() , df:{} , fj:[] , dj:<> , dk:"" , gk:'' , bk:`` }
 
 call arpeggio#load()
 
@@ -41,7 +41,7 @@ Arpeggioinoremap <> <C-r>=UltiSnips#Anon(
 Arpeggioimap jk ()
 Arpeggioimap df {}
 Arpeggioimap fj []
-Arpeggioimap vn <>
+Arpeggioimap dj <>
 
 Arpeggioinoremap dk <C-r>=UltiSnips#Anon(
   \ '"'.'$1'.'"'
@@ -58,7 +58,7 @@ Arpeggioinoremap bk <C-r>=UltiSnips#Anon(
 Arpeggiotnoremap jk ()<Left>
 Arpeggiotnoremap df {}<Left>
 Arpeggiotnoremap fj []<Left>
-Arpeggiotnoremap vn <><Left>
+Arpeggiotnoremap dj <><Left>
 Arpeggiotnoremap dk ""<Left>
 Arpeggiotnoremap gk ''<Left>
 Arpeggiotnoremap bk ``<Left>
