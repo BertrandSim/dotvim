@@ -25,23 +25,18 @@ call arpeggio#load()
 
 " insert mode
 " -----------
-Arpeggioinoremap () <C-r>=UltiSnips#Anon(
+Arpeggioinoremap jk <C-r>=UltiSnips#Anon(
   \ '('.'$1'.')'
   \)<CR>
-Arpeggioinoremap {} <C-r>=UltiSnips#Anon(
+Arpeggioinoremap df <C-r>=UltiSnips#Anon(
   \ '{'.'$1'.'}'
   \)<CR>
-Arpeggioinoremap [] <C-r>=UltiSnips#Anon(
+Arpeggioinoremap fj <C-r>=UltiSnips#Anon(
   \ '['.'$1'.']'
   \)<CR>
-Arpeggioinoremap <> <C-r>=UltiSnips#Anon(
+Arpeggioinoremap dj <C-r>=UltiSnips#Anon(
   \ '<'.'$1'.'>'
   \)<CR>
-
-Arpeggioimap jk ()
-Arpeggioimap df {}
-Arpeggioimap fj []
-Arpeggioimap dj <>
 
 Arpeggioinoremap dk <C-r>=UltiSnips#Anon(
   \ '"'.'$1'.'"'
