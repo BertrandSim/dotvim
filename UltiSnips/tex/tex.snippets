@@ -35,6 +35,15 @@ snippet rnc "\renewcommand" b
 \renewcommand{$1}{$2}
 endsnippet
 
+snippet newth "\newtheorem w parent counter" b
+\newtheorem{${1:env_name}}{${2:text}}[${3:parent_counter}]
+endsnippet
+
+snippet newths "\newtheorem w shared counter" b
+\newtheorem{${1:env_name}}[${2:shared_counter}]{${3:text}}
+endsnippet
+
+
 snippet mo "\DeclareMathOperator{\op}{op}" b
 \DeclareMathOperator{${1:\op}}{${2:`!p snip.rv=t[1].lstrip("\\")`}}
 endsnippet
