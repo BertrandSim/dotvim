@@ -20,6 +20,9 @@ endfunction
 " map key chords {{{
 " ==================
 " { jk:() , df:{} , fj:[] , dj:<> , dk:"" , gk:'' , bk:`` }
+"
+" (see also .vim/after/ftplugin/tex/brackets_arpeggio_tex.vim for tex-specific chords)
+
 
 call arpeggio#load()
 
