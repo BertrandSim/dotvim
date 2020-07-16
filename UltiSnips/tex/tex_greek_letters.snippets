@@ -2,23 +2,19 @@ global !p
 from usnip_helpers import *
 from usnip_tex_contexts import * 	
 
-# python dictionary that stores shortcuts for greek letters
+# python dictionaries that store shortcuts for greek letters
 # eg. (a: alpha, b: beta) and so on
 
-greekalpha = {
-
+greekalpha_lower = {
 # lower case letters
   'a':   'alpha',
   'b':   'beta',
   'g':   'gamma',
   'd':   'delta',
   'e':   'epsilon',
-  've':  'varepsilon',
   'z':   'zeta',
   'h':   'eta',
   'q':   'theta',
-  # 'th':  'theta',
-  'vq':  'vartheta',
   'i':   'iota',
   'k':   'kappa',
   'l':   'lambda',
@@ -27,61 +23,91 @@ greekalpha = {
   'c':   'xi',
   # omicron is simply 'o',
   'p':   'pi',
-  'vp':  'varpi',
   'r':   'rho',
-  'vr':  'varrho',
   's':   'sigma',
-  'vs':  'varsigma',
   't':   'tau',
   'u':   'upsilon',
   'f':   'phi',
-  'ph':  'phi',
-  'vf':  'varphi',
-  'vph': 'varphi',
   'x':   'chi',
-  'ch':  'chi',
   'y':   'psi',
-  'ps':  'psi',
   'w':   'omega',
 
+  # # 2-char alternatives
+  # 'th':  'theta',
+  # 'ph':  'phi',
+  # 'ch':  'chi',
+  # 'ps':  'psi',
+
+}
+
+greekalpha_variants = {
+# lower case variants
+  'e':  'varepsilon',
+  'q':  'vartheta',
+  'p':  'varpi',
+  'r':  'varrho',
+  's':  'varsigma',
+  'f':  'varphi',
+
+  # 'th':  'vartheta',
+  # 'ph':  'varphi',
+}
+
+greekalpha_upper = {
 # Upper case letters
-  'G':  'Gamma',
-  'D':  'Delta',
-  'Q':  'Theta',
-  'L':  'Lambda',
-  'C':  'Xi',
-  'P':  'Pi',
-  'S':  'Sigma',
-  'U':  'Upsilon',
-  'F':  'Phi',
-  'PH': 'Phi',
-  'Y':  'Psi',
-  'W':  'Omega',
+  'g':  'Gamma',
+  'd':  'Delta',
+  'q':  'Theta',
+  'l':  'Lambda',
+  'c':  'Xi',
+  'p':  'Pi',
+  's':  'Sigma',
+  'u':  'Upsilon',
+  'f':  'Phi',
+  'y':  'Psi',
+  'w':  'Omega',
+
+  # 'th':  'Theta',
+  # 'ph':  'Phi',
+  # 'ps':  'Psi',
 }
 
 endglobal
 
-# quick insert gree(k) a(l)phabets: eg, kla -> \alpha
-# autoexpands after a nonalphabet is typed
-# priority 0
-# context "math()"
-# snippet "\\([a-zA-Z])([^a-zA-Z])" "greek alphabets" rA
-# \\`!p akey = match.group(1)
-# if akey in greekalpha:
-# 	avalue = greekalpha[akey]
-# else:
-# 	avalue = match.group(1)
-# 
-# snip.rv = avalue + match.group(2)`
-# endsnippet
 
-# quick insert gree[k] alphabets: eg, ka -> \alpha
+# quick insert gree[k] [l]owercase alphabets: eg, kla -> \alpha
 priority 0
 context "math()"
-snippet "kl([a-zA-Z])" "greek alphabets" rA
+snippet "kl([a-zA-Z])" "greek lowercase alphabets" rA
 `!p akey = match.group(1)
-if akey in greekalpha:
-	snip.rv = '\\' + greekalpha[akey]
+if akey in greekalpha_lower:
+	snip.rv = '\\' + greekalpha_lower[akey]
+else:
+	snip.rv = match.group(0)
+`
+endsnippet
+
+
+# quick insert gree[k] lowercase [v]ariants: eg, kve -> \varepsilon
+priority 0
+context "math()"
+snippet "kv([a-zA-Z])" "greek lowercase variants" rA
+`!p akey = match.group(1)
+if akey in greekalpha_variants:
+	snip.rv = '\\' + greekalpha_variants[akey]
+else:
+	snip.rv = match.group(0)
+`
+endsnippet
+
+
+# quick insert gree[k] [u]ppercase alphabets: eg, kug -> \Gamma
+priority 0
+context "math()"
+snippet "ku([a-zA-Z])" "greek uppercase alphabets" rA
+`!p akey = match.group(1)
+if akey in greekalpha_upper:
+	snip.rv = '\\' + greekalpha_upper[akey]
 else:
 	snip.rv = match.group(0)
 `
@@ -91,4 +117,3 @@ context "math()"
 snippet ll "\ell" iA
 \ell
 endsnippet
-
