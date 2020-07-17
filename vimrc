@@ -137,8 +137,6 @@ if has('packages')
   "     ludovicchabant/vim-gutentags	" automatically generate tags
 
   " packages in opt:
-  " packadd! vim-latex-1.10.0 	" vim-latex or latex suite
-  " packadd! vim-surround-2.1-usr	" surroundings; usr changed to use omap for ds,cs, etc.
   packadd! auto-pairs       	" BertrandSim/auto-pairs;	delims, forked from jiangmiao/auto-pairs
   packadd! incsearch.vim		" hayabusa/incsearch.vim;	improved / ? incsearch
   packadd! vim-arpeggio			" kana/vim-arpeggio;		key chords
@@ -165,7 +163,7 @@ else
   endif
   set runtimepath+=~/.vim/pack/text-obj/start/vim-angry
   if v:version >= 704
-	set runtimepath+=~/.vim/pack/text-obj/start/vim-textobj-user-0.7.6
+	set runtimepath+=~/.vim/pack/text-obj/start/vim-textobj-user
 	set runtimepath+=~/.vim/pack/text-obj/start/vim-textobj-entire
 	set runtimepath+=~/.vim/pack/text-obj/start/vim-textobj-line
   endif
@@ -173,8 +171,6 @@ else
   set runtimepath+=~/.vim/pack/search-nav/start/vim-gutentags
 
 
-  " set runtimepath+=~/.vim/pack/bundle/opt/vim-latex-1.10.0
-  " set runtimepath+=~/.vim/pack/bundle/opt/vim-surround-2.1-usr
   set runtimepath+=~/.vim/pack/bundle/opt/auto-pairs
   set runtimepath+=~/.vim/pack/bundle/opt/incsearch.vim
   set runtimepath+=~/.vim/pack/bundle/opt/vim-arpeggio
