@@ -112,6 +112,13 @@ snippet ,., ",\dots," iA
 , \dots, 
 endsnippet
 
+# Use arpeggio mapping instead, see 
+#   .vim/after/ftplugin/tex/brackets_arpeggio_tex.vim
+# context "math()"
+# snippet \{} "\{ \}" iA
+# \\{${1:${VISUAL}}\\}
+# endsnippet
+
 context "math()"
 snippet == " &= (alignment)" A
 &=
@@ -247,16 +254,18 @@ endsnippet
 # math mode delims ([{1
 # ----------------
 
-snippet mk "$...$" wA
-$${1:${VISUAL}}$
-endsnippet
+# $..$ and \[...\] have moved to .vim/after/ftplugin/tex/brackets_arpeggio_tex.vim
 
-snippet dm "\[...\]" wA
-\[
-	${1:${VISUAL}}
-${2:,}\]
-$0
-endsnippet
+# snippet mk "$...$" wA
+# $${1:${VISUAL}}$
+# endsnippet
+ 
+# snippet dm "\[...\]" wA
+# \[
+# 	${1:${VISUAL}}
+# ${2:,}\]
+# $0
+# endsnippet
 
 # environments ([{1
 # ------------

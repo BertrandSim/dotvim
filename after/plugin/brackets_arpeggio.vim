@@ -20,36 +20,34 @@ endfunction
 " map key chords {{{
 " ==================
 " { jk:() , df:{} , fj:[] , dj:<> , dk:"" , gk:'' , bk:`` }
+"
+" (see also .vim/after/ftplugin/tex/brackets_arpeggio_tex.vim for tex-specific chords)
+
 
 call arpeggio#load()
 
 " insert mode
 " -----------
-Arpeggioinoremap () <C-r>=UltiSnips#Anon(
+Arpeggioinoremap <silent> jk <C-r>=UltiSnips#Anon(
   \ '('.'$1'.')'
   \)<CR>
-Arpeggioinoremap {} <C-r>=UltiSnips#Anon(
+Arpeggioinoremap <silent> df <C-r>=UltiSnips#Anon(
   \ '{'.'$1'.'}'
   \)<CR>
-Arpeggioinoremap [] <C-r>=UltiSnips#Anon(
+Arpeggioinoremap <silent> fj <C-r>=UltiSnips#Anon(
   \ '['.'$1'.']'
   \)<CR>
-Arpeggioinoremap <> <C-r>=UltiSnips#Anon(
+Arpeggioinoremap <silent> dj <C-r>=UltiSnips#Anon(
   \ '<'.'$1'.'>'
   \)<CR>
 
-Arpeggioimap jk ()
-Arpeggioimap df {}
-Arpeggioimap fj []
-Arpeggioimap dj <>
-
-Arpeggioinoremap dk <C-r>=UltiSnips#Anon(
+Arpeggioinoremap <silent> dk <C-r>=UltiSnips#Anon(
   \ '"'.'$1'.'"'
   \)<CR>
-Arpeggioinoremap gk <C-r>=UltiSnips#Anon(
+Arpeggioinoremap <silent> gk <C-r>=UltiSnips#Anon(
   \ "'".'$1'."'"
   \)<CR>
-Arpeggioinoremap bk <C-r>=UltiSnips#Anon(
+Arpeggioinoremap <silent> bk <C-r>=UltiSnips#Anon(
   \ '\`'.'$1'.'\`'
   \)<CR>
 
