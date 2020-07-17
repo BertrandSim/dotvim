@@ -7,11 +7,11 @@
 call textobj#user#plugin('rfunc', {
 	  \   '-': {
 	  \     'select-a-function': 'SelectRFunc',
-	  \     'select-a': 'af',
+	  \     'select-a': '<buffer> af',
 	  \   },
 	  \ })
 	" \     'select-i-function': '<func_name>',
-	" \     'select-i': 'if',
+	" \     'select-i': '<buffer> if',
 
 
 function! SelectRFunc()
@@ -119,20 +119,23 @@ function s:PosCompare(p1, p2)
   else | return  0 | endif
 endfunction
 
+
+" Teardown {{{1
+
 function! s:isRCommentOrString(lnum, cnum)
   return synIDattr(synID(a:lnum, a:cnum, 0), "name") =~? 'rComment\|rString'
 endfunction
 
-" " Teardown {{{1
-" " TODO b:undo_ftplugin
-" if !exists('b:undo_ftplugin')
-"   let b:undo_ftplugin = ''
-" else
-"   let b:undo_ftplugin .= ' | '
-" endif
-" 
-" let b:undo_ftplugin .= '...' 
-" let b:undo_ftplugin .= ' | ....'
+if !exists('b:undo_ftplugin')
+  let b:undo_ftplugin = ''
+else
+  let b:undo_ftplugin .= '| '
+endif
 
+" remove custom functions
+let b:undo_ftplugin .= ' delfunc SelectRFunc|'
+let b:undo_ftplugin .= ' delfunc SearchRFunc|'
 
-
+" remove custom textobject
+let b:undo_ftplugin .= ' ounmap <buffer> af| xunmap <buffer> af|'
+let b:undo_ftplugin .= ' ounmap <Plug>(textobj-rfunc-a)| xunmap <Plug>(textobj-rfunc-a)'
