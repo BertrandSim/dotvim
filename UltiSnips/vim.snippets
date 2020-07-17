@@ -49,3 +49,14 @@ snippet en "execute 'normal[!]'" b
 execute 'normal! $1'
 endsnippet
 
+snippet undoft "b:undo_ftplugin" b
+" Teardown
+if !exists('b:undo_ftplugin')
+	let b:undo_ftplugin = ''
+else
+	let b:undo_ftplugin .= '| '
+endif
+
+let b:undo_ftplugin .= '${1:cmd_string}'
+endsnippet
+
