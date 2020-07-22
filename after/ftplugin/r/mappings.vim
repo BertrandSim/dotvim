@@ -4,8 +4,8 @@
 " in insert mode: 
 " if UltiSnips loaded, use that, otherwise, map them
 if !( exists('did_plugin_ultisnips') && exists('g:_uspy') )
-  inoremap <buffer> __ <-
-  " see also Nvim-R's R_assign.
+  " inoremap <buffer> __ <-
+  " " see also Nvim-R's R_assign.
   inoremap <buffer> >> %>%
 endif
 
@@ -16,15 +16,15 @@ if has('terminal') 	" any other conditions to add?
   " tnoremap <Del> <Right><BS>	" don't exit R console with <Del> on empty line
 
   nnoremap <buffer> <leader>rf
-        \ :tnoremap __ <-<CR>
 	 \:tnoremap >> %>%<CR>
 	 \:tnoremap <lt>Del> <lt>Right><lt>BS><CR>
 	 \:call StartR("R")<CR>
+	" \ :tnoremap __ <-<CR>
   nnoremap <buffer> <leader>rq
-        \ :tunmap __<CR>
          \:tunmap >><CR>
 	 \:tunmap <lt>Del><CR>
          \:call RQuit('nosave')<CR>
+	" \ :tunmap __<CR>
 endif
 
 
@@ -35,9 +35,10 @@ if !( exists('did_plugin_ultisnips') && exists('g:_uspy') )
   if !exists('b:undo_ftplugin')
     let b:undo_ftplugin = ''
   else
-    let b:undo_ftplugin .= ' | '
+    let b:undo_ftplugin .= '|'
   endif
 
-  let b:undo_ftplugin .= 'iunmap __ | iunmap >>'
+  " let b:undo_ftplugin .= ' iunmap __|'
+  let b:undo_ftplugin .= ' iunmap >>'
 
 endif
