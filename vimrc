@@ -396,6 +396,13 @@ let g:tagbar_type_r = {
     \ ]
 \ }
 
+" gutentags: automatic ctags generation
+" exclude tagging in the following files
+let g:gutentags_ctags_exclude = []
+let g:gutentags_ctags_exclude += [
+  \ 'Session.vim',
+  \ ]
+
 " CtrLP
 " basic search modes
 let g:ctrlp_types = ['fil', 'buf', 'mru']
