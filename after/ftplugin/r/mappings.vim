@@ -15,12 +15,12 @@ if has('terminal') 	" any other conditions to add?
   " tnoremap >> %>%
   " tnoremap <Del> <Right><BS>	" don't exit R console with <Del> on empty line
 
-  nnoremap <buffer> <leader>rf
+  nnoremap <buffer> <leader>rf 
 	 \:tnoremap >> %>%<CR>
 	 \:tnoremap <lt>Del> <lt>Right><lt>BS><CR>
 	 \:call StartR("R")<CR>
 	" \ :tnoremap __ <-<CR>
-  nnoremap <buffer> <leader>rq
+  nnoremap <buffer> <leader>rq 
          \:tunmap >><CR>
 	 \:tunmap <lt>Del><CR>
          \:call RQuit('nosave')<CR>
