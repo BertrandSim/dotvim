@@ -281,9 +281,9 @@ let R_esc_term = 0
 " let <Esc> function as expected in a R console / terminal
 " Note: to interrupt a '+' prompt in a console, use ^C instead.
 
-" let R_assign = 2 	" type two _'s to get <-
-let R_assign = 0	" disable shortcut for <-.
-" See .vim/after/ftplugin/r_conf for the replacement.
+let R_assign = 0		" don't replace _ with <-
+let R_rmdchunk = 0		" don't replace ` with ```{r} ``` in .Rmd files
+" let R_rnowebchunk = 0	" don't replace < with <<>>= @    in .Rnw files
 
 " run RStudio console instead of R console :)
 " let R_in_buffer = 0
