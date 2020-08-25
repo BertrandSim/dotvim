@@ -1,0 +1,19 @@
+# global !p
+# from usnip_helpers import *
+# endglobal
+
+# post_expand "jump_forward(snip, 1)"
+# snippet `r "r code chunk" b
+# \`\`\`{r, label='$1'}
+# ${2:${VISUAL}}
+# \`\`\`
+# $0
+# endsnippet
+
+snippet `r "r code chunk" b
+\`\`\`{r}
+${2:${VISUAL}}
+\`\`\`
+$0
+endsnippet
+
