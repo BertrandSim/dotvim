@@ -121,8 +121,11 @@ library(ggplot2)
 ${1:mbm} <- microbenchmark(
 	${2:a} = {$3},
 	${4:b} = {$5},
-	times=${7:100L}, check=${8:'${9:equivalent}'}
+	times=${7:100L}, 
+	check=${8:'${9:equivalent}'}
 )
+# print($1)
+# boxplot($1)
 autoplot($1)
 endsnippet
 
