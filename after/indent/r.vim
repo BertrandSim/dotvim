@@ -14,6 +14,36 @@ function! GetRIndentCustom()
   let clnum = line(".")    " current line
   let cline = getline(clnum)
 
+  let plnum = s:Get_prev_line(clnum)
+  if plnum == 0 | return 0 | endif
+  let pline = getline(plnum) " previous non-blank line
+  let pline = SanitizeRLine(pline)
+
+
+
+  " if previous line ends with '{', 
+  " and current line does NOT start with '}',
+  " increase current line's indent by 1.
+  if pline =~ '{$'
+    if cline =~ '^\s*}'
+      return indent(plnum)
+    else
+      return indent(plnum) + shiftwidth()
+    endif
+  endif
+
+  " if previous line ends with '('
+  if pline =~ '($'
+    if cline =~ '^\s*)'
+      return indent(plnum)
+    else
+      return indent(plnum) + shiftwidth()
+    endif
+  endif
+
+  " if pline ends with '( <some text>', eg. incomplete function call 'f(args, '
+  " handled by GetRIndent()?
+
 
   " if line contains only ')', find matching '('.
   " if matching line is '( text, text $', place it right next to matching '('
@@ -38,24 +68,6 @@ function! GetRIndentCustom()
       return op_col
     endif
   endif
-
-  " if previous line ends with '('
-
-  let plnum = s:Get_prev_line(clnum)
-  if plnum == 0 | return 0 | endif
-  let pline = getline(plnum) " previous non-blank line
-  let pline = SanitizeRLine(pline)
-
-  if pline =~ '($'
-    if cline =~ '^\s*)'
-      return indent(plnum)
-    else
-      return indent(plnum) + shiftwidth()
-    endif
-  endif
-
-  " if pline ends with '( <some text>', eg. incomplete function call 'f(args, '
-  " handled by GetRIndent()?
 
 
   " use Vim's builtin indent-expr
