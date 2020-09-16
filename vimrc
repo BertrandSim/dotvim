@@ -705,6 +705,10 @@ augroup qcomment
   autocmd FileType gitconfig		let b:comment_leader = '# '
 augroup END
 
+augroup qbcomment
+  autocmd!
+  autocmd Filetype rmd,markdown		let b:block_comment_marks = ['<!--', '-->']
+augroup END
 
 " cm / cx to comment / uncomment current line
 omap <expr> m v:operator ==# 'c' ? "\<Esc>"."\<Plug>(AddComment)".'_' : 'p'
