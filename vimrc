@@ -830,8 +830,9 @@ endfunction
 
 
 function! AddBlockCommentOp(type)
-  let [comstart, comend] = GetBlockCommentMarks()
   let [markstart, markend] = GetOpMarks(a:type)
+  let [comstart, comend] = GetBlockCommentMarks()
+  if comstart == "" && comend == "" | return | endif
 
   " get position / coordinates of start/end marks
   " getpos() only allows 'x, not `x
@@ -891,15 +892,21 @@ endfunction
 
 
 function! GetBlockCommentMarks()
-  if len(split(&commentstring, '%s')) == 2
-	" if 'commentstring' xx%sxx contains start and end part
-	let commentstartend = split(&commentstring, '%s')
-	let commentstart = commentstartend[0]
-	let commentend   = commentstartend[1]
 
-	return [commentstart, commentend]
+  if exists("b:block_comment_marks")
+	" b:block_comment_marks should be a list containing start and end strings
+	return b:block_comment_marks
   endif
+
+  let split_comment_str = split(&commentstring, '%s')
+  if len(split_comment_str) == 2
+	" if 'commentstring' xx%sxx contains start and end part
+	return split_comment_str
+  endif
+
   echoerr "Unable to find block comment syntax markers."
+  return ["",""]
+
 endfunction
 
 
