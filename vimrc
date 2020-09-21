@@ -381,6 +381,28 @@ function! LightlineFilenameFlags()
 endfunction
 
 " }}}
+" vim-pandoc-syntax {{{2
+
+" use conceal / utf-8 chars for rmd/markdown documents
+let g:pandoc#syntax#conceal#use = 1
+
+" disable conceal / utf-8 chars for the following
+  " don't replace # in #header
+  " don't use smart quotes
+  " show ``
+  " don't replace ```
+  " don't replace ending ```
+let g:pandoc#syntax#conceal#blacklist = [
+  \ "atx",
+  \ "quotes",
+  \ "inlinecode",
+  \ "codeblock_start",
+  \ "codeblock_delim",
+  \]
+
+" }}}
+
+
 
 " NERDTree
 nnoremap <silent> <C-n> :<C-u>NERDTreeToggle<CR>
