@@ -402,6 +402,10 @@ let g:pandoc#syntax#conceal#blacklist = [
 
 " }}}
 
+" tex conceal settings
+" let g:tex_conceal = "abdgmsS"
+" see h: g:tex_conceal as to the things each alphabet conceals
+" change this in tex, markdown, rmd ftplugin files
 
 
 " NERDTree

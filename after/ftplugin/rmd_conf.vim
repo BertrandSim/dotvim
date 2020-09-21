@@ -1,6 +1,3 @@
-" " Use nested instead of flat folding for markdown files. (Toggle with :FoldToggle)
-" setlocal foldexpr=NestedMarkdownFolds()
-
 " don't hide latex math *d*elims
 if !exists("g:tex_conceal")
   " let g:tex_conceal = 'abdmgsS'
