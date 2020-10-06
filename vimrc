@@ -737,8 +737,8 @@ augroup qbcomment
 augroup END
 
 " cm / cx to comment / uncomment current line
-omap <expr> m v:operator ==# 'c' ? "\<Esc>"."\<Plug>(AddComment)".'_' : 'p'
-omap <expr> x v:operator ==# 'c' ? "\<Esc>"."\<Plug>(RmComment)".'_' : 'p'
+omap <expr> m v:operator ==# 'c' ? "\<Esc>"."\<Plug>(AddComment)".'_' : 'm'
+omap <expr> x v:operator ==# 'c' ? "\<Esc>"."\<Plug>(RmComment)".'_' : 'x'
 
 " [\cm|\cx|\bm|\bx]{motion} to 
 " comment|uncomment|block comment|block uncomment lines specified by {motion}
