@@ -20,6 +20,11 @@ function(${1}) \{
 \}
 endsnippet
 
+snippet dcat "print ## debug" b
+cat("\`$1\` is \n") ## debug
+print(${1:var}) 
+endsnippet
+
 snippet ret "return" 
 return( ${1:${VISUAL}} )
 endsnippet
@@ -119,14 +124,15 @@ snippet mbm "microbenchmark"
 library(microbenchmark)
 library(ggplot2)
 ${1:mbm} <- microbenchmark(
-	${2:a} = {$3},
-	${4:b} = {$5},
+	${2:expr1} = {$3},
+	${4:expr2} = {$5},
 	times=${7:100L}, 
 	check=${8:'${9:equivalent}'}
 )
 # print($1)
 # boxplot($1)
 autoplot($1)
+
 endsnippet
 
 # combinations
