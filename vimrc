@@ -392,12 +392,14 @@ let g:pandoc#syntax#conceal#use = 1
   " show ``
   " don't replace ```
   " don't replace ending ```
+  " don't hide * for emphasis/strong blocks
 let g:pandoc#syntax#conceal#blacklist = [
   \ "atx",
   \ "quotes",
   \ "inlinecode",
   \ "codeblock_start",
   \ "codeblock_delim",
+  \ "block",
   \]
 
 " }}}
