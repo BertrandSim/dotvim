@@ -189,7 +189,7 @@ endsnippet
 # math accents ([{1
 # ------------
 
-# accents for \bar, \hat, and \tilde
+# accents for \bar, \hat, \tilde (til), and \breve (brv)
 # eg.  til -> tilde{.}
 #     Xtil -> tilde{X}    (postfix)
 #  \symtil -> tilde{\sym} (postfix)
@@ -249,6 +249,25 @@ priority 100
 context "math() or math_vimtex_2()"
 snippet "(\\[a-zA-Z]+)til" "tilde_postfix_\sym" riA
 \tilde{`!p snip.rv=match.group(1)`}
+endsnippet
+
+
+priority 10
+context "math() or math_vimtex_2()"
+snippet "(?<!\\)brv" "breve" r
+\breve{${1:${VISUAL}}}$0
+endsnippet
+
+priority 20
+context "math() or math_vimtex_2()"
+snippet "([a-zA-Z])brv" "breve_postfix_alpha" riA
+\breve{`!p snip.rv=match.group(1)`}
+endsnippet
+
+priority 100
+context "math() or math_vimtex_2()"
+snippet "(\\[a-zA-Z]+)brv" "breve_postfix_\sym" riA
+\breve{`!p snip.rv=match.group(1)`}
 endsnippet
 
 
