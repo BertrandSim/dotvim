@@ -77,7 +77,7 @@ endglobal
 
 # quick insert gree[k] [l]owercase alphabets: eg, kla -> \alpha
 priority 0
-context "math() or math_vimtex_2()"
+context "math()"
 snippet "kl([a-zA-Z])" "greek lowercase alphabets" rA
 `!p akey = match.group(1)
 if akey in greekalpha_lower:
@@ -90,7 +90,7 @@ endsnippet
 
 # quick insert gree[k] lowercase [v]ariants: eg, kve -> \varepsilon
 priority 0
-context "math() or math_vimtex_2()"
+context "math()"
 snippet "kv([a-zA-Z])" "greek lowercase variants" rA
 `!p akey = match.group(1)
 if akey in greekalpha_variants:
@@ -103,7 +103,7 @@ endsnippet
 
 # quick insert gree[k] [u]ppercase alphabets: eg, kug -> \Gamma
 priority 0
-context "math() or math_vimtex_2()"
+context "math()"
 snippet "ku([a-zA-Z])" "greek uppercase alphabets" rA
 `!p akey = match.group(1)
 if akey in greekalpha_upper:
@@ -113,7 +113,7 @@ else:
 `
 endsnippet
 
-context "math() or math_vimtex_2()"
+context "math()"
 snippet ll "\ell" i
 \ell
 endsnippet

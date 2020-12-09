@@ -97,91 +97,91 @@ endsnippet
 
 # common math snippets ([{1
 
-context "math() or math_vimtex_2()"
+context "math()"
 snippet __ "_{}" iA
 _{${1:${VISUAL}}}
 endsnippet
 
-context "math() or math_vimtex_2()"
+context "math()"
 snippet ^^ "^{}" iA
 ^{${1:${VISUAL}}}
 endsnippet
 
-context "math() or math_vimtex_2()"
+context "math()"
 snippet ,., ",\dots," iA
 , \dots, 
 endsnippet
 
 # Use arpeggio mapping instead, see 
 #   .vim/after/ftplugin/tex/brackets_arpeggio_tex.vim
-# context "math() or math_vimtex_2()"
+# context "math()"
 # snippet \{} "\{ \}" iA
 # \\{${1:${VISUAL}}\\}
 # endsnippet
 
-context "math() or math_vimtex_2()"
+context "math()"
 snippet == " &= (alignment)" A
 &=
 endsnippet
 
-context "math() or math_vimtex_2()"
+context "math()"
 snippet \= "next line (\\) and &=" A
 
 \\\\ &=
 endsnippet
 
-context "math() or math_vimtex_2()"
+context "math()"
 snippet // "frac{}{}" wA
 \frac{${1:${VISUAL:n}}}{${2:d}}
 endsnippet
 
-context "math() or math_vimtex_2()"
+context "math()"
 post_expand "jump_forward(snip, 1)"
 priority 10
 snippet 1// "frac{1}{}" wA
 \frac{${1:1}}{${2:${VISUAL:d}}}
 endsnippet
 
-context "math() or math_vimtex_2()"
+context "math()"
 snippet sm "sum without limits" A
 \sum
 endsnippet
 
 # press trigger after sm to include limits
-context "math() or math_vimtex_2()"
+context "math()"
 snippet \sum "sum_{}^{}"
 \sum_{${1:i=1}}^{${2:n}} $3
 endsnippet
 
-context "math() or math_vimtex_2()"
+context "math()"
 post_expand "jump_forward(snip, 1)"
 snippet pp "partial deriv" i
 \frac{\partial$1}{\partial $2} $0
 endsnippet
 
-context "math() or math_vimtex_2()"
+context "math()"
 snippet inv "inverse ^{-1}" i
 ^{-1}
 endsnippet
 
-context "math() or math_vimtex_2()"
+context "math()"
 snippet bin "binom{}{}"
 \binom{${1:n}}{${2:k}}
 endsnippet
 
-context "math() or math_vimtex_2()"
+context "math()"
 snippet te "\text" i
 \text{${1:${VISUAL}}}
 endsnippet
 
 # math autosubscripts ([{1
 # --------------
-# context "math() or math_vimtex_2()"
+# context "math()"
 # snippet '([A-Za-z])(\d)' "auto subscript" wrA
 # `!p snip.rv = match.group(1)`_`!p snip.rv = match.group(2)`
 # endsnippet
 
-# context "math() or math_vimtex_2()"
+# context "math()"
 # snippet '([A-Za-z])_(\d\d)' "auto subscript2" wrA
 # `!p snip.rv = match.group(1)`_{`!p snip.rv = match.group(2)`}
 # endsnippet
@@ -195,77 +195,77 @@ endsnippet
 #  \symtil -> tilde{\sym} (postfix)
 
 priority 10
-context "math() or math_vimtex_2()"
+context "math()"
 # \overline{$1}$0
 snippet "(?<!\\)bar" "bar" r
 \bar{${1:${VISUAL}}}$0
 endsnippet
 
 priority 20
-context "math() or math_vimtex_2()"
+context "math()"
 snippet "([a-zA-Z])bar" "bar_postfix_alpha" riA
 \bar{`!p snip.rv=match.group(1)`}
 endsnippet
 
 priority 100
-context "math() or math_vimtex_2()"
+context "math()"
 snippet "(\\[a-zA-Z]+)bar" "bar_postfix_\sym" riA
 \bar{`!p snip.rv=match.group(1)`}
 endsnippet
 
 
 priority 10
-context "math() or math_vimtex_2()"
+context "math()"
 snippet "(?<!\\)hat" "hat" r
 \hat{${1:${VISUAL}}}$0
 endsnippet
 
 priority 20
-context "math() or math_vimtex_2()"
+context "math()"
 snippet "([a-zA-Z])hat" "hat_postfix_alpha" riA
 \hat{`!p snip.rv=match.group(1)`}
 endsnippet
 
 priority 100
-context "math() or math_vimtex_2()"
+context "math()"
 snippet "(\\[a-zA-Z]+)hat" "hat_postfix_\sym" riA
 \hat{`!p snip.rv=match.group(1)`}
 endsnippet
 
 
 priority 10
-context "math() or math_vimtex_2()"
+context "math()"
 snippet "(?<!\\)til" "tilde" r
 \tilde{${1:${VISUAL}}}$0
 endsnippet
 
 priority 20
-context "math() or math_vimtex_2()"
+context "math()"
 snippet "([a-zA-Z])til" "tilde_postfix_alpha" riA
 \tilde{`!p snip.rv=match.group(1)`}
 endsnippet
 
 priority 100
-context "math() or math_vimtex_2()"
+context "math()"
 snippet "(\\[a-zA-Z]+)til" "tilde_postfix_\sym" riA
 \tilde{`!p snip.rv=match.group(1)`}
 endsnippet
 
 
 priority 10
-context "math() or math_vimtex_2()"
+context "math()"
 snippet "(?<!\\)brv" "breve" r
 \breve{${1:${VISUAL}}}$0
 endsnippet
 
 priority 20
-context "math() or math_vimtex_2()"
+context "math()"
 snippet "([a-zA-Z])brv" "breve_postfix_alpha" riA
 \breve{`!p snip.rv=match.group(1)`}
 endsnippet
 
 priority 100
-context "math() or math_vimtex_2()"
+context "math()"
 snippet "(\\[a-zA-Z]+)brv" "breve_postfix_\sym" riA
 \breve{`!p snip.rv=match.group(1)`}
 endsnippet
