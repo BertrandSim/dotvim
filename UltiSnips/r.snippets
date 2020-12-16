@@ -135,6 +135,25 @@ autoplot($1)
 
 endsnippet
 
+# arg=arg 
+snippet .=. "arg=arg" w
+${1:arg} = $1
+endsnippet
+
+snippet .=, "arg=arg," w
+${1:arg} = $1, 
+endsnippet
+
+priority 1
+snippet "(\w+)\.=\." "arg=arg" rA
+`!p snip.rv=match.group(1)` = `!p snip.rv=match.group(1)`
+endsnippet
+
+priority 1
+snippet "(\w+)\.=," "arg=arg," rA
+`!p snip.rv=match.group(1)` = `!p snip.rv=match.group(1)`,
+endsnippet
+
 # combinations
 snippet choose "choose(n,k)" i
 choose(${1:n},${2:k})
