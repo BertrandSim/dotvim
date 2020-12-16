@@ -1,9 +1,11 @@
 " run commands for Vim GUIs
 
-set guifont=Consolas:h12:cANSI:qDEFAULT	" font family, size, ...
-set lines=30 columns=120		" window size (nr of chars)
-set guicursor+=n:blinkon0		" don't blink the cursor in normal mode
-set guicursor+=v:hor20-Cursor-blinkon0	" use '_' cursor in visual mode, don't blink
+if has('gui_win32')
+  set guifont=Consolas:h12:cANSI:qDEFAULT	" font family, size, ...
+  set lines=30 columns=120		" window size (nr of chars)
+  set guicursor+=n:blinkon0		" don't blink the cursor in normal mode
+  set guicursor+=v:hor20-Cursor-blinkon0	" use '_' cursor in visual mode, don't blink
+endif
 
 if has('win64') || has('win32')
       set winaltkeys=no
