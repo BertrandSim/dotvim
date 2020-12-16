@@ -318,7 +318,7 @@ if isdirectory($VIMHOME."/pack/bundle/opt/Nvim-R") ||
 endif
 
 " }}}
-" Ultsnips config {{{2
+" Ultisnips config {{{2
 " ---------------
 " mappings
 let g:UltiSnipsExpandTrigger       = '<Tab>'
@@ -1069,6 +1069,18 @@ command! -bang -nargs=? -complete=help Vh vert h<bang> <args>
 command! -bang -nargs=? -complete=help VH vert h<bang> <args>
 command! -bang -nargs=? -complete=help Th tab h<bang> <args>
 command! -bang -nargs=? -complete=help TH tab h<bang> <args>
+
+" split view with conceal {{{2
+" -----------------------
+" eg., viewing tex source code alongside a more readable version
+command! Cview 
+  \  set scrollbind 
+  \| vert split 
+  \| set conceallevel=2 concealcursor=nc scrollbind 
+  \| wincmd p
+
+"}}}
+
 
 " cmdline + Ultisnips {{{1
 " -------------------
