@@ -620,22 +620,8 @@ nnoremap <X2Mouse> <C-I>
 " nnoremap <C-j> @="o\ek"<CR>
 " nnoremap <C-k> @="O\ej"<CR>
 " could also use [<Space>, ]<Space>, in vim-unimpaired plugin.
-nnoremap <C-j> :<C-U>call NewlinesBelow(v:count1)<CR>
-nnoremap <C-k> :<C-U>call NewlinesAbove(v:count1)<CR>
-
-function NewlinesBelow(count)
-  let curpos_save = getcurpos()
-  exec "normal!" . repeat("o\e", a:count)
-  call setpos(".", curpos_save)
-endfunction
-
-function NewlinesAbove(count)
-  let curpos_save = getcurpos()
-  let curpos_save[1] += a:count
-  exec "normal!" . repeat("O\e", a:count)
-  call setpos(".", curpos_save)
-endfunction
-
+nnoremap <C-j> :<C-U>call lines#newlinesBelow(v:count1)<CR>
+nnoremap <C-k> :<C-U>call lines#newlinesAbove(v:count1)<CR>
 
 " use a count with 'o' or 'O' to specify how many lines to open
 nnoremap <expr> o '<Esc>o' . repeat('<CR>', v:count1 - 1)
