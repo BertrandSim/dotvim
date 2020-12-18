@@ -37,7 +37,7 @@ endfunction
 
 function! commentor#RemoveComment(startline, endline)
   let comleader = commentor#GetCommentLeader()
-  execute a:startline . ',' a:endline . 'substitute' . '/' .
+  silent execute a:startline . ',' a:endline . 'substitute' . '/' .
 	\ '\v(^\s*)' . '\V'.escape(comleader,'\/') . '/' .
 	\ '\1' . '/e'
   nohlsearch
@@ -154,17 +154,9 @@ function! commentor#GetMinIndent(range)
 
 endfunction
 
-
 function! commentor#IsBlankLine(lnum)
   return getline(a:lnum) =~ '\v^\s*$'
 endfunction
-
-
-
-
-
-
-
 
 function! commentor#GetBlockCommentMarks()
 
@@ -183,7 +175,6 @@ function! commentor#GetBlockCommentMarks()
   return ["",""]
 
 endfunction
-
 
 function commentor#AppendSpace(str)
 " adds a space to the back of str if there isn't one
