@@ -1004,7 +1004,8 @@ function! ComACop(above)
   endif
 
   " comment line
-  execute 'normal!'."\<Plug>(AddComment)" .'_'
+  set opfunc=AddCommentOp
+  norm! g@_
 
   " restore cursor
   if !a:above
