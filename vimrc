@@ -620,8 +620,8 @@ nnoremap <X2Mouse> <C-I>
 " nnoremap <C-j> @="o\ek"<CR>
 " nnoremap <C-k> @="O\ej"<CR>
 " could also use [<Space>, ]<Space>, in vim-unimpaired plugin.
-nnoremap <C-j> :<C-U>call lines#newlinesBelow(v:count1)<CR>
-nnoremap <C-k> :<C-U>call lines#newlinesAbove(v:count1)<CR>
+nnoremap <silent> <C-j> :<C-U>call lines#newlinesBelow(v:count1)<CR>
+nnoremap <silent> <C-k> :<C-U>call lines#newlinesAbove(v:count1)<CR>
 
 " use a count with 'o' or 'O' to specify how many lines to open
 nnoremap <expr> o '<Esc>o' . repeat('<CR>', v:count1 - 1)
@@ -719,10 +719,6 @@ augroup END
 " -------------
 
 " comment_leader can be specified by user, or extracted from 'commentstring' or 'comment' options.
-" [TODO] use SID for functions
-" [TODO] migrate to a plugin
-
-
 augroup qcomment
   autocmd!
   autocmd FileType c,cpp,java,scala	let b:comment_leader = '// '
@@ -750,304 +746,18 @@ omap <expr> x v:operator ==# 'c' ? "\<Esc>"."\<Plug>(RmComment)".'_' : 'x'
 nmap <leader>cm <Plug>(AddComment)
 nmap <leader>cx <Plug>(RmComment)
 nmap <leader>bm <Plug>(AddBlockComment)
-" nmap <leader>bx <Plug>(RmBlockComment)
+nmap <leader>bx <Plug>(RmBlockComment)
 vmap <leader>cm <Plug>(VAddComment)
 vmap <leader>cx <Plug>(VRmComment)
 vmap <leader>bm <Plug>(VAddBlockComment)
-" vmap <leader>bx <Plug>(VRmBlockComment)
+vmap <leader>bx <Plug>(VRmBlockComment)
 
-nnoremap <silent> <Plug>(AddComment) :<C-U>set opfunc=AddCommentOp<CR>g@
-nnoremap <silent> <Plug>(RmComment) :<C-U>set opfunc=RemoveCommentOp<CR>g@
-nnoremap <silent> <Plug>(AddBlockComment) :<C-U>set opfunc=AddBlockCommentOp<CR>g@
-" nnoremap <silent> <Plug>(RmBlockComment) :<C-U>set opfunc=RemoveCommentOp<CR>g@
-vnoremap <silent> <Plug>(VAddComment) :<C-U>call AddCommentOp(visualmode())<CR>
-vnoremap <silent> <Plug>(VRmComment) :<C-U>call RemoveCommentOp(visualmode())<CR>
-vnoremap <silent> <Plug>(VAddBlockComment) :<C-U>call AddBlockCommentOp(visualmode())<CR>
-" vnoremap <silent> <Plug>(VRmBlockComment) :<C-U>call RemoveCommentOp(visualmode())<CR>
 
-
-
-nnoremap <silent> <leader>bx :<C-u>call RemoveBlockComment()<CR>
-vnoremap <silent> <leader>bx :<C-u>call RemoveBlockComment()<CR>
-
-function! AddCommentOp(type)
-  let comleader = GetCommentLeader()
-
-  if a:type ==# 'char' || a:type ==# 'line' || a:type ==# 'block'
-	let startline = line("'[")
-	let endline   = line("']")
-  else "if a:type ==# 'v' || a:type ==# 'V' || a:type ==# ''
-	let startline = line("'<")
-	let endline   = line("'>")
-  endif
-
-  let minindent = GetMinIndent( range(startline, endline) )
-  let shiftwidth_ =  has('patch-7.3.694') ? shiftwidth() : &sw == 0 ? &ts : &sw
-  let minsw = minindent / shiftwidth_
-
-  execute "silent" . startline.','.endline . repeat('<', minsw)
-  execute "silent" . startline.','.endline . 'normal 0i'.comleader."\<Esc>"
-  execute "silent" . startline.','.endline . repeat('>', minsw)
-
-  nohlsearch
-endfunction
-
-
-function! RemoveCommentOp(type)
-  if a:type ==# 'char' || a:type ==# 'line' || a:type ==# 'block'
-    let startline = line("'[")
-	let endline   = line("']")
-  else "if a:type ==# 'v' || a:type ==# 'V' || a:type ==# ''
-	let startline = line("'<")
-	let endline   = line("'>")
-  endif
-
-  call RemoveComment(startline, endline)
-
-endfunction
-
-function! RemoveComment(startline, endline)
-  let comleader = GetCommentLeader()
-  execute a:startline . ',' a:endline . 'substitute' . '/' .
-	\ '\v(^\s*)' . '\V'.escape(comleader,'\/') . '/' .
-	\ '\1' . '/e'
-  nohlsearch
-endfunction
-
-function! GetCommentLeader()
-  if exists("b:comment_leader")  " user defined
-	let commentstart = b:comment_leader
-  elseif len(split(&commentstring, '%s')) == 1
-	" if 'commentstring' xx%sxx contains no end part
-	let commentstart = split(&commentstring, '%s')[0]
-  elseif match(&comments, '\v(,|^):[^,:]*,')
-    " if 'comment' contains ',:xxx,'
-    let commentstart = matchstr(&comments, '\v(,|^):\zs[^,:]*\ze,')
-  else
-	echoerr "unable to find comment leader."
-  endif
-
-  let commentstart = AppendSpace( commentstart )
-  return commentstart
-endfunction
-
-function! GetMinIndent(range)
-
-  let foundNonBlank = 0
-
-  for lnum in a:range
-
-	" find first nonblank line as a starting comparison
-    if !foundNonBlank
-	  if !IsBlankLine(lnum)
-		let minIndent = indent(lnum)
-		let foundNonBlank = 1
-	  elseif lnum == a:range[-1]
-	  " ie. if last line and all other lines blank
-		return 0
-	  endif
-
-	elseif !IsBlankLine(lnum) && indent(lnum) < minIndent
-	  let minIndent = indent(lnum)
-
-	endif
-
-  endfor
-
-  return minIndent
-
-endfunction
-
-
-function! IsBlankLine(lnum)
-  return getline(a:lnum) =~ '\v^\s*$'
-endfunction
-
-
-function! AddBlockCommentOp(type)
-  let [markstart, markend] = GetOpMarks(a:type)
-  let [comstart, comend] = GetBlockCommentMarks()
-  if comstart == "" && comend == "" | return | endif
-
-  " get position / coordinates of start/end marks
-  " getpos() only allows 'x, not `x
-  let opstart = getpos(substitute(markstart,"`","'",""))
-  let opend   = getpos(substitute(markend,  "`","'",""))
-
-  if a:type ==# 'char' || a:type ==# 'v'
-	" character wise
-	exec 'normal' . markend . 'a'.comend."\<Esc>"
-	call setpos( substitute(markstart,"`","'",""), opstart)		" to recall `[ position ; setpos() only allows 'x, not `x
-	exec 'normal' . markstart .'i'.comstart."\<Esc>" . markstart
-  elseif a:type ==# 'line' || a:type ==# 'V'
-	" linewise
-	exec 'normal' . markend . 'o'.comend."\<Esc>"
-	call setpos( markstart, opstart)
-	exec 'normal' . markstart .'O'.comstart."\<Esc>" . markstart
-  endif
-
-  " idea of the above (in visual mode):
-  " if a:type ==# 'v'	" character wise
-  "   exec 'normal' . '`>'. 'a'.comend."\<Esc>" . '`<' .'i'.comstart."\<Esc>" . '`<'
-  " elseif a:type ==# 'V'	" linewise
-  "   exec 'normal' . '`>'. 'o'.comend."\<Esc>" . '`<' .'O'.comstart."\<Esc>" . '`<'
-  " endif
-endfunction
-
-function! RemoveBlockComment()
-  let [comstart, comend] = GetBlockCommentMarks()
-  let comstart_len = len(comstart)
-  let comend_len   = len(comend)
-
-  " search outward for comment markers
-  " for now, cursor must NOT be on the comment markers [FIXME]
-  let startpos = searchpairpos('\V'.escape(comstart,'/'), '', '\V'.escape(comend,'\'), 'bnW')
-  " echo 'startpos: ' . string(startpos)
-  let endpos   = searchpairpos('\V'.escape(comstart,'/'), '', '\V'.escape(comend,'\'),  'nW')
-  " echo 'endpos: '   . string(endpos)
-
-  if startpos != [0,0] && endpos != [0,0]
-  " ie. block comment markers found
-	let curcurpos = getcurpos()
-
-	" remove comment markers
-	call cursor(endpos)
-	exec 'norm' . comend_len.'x'
-	call cursor(startpos)
-	exec 'norm' . comstart_len.'x'
-
-	" restore cursor position
-	let curcurpos[2] -= comstart_len  " shift left
-	let curcurpos[4] = 0	" remove curswant
-	" echo string(curcurpos)
-	call setpos('.', curcurpos)
-  endif
-
-endfunction
-
-
-function! GetBlockCommentMarks()
-
-  if exists("b:block_comment_marks")
-	" b:block_comment_marks should be a list containing start and end strings
-	return b:block_comment_marks
-  endif
-
-  let split_comment_str = split(&commentstring, '%s')
-  if len(split_comment_str) == 2
-	" if 'commentstring' xx%sxx contains start and end part
-	return split_comment_str
-  endif
-
-  echoerr "Unable to find block comment syntax markers."
-  return ["",""]
-
-endfunction
-
-
-function AppendSpace(str)
-" adds a space to the back of str if there isn't one
-  let len=strlen(a:str)
-  let outstr = a:str
-
-  if a:str[len-1] != ' '
-    let outstr = outstr.' '
-  endif
-  return outstr
-endfunction
-
-function! GetOpMarks(type)
-  " returns [start, end] `marks' of operator action
-  if     a:type ==# 'char'	" character wise
-	let [_start, _end] = [ "`[", "`]" ]
-  elseif a:type ==# 'line'	" linewise
-	let [_start, _end] = [ "'[", "']" ]
-  elseif a:type ==# "v"	" character wise
-	let [_start, _end] = [ "`<", "`>" ]
-  elseif a:type ==# 'V'	" linewise
-	let [_start, _end] = [ "'<", "'>" ]
-  endif
-  return [_start, _end]
-endfunction
-
-
-" v1: the idea
-" noremap <silent> <leader>cc 
-	  " \:<C-B>silent <C-E>
-	  " \s/^\s*/&<C-R>=escape(b:comment_leader,'\/')<CR>/<CR>
-	  " \:nohlsearch<CR>
-" noremap <silent> <leader>cu 
-	  " \:<C-B>silent <C-E>
-	  " \s/\v(^\s{-})\V<C-R>=escape(b:comment_leader,'\/')<CR>/\1/e<CR>
-	  " \:nohlsearch<CR>
-
-
-
-" comment and copy {{{1
-
-" Comments cur line or visual selection,
-" makes another copy, and
-" positions cursor at the copy.
-" Requires quick comment.
-
-" note that in the implemenation, the line/selection is first copied, then commented.
-
-function! ComACop(above)
-" above: boolean. if true, positions copy above line, otherwise below
-  let curpos_save = getcurpos()
-
-  if a:above
-    copy .
-  else
-    copy -
-  endif
-
-  " comment line
-  set opfunc=AddCommentOp
-  norm! g@_
-
-  " restore cursor
-  if !a:above
-    let curpos_save[1] += 1   " adjust line (row) position
-  endif
-  call setpos('.', curpos_save) 
-endfunction
-
-function! VComACop(above)
-" above: boolean. if true, positions copy above line/selection, otherwise below
-  let curpos_save = getcurpos() 
-  let numlines = line("'>") - line("'<") + 1
-
-  if a:above
-    '<,'>copy '>.
-  else
-    '<,'>copy '<-
-  endif
-
-  "comment
-  set opfunc=AddCommentOp
-  execute 'normal!' ."'<". repeat(a:above ? 'j':'k', numlines)
-  execute 'normal!' . 'g@'.numlines.'_'
-
-  " restore cursor
-  if !a:above
-    let curpos_save[1] += numlines   " adjust line (row) position
-  endif
-  call setpos('.', curpos_save) 
-endfunction
-
-" nnoremap <silent> <Plug>(ComACop)  :<C-U>copy  -\|:execute 'normal'."\<Plug>(AddComment)_j"<CR>
-" vnoremap <silent> <Plug>(VComACop) :     copy '>\|:execute 'normal! gv'\|:execute 'normal'."\<Plug>(VAddComment)"\|
-" ^ old ver.
-nnoremap <silent> <Plug>(ComACop)   :<C-U>call ComACop(0)<CR>
-nnoremap <silent> <Plug>(ComACopA)  :<C-U>call ComACop(1)<CR>
-vnoremap <silent> <Plug>(VComACop)  :<C-U>call VComACop(0)<CR>
-vnoremap <silent> <Plug>(VComACopA) :<C-U>call VComACop(1)<CR>
-
-"cp/cP to copy and comment cur line (normal mode)
+" cp / cP to copy and comment cur line (normal mode)
 omap <expr> p v:operator ==# 'c' ? "\<Esc>"."\<Plug>(ComACop)"  : 'p'
 omap <expr> P v:operator ==# 'c' ? "\<Esc>"."\<Plug>(ComACopA)" : 'P'
-"or \cp to copy and comment motion / visual selection
+
+" \cp / \cP to copy and comment motion / visual selection
 " TODO [2020-01-30]: operator for comment-a-copy
 " nmap <leader>cp ...
 vmap <leader>cp <Plug>(VComACop)
