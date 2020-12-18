@@ -728,11 +728,11 @@ augroup qcomment
   autocmd FileType c,cpp,java,scala	let b:comment_leader = '// '
   autocmd FileType sh,python,r		let b:comment_leader = '# '
   autocmd FileType conf,fstab		let b:comment_leader = '# '
-  autocmd FileType tex				let b:comment_leader = '% '
-  autocmd FileType mail				let b:comment_leader = '> '
+  autocmd FileType tex			let b:comment_leader = '% '
+  autocmd FileType mail			let b:comment_leader = '> '
   autocmd FileType autohotkey		let b:comment_leader = '; '
-  autocmd FileType vim				let b:comment_leader = '" '
-  autocmd FileType snippets			let b:comment_leader = '# '
+  autocmd FileType vim			let b:comment_leader = '" '
+  autocmd FileType snippets		let b:comment_leader = '# '
   autocmd FileType gitconfig		let b:comment_leader = '# '
 augroup END
 
@@ -983,23 +983,34 @@ endfunction
 
 
 
-" comment a copy {{{1
+" comment and copy {{{1
 
-" Copies cur line or visual selection,
-" comments the copied lines above, and
-" positions cursor at the copy below.
+" Comments cur line or visual selection,
+" makes another copy, and
+" positions cursor at the copy.
 " Requires quick comment.
 
+" note that in the implemenation, the line/selection is first copied, then commented.
 " known issue: does not work if _ is remapped.
 
-function! ComACop()
+function! ComACop(above)
+" above: boolean. if true, positions copy above line, otherwise below
   let curpos_save = getcurpos()
-  copy -
-  execute 'normal'."\<Plug>(AddComment)" .'_'
+
+  if a:above
+    copy .
+  else
+    copy -
+  endif
+
+  " comment line
+  execute 'normal!'."\<Plug>(AddComment)" .'_'
+
   " restore cursor
-  " curpos_save[1] += 1   " adjust line after changing buffer
+  if !a:above
+    let curpos_save[1] += 1   " adjust line after changing buffer
+  endif
   call setpos('.', curpos_save) 
-  normal! j
 endfunction
 
 function! VComACop()
@@ -1020,11 +1031,13 @@ endfunction
 " nnoremap <silent> <Plug>(ComACop)  :<C-U>copy  -\|:execute 'normal'."\<Plug>(AddComment)_j"<CR>
 " vnoremap <silent> <Plug>(VComACop) :     copy '>\|:execute 'normal! gv'\|:execute 'normal'."\<Plug>(VAddComment)"\|
 " ^ old ver.
-nnoremap <silent> <Plug>(ComACop)  :<C-U>call ComACop()<CR>
+nnoremap <silent> <Plug>(ComACop)  :<C-U>call ComACop(0)<CR>
+nnoremap <silent> <Plug>(ComACopA) :<C-U>call ComACop(1)<CR>
 vnoremap <silent> <Plug>(VComACop) :<C-U>call VComACop()<CR>
 
-"cp to copy and comment cur line (normal mode)
-omap <expr> p v:operator ==# 'c' ? "\<Esc>"."\<Plug>(ComACop)" : 'p'
+"cp/cP to copy and comment cur line (normal mode)
+omap <expr> p v:operator ==# 'c' ? "\<Esc>"."\<Plug>(ComACop)"  : 'p'
+omap <expr> P v:operator ==# 'c' ? "\<Esc>"."\<Plug>(ComACopA)" : 'P'
 "or \cp to copy and comment motion / visual selection
 " TODO [2020-01-30]: operator for comment-a-copy
 " nmap <leader>cp ...
