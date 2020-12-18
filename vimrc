@@ -991,7 +991,6 @@ endfunction
 " Requires quick comment.
 
 " note that in the implemenation, the line/selection is first copied, then commented.
-" known issue: does not work if _ is remapped.
 
 function! ComACop(above)
 " above: boolean. if true, positions copy above line, otherwise below
@@ -1009,32 +1008,41 @@ function! ComACop(above)
 
   " restore cursor
   if !a:above
-    let curpos_save[1] += 1   " adjust line after changing buffer
+    let curpos_save[1] += 1   " adjust line (row) position
   endif
   call setpos('.', curpos_save) 
 endfunction
 
-function! VComACop()
+function! VComACop(above)
+" above: boolean. if true, positions copy above line/selection, otherwise below
   let curpos_save = getcurpos() 
   let numlines = line("'>") - line("'<") + 1
-  '<,'>copy '<-
+
+  if a:above
+    '<,'>copy '>.
+  else
+    '<,'>copy '<-
+  endif
 
   "comment
-  execute 'normal!' ."'<". repeat('k', numlines)
-  execute 'normal' ."\<Plug>(AddComment)" .numlines.'_'
+  set opfunc=AddCommentOp
+  execute 'normal!' ."'<". repeat(a:above ? 'j':'k', numlines)
+  execute 'normal!' . 'g@'.numlines.'_'
 
-  "restore cursor
-  " curpos_save[1] += numlines
-  call setpos('.', curpos_save)
-  execute 'normal!'.numlines.'j'
+  " restore cursor
+  if !a:above
+    let curpos_save[1] += numlines   " adjust line (row) position
+  endif
+  call setpos('.', curpos_save) 
 endfunction
 
 " nnoremap <silent> <Plug>(ComACop)  :<C-U>copy  -\|:execute 'normal'."\<Plug>(AddComment)_j"<CR>
 " vnoremap <silent> <Plug>(VComACop) :     copy '>\|:execute 'normal! gv'\|:execute 'normal'."\<Plug>(VAddComment)"\|
 " ^ old ver.
-nnoremap <silent> <Plug>(ComACop)  :<C-U>call ComACop(0)<CR>
-nnoremap <silent> <Plug>(ComACopA) :<C-U>call ComACop(1)<CR>
-vnoremap <silent> <Plug>(VComACop) :<C-U>call VComACop()<CR>
+nnoremap <silent> <Plug>(ComACop)   :<C-U>call ComACop(0)<CR>
+nnoremap <silent> <Plug>(ComACopA)  :<C-U>call ComACop(1)<CR>
+vnoremap <silent> <Plug>(VComACop)  :<C-U>call VComACop(0)<CR>
+vnoremap <silent> <Plug>(VComACopA) :<C-U>call VComACop(1)<CR>
 
 "cp/cP to copy and comment cur line (normal mode)
 omap <expr> p v:operator ==# 'c' ? "\<Esc>"."\<Plug>(ComACop)"  : 'p'
@@ -1043,6 +1051,7 @@ omap <expr> P v:operator ==# 'c' ? "\<Esc>"."\<Plug>(ComACopA)" : 'P'
 " TODO [2020-01-30]: operator for comment-a-copy
 " nmap <leader>cp ...
 vmap <leader>cp <Plug>(VComACop)
+vmap <leader>cP <Plug>(VComACopA)
 
 
 " folding {{{1
