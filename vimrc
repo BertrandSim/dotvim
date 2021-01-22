@@ -205,7 +205,7 @@ let g:vimtex_compiler_latexmk = { 'continuous':0 }
 " \lw to write and compile.
 augroup vimtex_config
   autocmd!
-  autocmd Filetype tex nnoremap <localleader>lw :silent update \| VimtexCompile <CR>
+  autocmd Filetype tex nnoremap <silent> <localleader>lw :<C-U>silent update \| VimtexCompile <CR>
 augroup END
 
 " [count] std/sTd cycles through 
