@@ -10,7 +10,7 @@ import vim
 
 # math blocks
 # simplified as per https://github.com/gillescastel/latex-snippets/pull/14/files
-# and compatible with vimtex 2.0 syntax
+# compatible with and without vimtex 2.0 
 
 texMathZones = ['texMathZone']
 texTextZones = ['texMathText']
@@ -33,12 +33,42 @@ def math():
 
 texEqZones = ['texMathZoneC', 'texMathZoneE']
              # equation env ,  align env
-texEqZoneIds = vim.eval('map('+str(texEqZones)+", 'hlID(v:val)')")
+  # texMathZoneE requires 
+  # http://www.drchip.org/astronaut/vim/vbafiles/amsmath.vba.gz or similar
 
-def eq_env():
-    synstackids = vim.eval("synstack(line('.'), col('.') - (col('.')>=2 ? 1 : 0))")
+def in_eq_env():
+    if in_latex_env("equation") or in_latex_env("align"):
+        return True
+
+    synstackNames = vim.eval("map(synstack(line('.'), max([col('.') - 1, 1])), 'synIDattr(v:val, ''name'')')")
     try:
-        first = next(i for i in reversed(synstackids) if i in texEqZoneIds)
+        first = next(
+            i for i in reversed(synstackNames) if i in texEqZones
+        )
         return True
     except StopIteration:
         return False 
+
+
+# in \begin{ {name} } ... \end{ {name} }
+def in_latex_env(name):
+    if vim.eval('exists("*vimtex#env#is_inside")') == '1':
+        return vim.eval("vimtex#env#is_inside('" + name + "')") != ['0','0']
+    return False
+
+
+# in comment
+def in_comment():
+    if vim.eval('exists("*vimtex#syntax#in_comment")') == '1':
+        return vim.eval('vimtex#syntax#in_comment()') == '1'
+
+    # look for 'texComment' in syntax stack
+    synstackNames = vim.eval("map(synstack(line('.'), max([col('.') - 1, 1])), 'synIDattr(v:val, ''name'')')")
+    try:
+        first = next(
+            i for i in reversed(synstackNames) if i == 'texComment'
+        )
+        return True
+    except StopIteration:
+        return False 
+
