@@ -322,17 +322,16 @@ endsnippet
 
 # floats ([{1
 # ------
-post_expand "jump_forward(snip, 1)"
+post_expand "jump_forward(snip, 3)"
 snippet fig "\begin{figure}" b
 \begin{figure}[${1:htpb}]
 	\centering
-	\includegraphics{${2:path/to/file}}
-	\caption{${3:caption text}}
-	\label{fig:${4:label}}
+	\includegraphics${2:[width=${3:0.7}\textwidth]}{${4:path/to/file}}
+	\caption{${5:caption text}}
+	\label{fig:${6:label}}
 \end{figure}
 $0
 endsnippet
-# [TODO] add options, eg. [width=0.6\textwidth] after \includegraphics.
 
 post_expand "jump_forward(snip, 3)"
 snippet tab "\begin{table}" b
