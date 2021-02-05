@@ -1,0 +1,12 @@
+# yaml metadata snippets
+snippet ---post "jekyll post YAML" b
+---
+layout: post
+title: "${1}"
+date: ${2:`!v strftime('%Y-%m-%d')`} ${3:`!v strftime('%H:%M:%S')`} +0800
+categories: ${4:foo bar}
+---
+
+$0
+endsnippet
+
