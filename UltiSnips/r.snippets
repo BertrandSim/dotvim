@@ -112,6 +112,18 @@ endsnippet
 # `!p snip.rv=match.group(1)` <- ${1:func}(`!p snip.rv=match.group(1)`
 
 
+# plotting {{{1
+
+snippet parmf "par(mfrow=c(nr,nc))" b
+opar <- par(mfrow=c(${1:nrow},${2:ncol}))
+	${3:# plot1}
+	${4:# plot2}
+par(opar)
+$0
+endsnippet
+
+
+
 # misc {{{1
 
 # auto-expands on map*~
