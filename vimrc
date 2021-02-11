@@ -632,6 +632,14 @@ nnoremap <expr> O '<Esc>O' . repeat('<CR>', v:count1 - 1) . repeat('<Up>', v:cou
 " and past the starting place of insertion
 set backspace=indent,eol,start
 
+" U to _u_njoin lines in normal mode.
+" Adds a line break at current char, and
+"   stays in normal mode.
+" This is dot-repeatable :)
+" This masks the 'undo line' feature, (which I never use)
+nnoremap U i<CR><Esc>k$
+
+
 " Use u for t after an operator (UnTil).
 " A little easier on the hands
 onoremap u t
