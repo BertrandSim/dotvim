@@ -635,6 +635,12 @@ set backspace=indent,eol,start
 " Use u for t after an operator (UnTil).
 " A little easier on the hands
 onoremap u t
+vnoremap u t
+
+" for changing case of visually selected text, use gu/gU instead
+" also to be consistent with gu/gU operators
+vnoremap gu u
+vnoremap gU U
 
 
 " search options {{{1
