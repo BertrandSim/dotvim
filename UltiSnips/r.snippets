@@ -122,6 +122,11 @@ par(opar)
 $0
 endsnippet
 
+snippet plotn "setup plot region" b
+plot(NULL, type = 'n', xlim = range($1), ylim = range($2), xlab = '${3:$1}', ylab = '${4:$2}')
+$0
+endsnippet
+
 
 
 # misc {{{1
