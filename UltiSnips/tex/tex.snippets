@@ -1,13 +1,16 @@
 global !p
 from usnip_helpers import *
 from usnip_tex_contexts import * 	
+from usnip_pos_contexts import *
 endglobal
 
 # templates ([{1
 # ---------
 
-snippet \doc "Basic template" b
-\documentclass[${1:opt}]{article}
+context "top_of_file(snip, 2)"
+post_expand "jump_forward(snip, 1)"
+snippet doc "Basic template" b
+\documentclass[${1:opt}]{${2:article}}
 
 \usepackage{amsmath, amssymb}
 
@@ -44,11 +47,11 @@ snippet newths "\newtheorem w shared counter" b
 endsnippet
 
 
-snippet mo "\DeclareMathOperator{\op}{op}" b
+snippet dmo "\DeclareMathOperator{\op}{op}" b
 \DeclareMathOperator{${1:\op}}{${2:`!p snip.rv=t[1].lstrip("\\")`}}
 endsnippet
 
-snippet mos "\DeclareMathOperator*{\op}{op}" b
+snippet dmos "\DeclareMathOperator*{\op}{op}" b
 \DeclareMathOperator*{${1:\op}}{${2:`!p snip.rv=t[1].lstrip("\\")`}}
 endsnippet
 
@@ -313,7 +316,8 @@ endsnippet
 
 snippet fr "frame" b
 \begin{frame}
-	${1:${VISUAL}}
+\frametitle{$1}
+	${2:${VISUAL}}
 \end{frame}
 $0
 endsnippet
