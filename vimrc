@@ -135,6 +135,7 @@ if has('packages')
   "   search and navigation:
   "     majutsushi/tagbar			" show tags on a side margin
   "     ludovicchabant/vim-gutentags	" automatically generate tags
+  "     kshenoy/vim-signature	" show marks in signs column (left gutter)
 
   " packages in opt:
   packadd! auto-pairs       	" BertrandSim/auto-pairs;	delims, forked from jiangmiao/auto-pairs
@@ -169,6 +170,7 @@ else
   endif
   set runtimepath+=~/.vim/pack/search-nav/start/tagbar
   set runtimepath+=~/.vim/pack/search-nav/start/vim-gutentags
+  set runtimepath+=~/.vim/pack/search-nav/start/vim-signature
 
 
   set runtimepath+=~/.vim/pack/bundle/opt/auto-pairs
