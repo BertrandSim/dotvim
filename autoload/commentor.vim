@@ -18,8 +18,6 @@ function! commentor#AddCommentOp(type)
   execute "silent" . startline.','.endline . repeat('<', minsw)
   execute "silent" . startline.','.endline . 'normal 0i'.comleader."\<Esc>"
   execute "silent" . startline.','.endline . repeat('>', minsw)
-
-  nohlsearch
 endfunction
 
 function! commentor#RemoveCommentOp(type)
