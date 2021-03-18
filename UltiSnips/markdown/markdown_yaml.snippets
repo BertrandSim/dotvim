@@ -1,12 +1,28 @@
-# yaml metadata snippets
+# YAML metadata snippets
+
+global !p
+import vim
+from usnip_pos_contexts import *
+endglobal
+
+
+context "top_of_file(snip)"
 snippet ---post "jekyll post YAML" b
 ---
 layout: post
 title: "${1}"
-date: ${2:`!v strftime('%Y-%m-%d')`} ${3:`!v strftime('%H:%M:%S')`} +0800
+date: ${2:`!p 
+if not snip.c:
+	snip.rv = vim.eval("strftime('%Y-%m-%d')")
+`} ${3:`!p 
+if not snip.c:
+	snip.rv = vim.eval("strftime('%H:%M:%S')")
+`} +0800
 categories: ${4:foo bar}
 ---
 
 $0
 endsnippet
+# use snip.c to prevent recursive update 0->1->2...
+# date: ${2:`!v strftime('%Y-%m-%d')`} ${3:`!v strftime('%H:%M:%S')`} +0800
 
