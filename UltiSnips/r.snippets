@@ -83,6 +83,15 @@ else {
 endsnippet
 
 
+snippet switch "switch case" b
+switch( ${1:EXPR}, 
+	${2:case1_val} = ${3:{expr1}},
+	${4:case2_val} = ${5:{expr2}},
+	stop(${6:"msg"})	# default_expr
+)
+endsnippet
+
+
 # modify variable and replace {{{1
 
 snippet "(\w+)\+\+" "var++" wrA
