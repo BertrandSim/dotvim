@@ -14,5 +14,8 @@ tags
 # python pyc files 
 *.pyc
 
+# vim-plug directory
+plugged
+
 # misc
 esv_api_key.vim

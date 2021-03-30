@@ -88,6 +88,9 @@ set fileformats=unix,dos	" use unix by default, o/w try dos
 " ( = dir containing this vimrc file)
 let $VIMHOME = expand('<sfile>:p:h')
 
+" use '/' for file paths, even on windows (instead of '\')
+set shellslash
+
 " _c_hange _d_irectory to that of _c_urrent file with :CDC
 command CDC lcd %:p:h
 
@@ -111,60 +114,71 @@ let g:tex_flavor='latex'			" ft of .tex files to 'tex', not 'plaintex'.
 " plugins {{{1
 " --------
 
-" helper func for vim-plug conditional activation
-function! Cond(cond, ...)
-  let opts = get(a:000, 0, {})
-  return a:cond ? opts : extend(opts, { 'on': [], 'for': [] })
-endfunction
+if has('packages')
+" using built-in package manager
 
-" call plug#begin('~/.vim/plugged')
-call plug#begin($VIMHOME.'/plugged')
+  " packages in start:
+  "   lifepillar/vim-solarized8		" solarized8 colorscheme
+  "   tpope/vim-unimpaired			" handy pairs of mappings
+  "   masukmoi/vim-markdown-folding	" expr-folding of markdown files
+  "   itchyny/lightline.vim			" lean status line
+  "   SirVer/ultisnips				" snippets
+  "   jalvesaq/Nvim-R				" interaction between R scripts with R terminal
+  "   junegunn/vim-easy-align		" align lines by a char/regex
+  "   machakann/vim-sandwich		" surroundings
+  "   lervag/vimtex					" plugin for tex files
+  "   text objects:
+  "     b4winckler/vim-angry			" function argument text object
+  "     kana/vim-textobj-user			" custom text objects
+  "     kana/vim-textobj-entire
+  "     kana/vim-textobj-line
+  "   search and navigation:
+  "     majutsushi/tagbar			" show tags on a side margin
+  "     ludovicchabant/vim-gutentags	" automatically generate tags
+  "     kshenoy/vim-signature	" show marks in signs column (left gutter)
 
-" frequently used:
-Plug 'lifepillar/vim-solarized8'		" solarized8 colorscheme
-Plug 'tpope/vim-unimpaired'				" handy pairs of mappings
-Plug 'masukomi/vim-markdown-folding'	" expr-folding of markdown files
-Plug 'vim-pandoc/vim-pandoc-syntax'		" syntax highlighting for markdown and related files
-Plug 'itchyny/lightline.vim'			" lean status line
-Plug 'SirVer/ultisnips',
-  \ Cond(v:version >= 704, { 'tag': '3.1' })		" snippets; perhaps v3.2?
-Plug 'jalvesaq/Nvim-R',
-  \ Cond(has('patch-8.0.0946'))			" interaction between R scripts with R terminal
-Plug 'junegunn/vim-easy-align'			" align lines by a char/regex
-Plug 'machakann/vim-sandwich'			" surroundings
-Plug 'lervag/vimtex',
-  \ Cond(has('patch-7.4.52'))			" plugin for tex files
+  " packages in opt:
+  packadd! auto-pairs       	" BertrandSim/auto-pairs;	delims, forked from jiangmiao/auto-pairs
+  packadd! incsearch.vim		" hayabusa/incsearch.vim;	improved / ? incsearch
+  packadd! vim-arpeggio			" kana/vim-arpeggio;		key chords
+  packadd! Colorizer			" chrisbra/Colorizer;		show color codes and names in vim
 
-  " text objects:
-Plug 'b4winckler/vim-angry'				" function argument text object
-Plug 'kana/vim-textobj-user',
-  \ Cond(v:version >= 704)
-Plug 'kana/vim-textobj-entire',
-  \ Cond(v:version >= 704)
-Plug 'kana/vim-textobj-line',
-  \ Cond(v:version >= 704)				" custom text objects
+" elseif " using pathogen plugin manager,
+" execute pathogen#infect()
 
-  " search and navigation:
-Plug 'preservim/nerdtree'				" file explorer in vim
-Plug 'kien/ctrlp.vim'					" fuzzy finder
-Plug 'majutsushi/tagbar'				" show tags on a side margin
-Plug 'ludovicchabant/vim-gutentags'		" automatically generate tags
-Plug 'kshenoy/vim-signature'			" show marks in signs column (left gutter)
+else
+  set runtimepath+=~/.vim/pack/bundle/start/vim-solarized8
+  set runtimepath+=~/.vim/pack/bundle/start/vim-unimpaired
+  set runtimepath+=~/.vim/pack/bundle/start/vim-markdown-folding
+  set runtimepath+=~/.vim/pack/bundle/start/lightline.vim
+  if v:version >= 704
+	set runtimepath+=~/.vim/pack/bundle/start/ultisnips    " -3.1
+  endif
+  if has('patch-8.0.0946')
+	set runtimepath+=~/.vim/pack/bundle/start/Nvim-R
+  endif
+  set runtimepath+=~/.vim/pack/bundle/start/vim-easy-align
+  set runtimepath+=~/.vim/pack/bundle/start/vim-sandwich
+  if has('patch-7.4.52')
+    set runtimepath+=~/.vim/pack/bundle/start/vimtex
+  endif
+  set runtimepath+=~/.vim/pack/text-obj/start/vim-angry
+  if v:version >= 704
+	set runtimepath+=~/.vim/pack/text-obj/start/vim-textobj-user
+	set runtimepath+=~/.vim/pack/text-obj/start/vim-textobj-entire
+	set runtimepath+=~/.vim/pack/text-obj/start/vim-textobj-line
+  endif
+  set runtimepath+=~/.vim/pack/search-nav/start/tagbar
+  set runtimepath+=~/.vim/pack/search-nav/start/vim-gutentags
+  set runtimepath+=~/.vim/pack/search-nav/start/vim-signature
 
 
-" optional
-Plug 'BertrandSim/auto-pairs'			" delims, forked from jiangmiao/auto-pairs
-Plug 'haya14busa/incsearch.vim'			" improved / ? incsearch
-Plug 'BertrandSim/vim-arpeggio', 
-  \ { 'branch': 'tmap' }				" key chords, forked to support Arpeggio in terminal mode
-Plug 'chrisbra/Colorizer', 
-  \{ 'on': [] }							" show color codes and names in vim
+  set runtimepath+=~/.vim/pack/bundle/opt/auto-pairs
+  set runtimepath+=~/.vim/pack/bundle/opt/incsearch.vim
+  set runtimepath+=~/.vim/pack/bundle/opt/vim-arpeggio
+  set runtimepath+=~/.vim/pack/bundle/opt/Colorizer
 
-call plug#end()
-
-" shellslash {{{1
-" use '/' for file paths, even on windows (instead of '\')
-set shellslash	" do so after plug#begin()
+endif
 
 " plugin configs {{{1
 " --------------
@@ -207,8 +221,8 @@ let g:vimtex_delim_toggle_mod_list = [
 
 " Use sandwich.vim-style mappings for ds,cs,ts --> sd, se, st/sT
 " temporary solution while transiting to sandwich.vim [TODO]
-if isdirectory($VIMHOME."/plugged/vimtex")
-
+if isdirectory($VIMHOME."/pack/bundle/opt/vimtex") || 
+  \isdirectory($VIMHOME."/pack/bundle/start/vimtex")
   augroup vimtex_maps
 	autocmd!
 	" autocmd Filetype tex nmap sde <plug>(vimtex-env-delete)
@@ -248,7 +262,8 @@ let g:vimtex_include_search_enabled = 0
 " }}}
 " sandwich config {{{2
 " ---------------
-if isdirectory($VIMHOME."/plugged/vim-sandwich")
+if isdirectory($VIMHOME."/pack/bundle/opt/vim-sandwich") || 
+  \isdirectory($VIMHOME."/pack/bundle/start/vim-sandwich")
 
   " unmap substitute (s) mapping
   nmap s <Nop>
@@ -293,7 +308,8 @@ let R_nvimpager = 'vertical'
 
 " keybindings
 " disable comment mappings
-if isdirectory($VIMHOME."/plugged/Nvim-R")
+if isdirectory($VIMHOME."/pack/bundle/opt/Nvim-R") || 
+  \isdirectory($VIMHOME."/pack/bundle/start/Nvim-R")
 
   augroup Nvim-R_config
 	autocmd!
@@ -433,7 +449,8 @@ let g:AutoPairsCenterLine = 0		" do not re-center screen after pressing <CR>
 let g:AutoPairsMultilineClose = 0	" do not jump past closing delim on another line
 
 " mappings for easy align plugin
-if isdirectory($VIMHOME."/plugged/vim-easy-align")
+if isdirectory($VIMHOME."/pack/bundle/opt/vim-easy-align") || 
+  \isdirectory($VIMHOME."/pack/bundle/start/vim-easy-align")
 
   nmap ga <Plug>(EasyAlign)
   xmap ga <Plug>(EasyAlign)
@@ -657,7 +674,8 @@ nnoremap <leader><space> :nohlsearch<CR>
 " nnoremap <leader><space> :let @/=""<CR>
 
 " incsearch.vim mappings
-if isdirectory($VIMHOME."/plugged/incsearch.vim")
+if isdirectory($VIMHOME."/pack/bundle/opt/incsearch.vim") || 
+  \isdirectory($VIMHOME."/pack/bundle/start/incsearch.vim")
 
   " map / <Plug>(incsearch-forward)
   " map ? <Plug>(incsearch-backward)
