@@ -200,8 +200,8 @@ let g:vimtex_delim_toggle_mod_list = [
 
 " Use sandwich.vim-style mappings for ds,cs,ts --> sd, se, st/sT
 " temporary solution while transiting to sandwich.vim [TODO]
-if isdirectory($VIMHOME."/pack/bundle/opt/vimtex") || 
-  \isdirectory($VIMHOME."/pack/bundle/start/vimtex")
+if isdirectory($VIMHOME."/plugged/vimtex")
+
   augroup vimtex_maps
 	autocmd!
 	" autocmd Filetype tex nmap sde <plug>(vimtex-env-delete)
@@ -241,8 +241,7 @@ let g:vimtex_include_search_enabled = 0
 " }}}
 " sandwich config {{{2
 " ---------------
-if isdirectory($VIMHOME."/pack/bundle/opt/vim-sandwich") || 
-  \isdirectory($VIMHOME."/pack/bundle/start/vim-sandwich")
+if isdirectory($VIMHOME."/plugged/vim-sandwich")
 
   " unmap substitute (s) mapping
   nmap s <Nop>
@@ -287,8 +286,7 @@ let R_nvimpager = 'vertical'
 
 " keybindings
 " disable comment mappings
-if isdirectory($VIMHOME."/pack/bundle/opt/Nvim-R") || 
-  \isdirectory($VIMHOME."/pack/bundle/start/Nvim-R")
+if isdirectory($VIMHOME."/plugged/Nvim-R")
 
   augroup Nvim-R_config
 	autocmd!
@@ -428,8 +426,7 @@ let g:AutoPairsCenterLine = 0		" do not re-center screen after pressing <CR>
 let g:AutoPairsMultilineClose = 0	" do not jump past closing delim on another line
 
 " mappings for easy align plugin
-if isdirectory($VIMHOME."/pack/bundle/opt/vim-easy-align") || 
-  \isdirectory($VIMHOME."/pack/bundle/start/vim-easy-align")
+if isdirectory($VIMHOME."/plugged/vim-easy-align")
 
   nmap ga <Plug>(EasyAlign)
   xmap ga <Plug>(EasyAlign)
@@ -653,8 +650,7 @@ nnoremap <leader><space> :nohlsearch<CR>
 " nnoremap <leader><space> :let @/=""<CR>
 
 " incsearch.vim mappings
-if isdirectory($VIMHOME."/pack/bundle/opt/incsearch.vim") || 
-  \isdirectory($VIMHOME."/pack/bundle/start/incsearch.vim")
+if isdirectory($VIMHOME."/plugged/incsearch.vim")
 
   " map / <Plug>(incsearch-forward)
   " map ? <Plug>(incsearch-backward)
