@@ -88,9 +88,6 @@ set fileformats=unix,dos	" use unix by default, o/w try dos
 " ( = dir containing this vimrc file)
 let $VIMHOME = expand('<sfile>:p:h')
 
-" use '/' for file paths, even on windows (instead of '\')
-set shellslash
-
 " _c_hange _d_irectory to that of _c_urrent file with :CDC
 command CDC lcd %:p:h
 
@@ -114,71 +111,53 @@ let g:tex_flavor='latex'			" ft of .tex files to 'tex', not 'plaintex'.
 " plugins {{{1
 " --------
 
-if has('packages')
-" using built-in package manager
+" helper func for vim-plug conditional activation
+function! Cond(cond, ...)
+  let opts = get(a:000, 0, {})
+  return a:cond ? opts : extend(opts, { 'on': [], 'for': [] })
+endfunction
 
-  " packages in start:
-  "   lifepillar/vim-solarized8		" solarized8 colorscheme
-  "   tpope/vim-unimpaired			" handy pairs of mappings
-  "   masukmoi/vim-markdown-folding	" expr-folding of markdown files
-  "   itchyny/lightline.vim			" lean status line
-  "   SirVer/ultisnips				" snippets
-  "   jalvesaq/Nvim-R				" interaction between R scripts with R terminal
-  "   junegunn/vim-easy-align		" align lines by a char/regex
-  "   machakann/vim-sandwich		" surroundings
-  "   lervag/vimtex					" plugin for tex files
-  "   text objects:
-  "     b4winckler/vim-angry			" function argument text object
-  "     kana/vim-textobj-user			" custom text objects
-  "     kana/vim-textobj-entire
-  "     kana/vim-textobj-line
-  "   search and navigation:
-  "     majutsushi/tagbar			" show tags on a side margin
-  "     ludovicchabant/vim-gutentags	" automatically generate tags
-  "     kshenoy/vim-signature	" show marks in signs column (left gutter)
+" call plug#begin('~/.vim/plugged')
+call plug#begin($VIMHOME.'/plugged')
 
-  " packages in opt:
-  packadd! auto-pairs       	" BertrandSim/auto-pairs;	delims, forked from jiangmiao/auto-pairs
-  packadd! incsearch.vim		" hayabusa/incsearch.vim;	improved / ? incsearch
-  packadd! vim-arpeggio			" kana/vim-arpeggio;		key chords
-  packadd! Colorizer			" chrisbra/Colorizer;		show color codes and names in vim
-
-" elseif " using pathogen plugin manager,
-" execute pathogen#infect()
-
-else
-  set runtimepath+=~/.vim/pack/bundle/start/vim-solarized8
-  set runtimepath+=~/.vim/pack/bundle/start/vim-unimpaired
-  set runtimepath+=~/.vim/pack/bundle/start/vim-markdown-folding
-  set runtimepath+=~/.vim/pack/bundle/start/lightline.vim
-  if v:version >= 704
-	set runtimepath+=~/.vim/pack/bundle/start/ultisnips    " -3.1
-  endif
-  if has('patch-8.0.0946')
-	set runtimepath+=~/.vim/pack/bundle/start/Nvim-R
-  endif
-  set runtimepath+=~/.vim/pack/bundle/start/vim-easy-align
-  set runtimepath+=~/.vim/pack/bundle/start/vim-sandwich
-  if has('patch-7.4.52')
-    set runtimepath+=~/.vim/pack/bundle/start/vimtex
-  endif
-  set runtimepath+=~/.vim/pack/text-obj/start/vim-angry
-  if v:version >= 704
-	set runtimepath+=~/.vim/pack/text-obj/start/vim-textobj-user
-	set runtimepath+=~/.vim/pack/text-obj/start/vim-textobj-entire
-	set runtimepath+=~/.vim/pack/text-obj/start/vim-textobj-line
-  endif
-  set runtimepath+=~/.vim/pack/search-nav/start/tagbar
-  set runtimepath+=~/.vim/pack/search-nav/start/vim-gutentags
-  set runtimepath+=~/.vim/pack/search-nav/start/vim-signature
+" frequently used:
+Plug 'lifepillar/vim-solarized8'		" solarized8 colorscheme
+Plug 'tpope/vim-unimpaired'				" handy pairs of mappings
+Plug 'masukomi/vim-markdown-folding'	" expr-folding of markdown files
+Plug 'itchyny/lightline.vim'			" lean status line
+Plug 'SirVer/ultisnips',
+  \ Cond(v:version >= 704, { 'tag': '3.1' })		" snippets; perhaps v3.2?
+Plug 'jalvesaq/Nvim-R',
+  \ Cond(has('patch-8.0.0946'))			" interaction between R scripts with R terminal
+Plug 'junegunn/vim-easy-align'			" align lines by a char/regex
+Plug 'machakann/vim-sandwich'			" surroundings
+Plug 'lervag/vimtex',
+  \ Cond(has('patch-7.4.52'))			" plugin for tex files
+  " text objects:
+Plug 'b4winckler/vim-angry'				" function argument text object
+Plug 'kana/vim-textobj-user',
+  \ Cond(v:version >= 704)
+Plug 'kana/vim-textobj-entire',
+  \ Cond(v:version >= 704)
+Plug 'kana/vim-textobj-line',
+  \ Cond(v:version >= 704)				" custom text objects
+  " search and navigation:
+Plug 'majutsushi/tagbar'				" show tags on a side margin
+Plug 'ludovicchabant/vim-gutentags'		" automatically generate tags
+Plug 'kshenoy/vim-signature'			" show marks in signs column (left gutter)
 
 
-  set runtimepath+=~/.vim/pack/bundle/opt/auto-pairs
-  set runtimepath+=~/.vim/pack/bundle/opt/incsearch.vim
-  set runtimepath+=~/.vim/pack/bundle/opt/vim-arpeggio
-  set runtimepath+=~/.vim/pack/bundle/opt/Colorizer
+" optional
+Plug 'BertrandSim/auto-pairs'			" delims, forked from jiangmiao/auto-pairs
+Plug 'haya14busa/incsearch.vim'			" improved / ? incsearch
+Plug 'kana/vim-arpeggio'				" key chords
+Plug 'chrisbra/Colorizer', { 'on': [] }	" show color codes and names in vim
 
-endif
+call plug#end()
+
+" shellslash {{{1
+" use '/' for file paths, even on windows (instead of '\')
+set shellslash	" do so after plug#begin()
 
 " plugin configs {{{1
 " --------------
