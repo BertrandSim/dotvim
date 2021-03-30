@@ -150,8 +150,10 @@ Plug 'kshenoy/vim-signature'			" show marks in signs column (left gutter)
 " optional
 Plug 'BertrandSim/auto-pairs'			" delims, forked from jiangmiao/auto-pairs
 Plug 'haya14busa/incsearch.vim'			" improved / ? incsearch
-Plug 'kana/vim-arpeggio'				" key chords
-Plug 'chrisbra/Colorizer', { 'on': [] }	" show color codes and names in vim
+Plug 'BertrandSim/vim-arpeggio', 
+  \ { 'branch': 'tmap' }				" key chords, forked to support Arpeggio in terminal mode
+Plug 'chrisbra/Colorizer', 
+  \{ 'on': [] }							" show color codes and names in vim
 
 call plug#end()
 
