@@ -124,6 +124,7 @@ call plug#begin($VIMHOME.'/plugged')
 Plug 'lifepillar/vim-solarized8'		" solarized8 colorscheme
 Plug 'tpope/vim-unimpaired'				" handy pairs of mappings
 Plug 'masukomi/vim-markdown-folding'	" expr-folding of markdown files
+Plug 'vim-pandoc/vim-pandoc-syntax'		" syntax highlighting for markdown and related files
 Plug 'itchyny/lightline.vim'			" lean status line
 Plug 'SirVer/ultisnips',
   \ Cond(v:version >= 704, { 'tag': '3.1' })		" snippets; perhaps v3.2?
@@ -133,6 +134,7 @@ Plug 'junegunn/vim-easy-align'			" align lines by a char/regex
 Plug 'machakann/vim-sandwich'			" surroundings
 Plug 'lervag/vimtex',
   \ Cond(has('patch-7.4.52'))			" plugin for tex files
+
   " text objects:
 Plug 'b4winckler/vim-angry'				" function argument text object
 Plug 'kana/vim-textobj-user',
@@ -141,7 +143,10 @@ Plug 'kana/vim-textobj-entire',
   \ Cond(v:version >= 704)
 Plug 'kana/vim-textobj-line',
   \ Cond(v:version >= 704)				" custom text objects
+
   " search and navigation:
+Plug 'preservim/nerdtree'				" file explorer in vim
+Plug 'kien/ctrlp.vim'					" fuzzy finder
 Plug 'majutsushi/tagbar'				" show tags on a side margin
 Plug 'ludovicchabant/vim-gutentags'		" automatically generate tags
 Plug 'kshenoy/vim-signature'			" show marks in signs column (left gutter)
