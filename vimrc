@@ -127,7 +127,7 @@ Plug 'masukomi/vim-markdown-folding'	" expr-folding of markdown files
 Plug 'vim-pandoc/vim-pandoc-syntax'		" syntax highlighting for markdown and related files
 Plug 'itchyny/lightline.vim'			" lean status line
 Plug 'SirVer/ultisnips',
-  \ Cond(v:version >= 704, { 'tag': '3.1' })		" snippets; perhaps v3.2?
+  \ Cond(v:version >= 704, { 'tag': '3.2' })		" snippets; v3.2 on Nov 2019
 Plug 'jalvesaq/Nvim-R',
   \ Cond(has('patch-8.0.0946'))			" interaction between R scripts with R terminal
 Plug 'junegunn/vim-easy-align'			" align lines by a char/regex
