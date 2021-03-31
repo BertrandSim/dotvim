@@ -6,14 +6,13 @@ function Check_output_equal()
   normal \o:sleep 50md2WkJi,sailfall.equal
 endfunction
 
-function Extract_first_args_para()
-  " for line in para
+function Extract_first_arg()
   " all.equal( <expr>, output_value ) --> <expr> , 
-  normal yapPvip:s/^.\{-}(\(.\{-}\),.*$/\1:nohlsearch
+  normal! :s/^.\{-}(\(.\{-}\),.*$/\1:nohlsearch
 endfunction
 
 map <leader>O :call Check_output_equal()<CR>
-map <leader>I :call Extract_first_args_para()<CR>
+map <leader>I :call Extract_first_arg()<CR>
 
 
 " Teardown
