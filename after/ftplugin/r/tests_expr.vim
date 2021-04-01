@@ -23,6 +23,6 @@ else
 endif
 
 let b:undo_ftplugin .= 
-  \'delfunc Check_output_equal | delfunc Extract_first_args_para 
+  \'delfunc Check_output_equal | delfunc Extract_first_arg
   \  | unmap <leader>O | unmap <leader>I 
   \'
