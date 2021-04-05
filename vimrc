@@ -57,7 +57,6 @@ m'gv``
 "set langnoremap
 "set nolangremap
 "set mousemodel=extend
-"set nrformats=bin,hex
 "set runtimepath=~/vimfiles,C:\\Program\ Files\\Vim/vimfiles,C:\\Program\ Files\\Vim\\vim81,C:\\Program\ Files\\Vim\\vim81\\pack\\dist\\opt\\matchit,C:\\Program\ Files\\Vim/vimfiles/after,~/vimfiles/after
 "set ttimeout
 "set ttimeoutlen=100
@@ -73,14 +72,16 @@ filetype plugin indent on
 " turns on filetype detection, and loads filetype-specific plugins and indent files
 " see :help filetype-overview
 
-set encoding=utf-8		" The encoding displayed.
-set fileencoding=utf-8	" The encoding written to file.
+set encoding=utf-8		" the encoding displayed.
+set fileencoding=utf-8	" the encoding written to file.
 
+set fileformats=unix,dos	" use unix (line endings) by default, o/w try dos
 
-" File formats {{{1
-" ------------
-" set fileformat=unix
-set fileformats=unix,dos	" use unix by default, o/w try dos
+set nrformats=bin,hex	" get rid of octal annoyance for ^a/^x 
+
+if has('patch-7.4.793')
+  set belloff=all	" turn off audio error bells
+endif
 
 " filepaths and dirs {{{1
 " ------------------
@@ -987,10 +988,6 @@ xmap iE <Plug>(textobj-entire-i)
 
 " misc {{{1
 " ----
-if has('patch-7.4.793')
-  set belloff=all " turn off audio error bells
-endif
-
 set diffopt+=vertical	  " when starting diffmode, use vertical splits by default, such as with :diffsplit
 
 function PosCompare(p1, p2)
