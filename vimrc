@@ -132,6 +132,7 @@ Plug 'jalvesaq/Nvim-R',
   \ Cond(has('patch-8.0.0946'))			" interaction between R scripts with R terminal
 Plug 'junegunn/vim-easy-align'			" align lines by a char/regex
 Plug 'machakann/vim-sandwich'			" surroundings
+Plug 'justinmk/vim-sneak'				" 2-char f/t-like motion
 Plug 'lervag/vimtex',
   \ Cond(has('patch-7.4.52'))			" plugin for tex files
 
@@ -389,8 +390,26 @@ let g:pandoc#syntax#conceal#blacklist = [
   \]
 
 " }}}
+" vim-sneak settings {{{2
 
-" tex conceal settings
+map K <Plug>Sneak_s
+map M <Plug>Sneak_S
+
+" enable label mode
+let g:sneak#label = 1
+let g:sneak#target_labels = "fjklwetunq/SFGHLTUNRMQZ?0"
+
+" temporal testing of sneak_f/t/F/T
+map <leader>f <Plug>Sneak_f
+map <leader>F <Plug>Sneak_F
+map <leader>t <Plug>Sneak_t
+map <leader>T <Plug>Sneak_T
+
+
+
+" }}}
+
+" tex conceal settings -> superseded by vimtex 2.0
 " let g:tex_conceal = "abdgmsS"
 " see h: g:tex_conceal as to the things each alphabet conceals
 " change this in tex, markdown, rmd ftplugin files
