@@ -60,7 +60,7 @@ function! SearchRFunc(searchpos, flags, curpos)
   let curpos_save = getpos('.')
 
   let patternFuncStart =
-    \'\v(\w+\s*(\<\-|\=)\_s*)?'.
+    \'\v(\a\k+\s*(\<\-|\=)\_s*)?'.
     \   'function\s*\('
     " optional: <name> <- or =
     " function(
