@@ -395,16 +395,22 @@ let g:pandoc#syntax#conceal#blacklist = [
 map K <Plug>Sneak_s
 map M <Plug>Sneak_S
 
-" enable label mode
+" use smartcase
+let g:sneak#use_ic_scs = 1	
+
+" label mode
 let g:sneak#label = 1
 let g:sneak#target_labels = "fjklwetunq/SFGHLTUNRMQZ?0"
+
+" highlighting
+" highlight link SneakScope Cursor
+highlight link SneakLabel Folded
 
 " temporal testing of sneak_f/t/F/T
 map <leader>f <Plug>Sneak_f
 map <leader>F <Plug>Sneak_F
 map <leader>t <Plug>Sneak_t
 map <leader>T <Plug>Sneak_T
-
 
 
 " }}}
