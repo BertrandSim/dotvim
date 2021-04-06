@@ -19,8 +19,8 @@ function Extract_first_arg()
   normal! :s/^.\{-}(\(.\{-}\),.*$/\1:nohlsearch
 endfunction
 
-map <leader>O :call Check_output_equal()<CR>
-map <leader>I :call Extract_first_arg()<CR>
+map <buffer> <leader>O :call Check_output_equal()<CR>
+map <buffer> <leader>I :call Extract_first_arg()<CR>
 
 
 " Teardown
@@ -32,5 +32,5 @@ endif
 
 let b:undo_ftplugin .= 
   \'delfunc Check_output_equal | delfunc Extract_first_arg
-  \  | unmap <leader>O | unmap <leader>I 
+  \  | unmap <buffer> <leader>O | unmap <buffer> <leader>I 
   \'
