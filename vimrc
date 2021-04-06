@@ -721,10 +721,10 @@ nnoremap g/ /\<\><Left><Left>
 " nmap <expr> gz/ incsearch#go({'command': '/', 'pattern': '\<\>', 'is_stay': 1 })."\<Left>\<Left>" "doesn't work
 
 " search between marks
-nnoremap m/ /\%>'s\%(\)\%<'e<Left><Left><Left><Left><Left><Left><Left>
+" use '>< {snippet-trigger}' in search (/?)
 
 " search within visual selection
-vnoremap / <Esc>/\%V\%(\)\%V<Left><Left><Left><Left><Left>
+" use 'VV {snippet-trigger}' in search (/?)
 
 
 " view help, nomodifiable buffers {{{1
@@ -862,7 +862,7 @@ augroup cmdline_window
     autocmd CmdWinEnter [:>] silent! nunmap <buffer> <Tab>
 augroup END
 
-" see UltiSnips/vim_cmdline.snippets for the snippets themselves
+" see UltiSnips/all_vim_cmdline.snippets for the snippets themselves
 
 " }}}
 " Ultisnip snippet operator {{{1
