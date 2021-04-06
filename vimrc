@@ -682,15 +682,26 @@ endif
 nnoremap <leader><space> :nohlsearch<CR>
 " nnoremap <leader><space> :let @/=""<CR>
 
-" incsearch.vim mappings
+" n/N always searches forward/backward. Also respects 'foldopen' option 
+" From vi.se/*/how-can-i-get-n-to-go-forward-even-if-*
+nnoremap <expr> n 'Nn'[v:searchforward].(&foldopen=~'search\\|all'?'zv':'')
+nnoremap <expr> N 'nN'[v:searchforward].(&foldopen=~'search\\|all'?'zv':'')
+
+" highlight search matches without jumping to it
+" nnoremap z/ :let @/=""<Left>
+" replaced with incsearch.vim
+
+" incsearch.vim 
 if isdirectory($VIMHOME."/plugged/incsearch.vim")
 
   " map / <Plug>(incsearch-forward)
   " map ? <Plug>(incsearch-backward)
+
+  " highlight search matches without jumping to it
   map z/ <Plug>(incsearch-stay)
 
   " let n always search forward, N always backward
-  " let g:incsearch#consistent_n_direction = 1
+  let g:incsearch#consistent_n_direction = 1
 endif
 
 " z*, gz*, z#, gz#
@@ -703,10 +714,6 @@ nnoremap <silent>  z# :let @/ = '\<'.expand('<cword>').'\>' \| set hlsearch \| l
 	  \ call histadd("/", @/) \| echo @/<CR>
 nnoremap <silent> gz# :let @/ =      expand('<cword>')      \| set hlsearch \| let v:searchforward=0 \|
 	  \ call histadd("/", @/) \| echo @/<CR>
-
-" highlight search matches without jumping to it
-" nnoremap <leader>/ :let @/=""<Left>
-" replaced with incsearch.vim?
 
 " enter search with word boundaries \<...\>
 nnoremap g/ /\<\><Left><Left>
