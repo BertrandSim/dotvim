@@ -1,9 +1,17 @@
 " quick macros for creating tests 
 
-function Check_output_equal()
+function Check_output_equal() abort
   " <cur_line> --> all.equal( <cur_line>, output_value )
-  " uses custom plugin mappings \o (Nvim-R), sa (vim-sandwich)
-  normal \o:sleep 50md2WkJi,^sa$fall.equal
+
+  " normal \o:sleep 50md2WkJi,sailfall.equal
+  "   original ver uses custom plugin mappings 
+  "   \o (Nvim-R), sa (vim-sandwich), il (vim-textobj-line)
+
+  call SendLineToRAndInsertOutput()
+  normal! 0
+  sleep 50m
+  normal! d2WkJi,
+  normal! Iall.equal(A)
 endfunction
 
 function Extract_first_arg()
