@@ -2,8 +2,8 @@
 
 function Check_output_equal()
   " <cur_line> --> all.equal( <cur_line>, output_value )
-  " uses custom plugin mappings \o, sa, il (text-object-line)
-  normal \o:sleep 50md2WkJi,sailfall.equal
+  " uses custom plugin mappings \o (Nvim-R), sa (vim-sandwich)
+  normal \o:sleep 50md2WkJi,^sa$fall.equal
 endfunction
 
 function Extract_first_arg()
