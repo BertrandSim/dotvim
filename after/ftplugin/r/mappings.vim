@@ -38,7 +38,7 @@ if !( exists('did_plugin_ultisnips') && exists('g:_uspy') )
     let b:undo_ftplugin .= '|'
   endif
 
-  " let b:undo_ftplugin .= ' iunmap __|'
-  let b:undo_ftplugin .= ' iunmap >>'
+  " let b:undo_ftplugin .= ' iunmap <buffer> __|'
+  let b:undo_ftplugin .= ' iunmap <buffer> >>'
 
 endif
