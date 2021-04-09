@@ -443,6 +443,11 @@ let g:gutentags_ctags_exclude += [
   \ 'Session.vim',
   \ ]
 
+" vim-signature: show marks in side column
+" use omap for 'dm' mapping
+let g:SignatureMap = {'DeleteMark' : ''}	" remove normal-mode mapping
+" see 'nmaps to omaps' below 
+
 " CtrLP
 " basic search modes
 let g:ctrlp_types = ['fil', 'buf', 'mru']
@@ -769,8 +774,7 @@ augroup qbcomment
 augroup END
 
 " cm / cx to comment / uncomment current line
-omap <expr> m v:operator ==# 'c' ? "\<Esc>"."\<Plug>(AddComment)".'_' : 'm'
-omap <expr> x v:operator ==# 'c' ? "\<Esc>"."\<Plug>(RmComment)".'_' : 'x'
+" see 'nmaps to omaps' below 
 
 " [\cm|\cx|\bm|\bx]{motion} to 
 " comment|uncomment|block comment|block uncomment lines specified by {motion}
@@ -785,8 +789,7 @@ vmap <leader>bx <Plug>(VRmBlockComment)
 
 
 " cp / cP to copy and comment cur line (normal mode)
-omap <expr> p v:operator ==# 'c' ? "\<Esc>"."\<Plug>(ComACop)"  : 'p'
-omap <expr> P v:operator ==# 'c' ? "\<Esc>"."\<Plug>(ComACopA)" : 'P'
+" see 'nmaps to omaps' below 
 
 " \cp / \cP to copy and comment motion / visual selection
 " TODO [2020-01-30]: operator for comment-a-copy
@@ -992,6 +995,21 @@ xmap iE <Plug>(textobj-entire-i)
 " autocmd Filetype R onoremap af :normal vaf<CR>
 " see vim-textobj-rfunc (working version, WIP, at time of writing)
 
+" nmaps to omaps {{{1
+" --------------------
+" compound mappings beginning with an operator (eg. c/d/y)
+" to be switched to operator pending mappings
+
+" cm/cx -> comment/uncomment line
+" cp/cP -> comment line and put below/above
+" dm -> remove mark (vim-signature)
+omap <expr> <silent> m 
+  \ v:operator ==# 'c' ? "\<Esc>"."\<Plug>(AddComment)".'_' : 
+  \ v:operator ==# 'd' ? "\<Esc>".":\<C-U>call signature#utils#Remove(v:count)\<CR>" : 
+  \ 'm'
+omap <expr> x v:operator ==# 'c' ? "\<Esc>"."\<Plug>(RmComment)".'_' : 'x'
+omap <expr> p v:operator ==# 'c' ? "\<Esc>"."\<Plug>(ComACop)"  : 'p'
+omap <expr> P v:operator ==# 'c' ? "\<Esc>"."\<Plug>(ComACopA)" : 'P'
 
 " misc {{{1
 " ----
