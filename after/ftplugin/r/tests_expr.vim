@@ -32,5 +32,5 @@ endif
 
 let b:undo_ftplugin .= 
   \'delfunc Check_output_equal | delfunc Extract_first_arg
-  \  | unmap <buffer> <leader>O | unmap <buffer> <leader>I 
+  \  | unmap <buffer> <leader>O| unmap <buffer> <leader>I
   \'
