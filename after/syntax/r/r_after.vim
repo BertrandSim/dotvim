@@ -2,12 +2,12 @@
 " Custom dictionary 'g:r_syn_fold' for folding options
 
 let s:r_syn_fold = get(g:, 'r_syn_fold', {})
-let s:r_syn_fold.paren = get(s:r_syn_fold, 'paren', 1)
-let s:r_syn_fold.curly = get(s:r_syn_fold, 'curly', 1)
-let s:r_syn_fold.brace = get(s:r_syn_fold, 'brace', 1)
-let s:r_syn_fold.section = get(s:r_syn_fold, 'section', 1)
-let s:r_syn_fold.funcArgs = get(s:r_syn_fold, 'funcArgs', 1)
-let s:r_syn_fold.funcBody = get(s:r_syn_fold, 'funcBody', 1)
+let s:r_syn_fold.paren = get(s:r_syn_fold, 'paren', 0)
+let s:r_syn_fold.curly = get(s:r_syn_fold, 'curly', 0)
+let s:r_syn_fold.brace = get(s:r_syn_fold, 'brace', 0)
+let s:r_syn_fold.section = get(s:r_syn_fold, 'section', 0)
+let s:r_syn_fold.funcArgs = get(s:r_syn_fold, 'funcArgs', 0)
+let s:r_syn_fold.funcBody = get(s:r_syn_fold, 'funcBody', 0)
 
 
 " rFunction syntax definition {{{1
