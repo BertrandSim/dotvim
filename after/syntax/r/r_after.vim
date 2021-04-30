@@ -19,9 +19,12 @@ syn keyword rType array category character complex double integer list logical m
 
 " function (<args>) {<body>}
 syn match rFuncWord /function/ skipwhite nextgroup=rFuncArgs 
-exec 'syn region rFuncArgs matchgroup=rParen start=/(/ end=/)/ skipwhite nextgroup=rFuncBody contained' .
+
+exec 'syn region rFuncArgs matchgroup=rParen start=/(/ end=/)/ skipwhite nextgroup=rFuncBody contained' . 
+  \ ' transparent contains=ALLBUT,rError,rBraceError,rCurlyError' .
   \ (s:r_syn_fold.funcArgs ? ' fold' : '')
 exec 'syn region rFuncBody matchgroup=rCurly start=/{/ end=/}/ contained' .
+  \ ' transparent contains=ALLBUT,rError,rCurlyError,rParenError' .
   \ (s:r_syn_fold.funcBody ? ' fold' : '')
 
 
