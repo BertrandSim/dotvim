@@ -687,10 +687,19 @@ endif
 nnoremap <leader><space> :nohlsearch<CR>
 " nnoremap <leader><space> :let @/=""<CR>
 
-" n/N always searches forward/backward. Also respects 'foldopen' option 
+" n/N always searches forward/backward. 
+" respects 'foldopen' and shows search count [n/nn]
+nnoremap n :<C-u>call feedkeys(v:count1 . (v:searchforward ? 'n' : 'N'), 'nt')<CR>
+nnoremap N :<C-u>call feedkeys(v:count1 . (v:searchforward ? 'N' : 'n'), 'nt')<CR>
+" these don't 'foldopen'
+  " nnoremap <expr> n (v:searchforward ? 'n':'N') 
+  " nnoremap <expr> N (v:searchforward ? 'N':'n')
+" these don't show search count [n/nn]
 " From vi.se/*/how-can-i-get-n-to-go-forward-even-if-*
-nnoremap <expr> n 'Nn'[v:searchforward].(&foldopen=~'search\\|all'?'zv':'')
-nnoremap <expr> N 'nN'[v:searchforward].(&foldopen=~'search\\|all'?'zv':'')
+  " nnoremap <expr> n (v:searchforward ? 'n':'N') . (&foldopen=~'search\\|all' ? 'zv' : '')
+  " nnoremap <expr> N (v:searchforward ? 'N':'n') . (&foldopen=~'search\\|all' ? 'zv' : '')
+  " nnoremap <expr> n 'Nn'[v:searchforward].(&foldopen=~'search\\|all'?'zv':'')
+  " nnoremap <expr> N 'nN'[v:searchforward].(&foldopen=~'search\\|all'?'zv':'')
 
 " highlight search matches without jumping to it
 " nnoremap z/ :let @/=""<Left>
