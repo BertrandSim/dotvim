@@ -917,16 +917,6 @@ endfunction
 " augroup END
 
 
-" R code folding [TODO] {{{1
-" ------
-
-" code folding, using native vim's syntax / Nvim-R
-autocmd Filetype r setlocal foldmethod=syntax
-" let r_syntax_folding=1
-let r_syntax_brace_folding=1
-" or using custom fold expr instead... via plugin [TODO]
-" autocmd Filetype r setlocal foldmethod=expr
-
 " terminal {{{1
 " --------
 
