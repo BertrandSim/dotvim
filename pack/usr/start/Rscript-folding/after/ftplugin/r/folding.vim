@@ -2,8 +2,10 @@
 " folds (1) ## headers ---- and (2) functions(){}
 " does not yet support nested functions that start (or end) on the same line. [todo]
 
-setlocal foldmethod=expr
-setlocal foldexpr=RscriptFoldExpr()
+" as at 30/4/2021, foldexpr superseded by syntax folding.
+" see .vim/after/syntax/r/r_after.vim and .vim/after/ftplugin/r/conf_syn_fold.vim
+  " setlocal foldmethod=expr
+  " setlocal foldexpr=RscriptFoldExpr()
 setlocal foldtext=RscriptFoldText()
 
 " Helper Functions {{{1
