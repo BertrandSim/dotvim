@@ -1,7 +1,7 @@
 " Code folding options, using custom syntax
 " see .vim/after/syntax/r/r_after.vim
 
-autocmd Filetype r setlocal foldmethod=syntax
+setlocal foldmethod=syntax
 
 let g:r_syn_fold = {
   \ 'paren' : 0,
@@ -12,3 +12,12 @@ let g:r_syn_fold = {
   \ 'funcBody' : 1,
 \}
 
+" Teardown
+if !exists('b:undo_ftplugin')
+  let b:undo_ftplugin = ''
+else
+  let b:undo_ftplugin .= '| '
+endif
+
+let b:undo_ftplugin .= 'setlocal foldmethod<'
+let b:undo_ftplugin .= ' | unlet g:r_syn_fold'
