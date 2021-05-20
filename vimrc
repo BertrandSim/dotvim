@@ -161,7 +161,7 @@ Plug 'BertrandSim/vim-arpeggio',
 Plug 'chrisbra/Colorizer', 
   \{ 'on': [] }							" show color codes and names in vim
 Plug 'BertrandSim/auto-pairs',
-  \{ 'on': [] }							" delims, forked from jiangmiao/auto-pairs. Superceded by SpacePair.vim
+  \{ 'on': [] }							" delims, forked from jiangmiao/auto-pairs. Superceded by pairspace.vim
 
 call plug#end()
 

@@ -52,7 +52,7 @@ Arpeggiotnoremap bk ``<Left>
 
 " if auto-pairs is loaded,
 "   remove buffer-local mappings for ()[]{}<> for Arpeggio mappings to work properly.
-"   remove buffer-local mappings for <Space>, <CR>, <BS>, for SpacePair.vim mappings to work.
+"   remove buffer-local mappings for <Space>, <CR>, <BS>, for pairspace.vim mappings to work.
 
 if !get(g:, "AutoPairsLoaded", 0) | finish | endif
 
