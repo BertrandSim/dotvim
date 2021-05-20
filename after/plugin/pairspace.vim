@@ -70,7 +70,7 @@ endfunction
 function! s:above_is(string, pos)
   let str_len = strlen(a:string)
   let [lnum, col] = a:pos
-  let line = getline(lnum - 1)->trim()
+  let line = s:trim(getline(lnum - 1))
   let line_len = strlen(line)
   if line[line_len-1-(str_len-1) : line_len-1] ==# a:string
     return 1
@@ -82,7 +82,7 @@ endfunction
 function! s:below_is(string, pos)
   let str_len = strlen(a:string)
   let [lnum, col] = a:pos
-  let line = getline(lnum + 1)->trim()
+  let line = s:trim(getline(lnum + 1))
   let line_len = strlen(line)
   if line[0 : (str_len-1)] ==# a:string
     return 1
@@ -92,7 +92,17 @@ endfunction
 
 " checks if line lnum contains only whitespaces
 function! s:line_iswhite(lnum)
-  return getline(a:lnum)->trim() ==# '' ? 1 : 0
+  return s:trim(getline(a:lnum)) ==# '' ? 1 : 0
+endfunction
+
+" trim() for older versions of vim
+" (lazy way): do nothing for earlier versions
+function! s:trim(string)
+  if has('patch-8.0.1630')
+    return trim(a:string)
+  else
+    return a:string
+  endif
 endfunction
 
 
