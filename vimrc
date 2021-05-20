@@ -121,19 +121,23 @@ endfunction
 " call plug#begin('~/.vim/plugged')
 call plug#begin($VIMHOME.'/plugged')
 
-" frequently used:
+  " core:
 Plug 'lifepillar/vim-solarized8'		" solarized8 colorscheme
 Plug 'tpope/vim-unimpaired'				" handy pairs of mappings
-Plug 'masukomi/vim-markdown-folding'	" expr-folding of markdown files
-Plug 'vim-pandoc/vim-pandoc-syntax'		" syntax highlighting for markdown and related files
 Plug 'itchyny/lightline.vim'			" lean status line
 Plug 'SirVer/ultisnips',
   \ Cond(v:version >= 704, { 'tag': '3.2' })		" snippets; v3.2 on Nov 2019
-Plug 'jalvesaq/Nvim-R',
-  \ Cond(has('patch-8.1.1705'))			" interaction between R scripts with R terminal
 Plug 'junegunn/vim-easy-align'			" align lines by a char/regex
 Plug 'machakann/vim-sandwich'			" surroundings
 Plug 'justinmk/vim-sneak'				" 2-char f/t-like motion
+Plug 'BertrandSim/vim-arpeggio', 
+  \ { 'branch': 'tmap' }				" key chords, forked to support Arpeggio in terminal mode
+
+  " ft specific:
+Plug 'masukomi/vim-markdown-folding'	" expr-folding of markdown files
+Plug 'vim-pandoc/vim-pandoc-syntax'		" syntax highlighting for markdown and related files
+Plug 'jalvesaq/Nvim-R',
+  \ Cond(has('patch-8.1.1705'))			" interaction between R scripts with R terminal
 Plug 'lervag/vimtex',
   \ Cond(has('patch-7.4.52'))			" plugin for tex files
 
@@ -156,8 +160,6 @@ Plug 'kshenoy/vim-signature'			" show marks in signs column (left gutter)
 
   " misc and backups
 Plug 'haya14busa/incsearch.vim'			" improved / ? incsearch
-Plug 'BertrandSim/vim-arpeggio', 
-  \ { 'branch': 'tmap' }				" key chords, forked to support Arpeggio in terminal mode
 Plug 'chrisbra/Colorizer', 
   \{ 'on': [] }							" show color codes and names in vim
 Plug 'BertrandSim/auto-pairs',
