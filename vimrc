@@ -154,13 +154,14 @@ Plug 'ludovicchabant/vim-gutentags'		" automatically generate tags
 Plug 'kshenoy/vim-signature'			" show marks in signs column (left gutter)
 
 
-" optional
-Plug 'BertrandSim/auto-pairs'			" delims, forked from jiangmiao/auto-pairs
+  " misc and backups
 Plug 'haya14busa/incsearch.vim'			" improved / ? incsearch
 Plug 'BertrandSim/vim-arpeggio', 
   \ { 'branch': 'tmap' }				" key chords, forked to support Arpeggio in terminal mode
 Plug 'chrisbra/Colorizer', 
   \{ 'on': [] }							" show color codes and names in vim
+Plug 'BertrandSim/auto-pairs',
+  \{ 'on': [] }							" delims, forked from jiangmiao/auto-pairs. Superceded by pairspace.vim
 
 call plug#end()
 
