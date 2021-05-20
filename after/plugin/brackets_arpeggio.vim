@@ -1,24 +1,8 @@
 " Arpeggio bracket key combis
 " ---------------------------
 
-" As imap ()[]{}<> is written by autopairs
-" remove these mappings for Arpeggio mappings below to work properly
-" use autopairs plugin for <space>, <BS>, <CR>
-au BufEnter * call s:unmapAutoPairsInsert()
-
-function! s:unmapAutoPairsInsert()
-  " redir => insertmaps
-  "   filter /\cAutoPairsInsert/ imap <buffer>
-  " redir END
-
-  for delim in ['(',')','[',']','{','}','<','>',"'",'"','`']
-    exec 'silent! iunmap <buffer>' delim
-  endfor
-endfunction
-
-
-" map key chords {{{
-" ==================
+" map key chords {{{1
+" ==============
 " { jk:() , df:{} , fj:[] , dj:<> , dk:"" , gk:'' , bk:`` }
 "
 " (see also .vim/after/ftplugin/tex/brackets_arpeggio_tex.vim for tex-specific chords)
@@ -60,4 +44,32 @@ Arpeggiotnoremap dj <><Left>
 Arpeggiotnoremap dk ""<Left>
 Arpeggiotnoremap gk ''<Left>
 Arpeggiotnoremap bk ``<Left>
+
+
+
+" unmap auto-pairs keymappings {{{1
+" ============================
+
+" if auto-pairs is loaded,
+"   remove buffer-local mappings for ()[]{}<> for Arpeggio mappings to work properly.
+"   remove buffer-local mappings for <Space>, <CR>, <BS>, for SpacePair.vim mappings to work.
+
+if !get(g:, "AutoPairsLoaded", 0) | finish | endif
+
+au BufEnter * call s:unmapAutoPairsInsert() 
+
+function! s:unmapAutoPairsInsert()
+  " redir => insertmaps
+  "   filter /\cAutoPairsInsert/ imap <buffer>
+  " redir END
+
+  for delim in ['(',')','[',']','{','}','<','>',"'",'"','`']
+    exec 'silent! iunmap <buffer>' delim
+  endfor
+
+  iunmap <buffer> <Space>
+  iunmap <buffer> <CR>
+  iunmap <buffer> <BS>
+endfunction
+
 
