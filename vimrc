@@ -163,7 +163,8 @@ Plug 'haya14busa/incsearch.vim'			" improved / ? incsearch
 Plug 'chrisbra/Colorizer', 
   \{ 'on': [] }							" show color codes and names in vim
 Plug 'BertrandSim/auto-pairs',
-  \{ 'on': [] }							" delims, forked from jiangmiao/auto-pairs. Superceded by pairspace.vim
+  \{ 'on': [] }							" delims, forked from jiangmiao/auto-pairs.
+										"   superceded by brackets_arpeggio.vim, and pairspace.vim
 
 call plug#end()
 
