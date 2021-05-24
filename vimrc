@@ -163,7 +163,7 @@ Plug 'haya14busa/incsearch.vim'			" improved / ? incsearch
 Plug 'chrisbra/Colorizer', 
   \{ 'on': [] }							" show color codes and names in vim
 Plug 'BertrandSim/auto-pairs',
-  \{ 'on': [] }							" delims, forked from jiangmiao/auto-pairs.
+  \{ 'on': [] }							" pairs of delims, forked from jiangmiao/auto-pairs.
 										"   superceded by brackets_arpeggio.vim, and pairspace.vim
 
 call plug#end()
@@ -758,27 +758,21 @@ augroup nomod_maps
 augroup END
 
 
-" bracket matching {{{1
-" ----------------
-" with autopairs plugin	(see AutoPairs setting above)
-" and Arpeggio plugin.	(see after/plugin/brackets_arpeggio.vim)
-
-
 " quick comment {{{1
 " -------------
 
 " comment_leader can be specified by user, or extracted from 'commentstring' or 'comment' options.
 augroup qcomment
   autocmd!
-  autocmd FileType c,cpp,java,scala	let b:comment_leader = '// '
-  autocmd FileType sh,python,r		let b:comment_leader = '# '
-  autocmd FileType conf,fstab		let b:comment_leader = '# '
-  autocmd FileType tex			let b:comment_leader = '% '
-  autocmd FileType mail			let b:comment_leader = '> '
-  autocmd FileType autohotkey		let b:comment_leader = '; '
-  autocmd FileType vim			let b:comment_leader = '" '
-  autocmd FileType snippets		let b:comment_leader = '# '
-  autocmd FileType gitconfig		let b:comment_leader = '# '
+  autocmd FileType c,cpp,java,scala let b:comment_leader = '// '
+  autocmd FileType sh,python,r      let b:comment_leader = '# '
+  autocmd FileType conf,fstab       let b:comment_leader = '# '
+  autocmd FileType tex              let b:comment_leader = '% '
+  autocmd FileType mail             let b:comment_leader = '> '
+  autocmd FileType autohotkey       let b:comment_leader = '; '
+  autocmd FileType vim              let b:comment_leader = '" '
+  autocmd FileType snippets         let b:comment_leader = '# '
+  autocmd FileType gitconfig        let b:comment_leader = '# '
 augroup END
 
 augroup qbcomment
@@ -881,7 +875,7 @@ augroup END
 " see UltiSnips/all_vim_cmdline.snippets for the snippets themselves
 
 " }}}
-" Ultisnip snippet operator {{{1
+" Ultisnips snippet operator {{{1
 " an operator wrapper to {Visual} + UltiSnips#ExpandSnippet()
 nnoremap <leader><Tab>
 	  \ :<C-U>set opfunc=SnippetOp<CR>
@@ -908,25 +902,9 @@ endfunction
 
 " augroup ft_tex
 "   autocmd!
-"   " swap [ and {
 "   autocmd Filetype tex
-"    \ if exists("g:AutoPairsLoaded")
-" 	 \| inoremap <buffer> [ <C-R>=AutoPairsInsert('{')<CR>
-" 	 \| inoremap <buffer> ] <C-R>=AutoPairsInsert('}')<CR>
-" 	 \| inoremap <buffer> { <C-R>=AutoPairsInsert('[')<CR>
-" 	 \| inoremap <buffer> } <C-R>=AutoPairsInsert(']')<CR>
-"    \| else
-" 	 \| inoremap <buffer> [ {
-" 	 \| inoremap <buffer> ] }
-" 	 \| inoremap <buffer> { [
-" 	 \| inoremap <buffer> } ]
-"    \| endif
 "   " add \(, \[, \{ pairs
-"   " but does not trigger after typing '\(', as it starts with \ .
-"   autocmd Filetype tex 
-"     \ if exists ("g:AutoPairsLoaded")
-"   	\| let b:AutoPairs = AutoPairsDefine({'\\(':'\\)', '\\[':'\\]', '\\{':'\\}'})
-"     \| endif
+"   " ...
 " augroup END
 
 
