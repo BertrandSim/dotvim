@@ -168,10 +168,6 @@ Plug 'BertrandSim/auto-pairs',
 
 call plug#end()
 
-" shellslash {{{1
-" use '/' for file paths, even on windows (instead of '\')
-set shellslash	" do so after plug#begin()
-
 " plugin configs {{{1
 " --------------
 "
@@ -425,7 +421,6 @@ map <leader>T <Plug>Sneak_T
 " see h: g:tex_conceal as to the things each alphabet conceals
 " change this in tex, markdown, rmd ftplugin files
 
-
 " NERDTree
 nnoremap <silent> <C-n> :<C-u>NERDTreeToggle<CR>
 
@@ -483,6 +478,10 @@ if has('gui_running') &&
   nnoremap <silent> <expr> <C-S-Down> exists(":Transparency") ? ":\<C-u>Transparency -\<CR>" : ''
 endif
 
+
+" shellslash {{{1
+" use '/' for file paths, even on windows (instead of '\')
+set shellslash	" do so after plug#begin()
 
 " UI {{{1
 " -------------------
