@@ -44,32 +44,3 @@ Arpeggiotnoremap dj <><Left>
 Arpeggiotnoremap dk ""<Left>
 Arpeggiotnoremap gk ''<Left>
 Arpeggiotnoremap bk ``<Left>
-
-
-
-" unmap auto-pairs keymappings {{{1
-" ============================
-
-" if auto-pairs is loaded,
-"   remove buffer-local mappings for ()[]{}<> for Arpeggio mappings to work properly.
-"   remove buffer-local mappings for <Space>, <CR>, <BS>, for pairspace.vim mappings to work.
-
-if !get(g:, "AutoPairsLoaded", 0) | finish | endif
-
-au BufEnter * call s:unmapAutoPairsInsert() 
-
-function! s:unmapAutoPairsInsert()
-  " redir => insertmaps
-  "   filter /\cAutoPairsInsert/ imap <buffer>
-  " redir END
-
-  for delim in ['(',')','[',']','{','}','<','>',"'",'"','`']
-    exec 'silent! iunmap <buffer>' delim
-  endfor
-
-  iunmap <buffer> <Space>
-  iunmap <buffer> <CR>
-  iunmap <buffer> <BS>
-endfunction
-
-

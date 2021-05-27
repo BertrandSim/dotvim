@@ -463,10 +463,6 @@ let g:ctrlp_match_window = 'bottom,order:btt,min:1,max:8,results:24'
 " for esv_in_vim
 source $VIMHOME/macros/esv_api_key.vim
 
-" Autopairs settings
-let g:AutoPairsCenterLine = 0		" do not re-center screen after pressing <CR>
-let g:AutoPairsMultilineClose = 0	" do not jump past closing delim on another line
-
 " mappings for easy align plugin
 if isdirectory($VIMHOME."/plugged/vim-easy-align")
 
