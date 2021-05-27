@@ -159,6 +159,7 @@ Plug 'kshenoy/vim-signature'			" show marks in signs column (left gutter)
 
 
   " misc and backups
+Plug 'simnalamburt/vim-mundo'			" graphical undo tree
 Plug 'haya14busa/incsearch.vim'			" improved / ? incsearch
 Plug 'chrisbra/Colorizer', 
   \{ 'on': [] }							" show color codes and names in vim
@@ -454,6 +455,9 @@ let g:ctrlp_types = ['fil', 'buf', 'mru']
 let g:ctrlp_extensions = ['tag', 'buffertag']
 " increase maximum number of results
 let g:ctrlp_match_window = 'bottom,order:btt,min:1,max:8,results:24'
+
+" Mundo
+nnoremap <F6> :<C-U>MundoToggle<CR>
 
 " for esv_in_vim
 source $VIMHOME/macros/esv_api_key.vim
