@@ -110,16 +110,25 @@ endfunction
 "   - helpers {{{2
 function! commentor#GetCommentLeader()
   if exists("b:comment_leader")  " user defined
-	let commentstart = b:comment_leader
-  elseif len(split(&commentstring, '%s')) == 1
-	" if 'commentstring' xx%sxx contains no end part
-	let commentstart = split(&commentstring, '%s')[0]
-  elseif match(&comments, '\v(,|^):[^,:]*,')
-    " if 'comment' contains ',:xxx,'
-    let commentstart = matchstr(&comments, '\v(,|^):\zs[^,:]*\ze,')
-  else
-	echoerr "unable to find comment leader."
+    let commentstart = b:comment_leader
   endif
+
+  let split_comment_str = split(&commentstring, '%s')
+  if len(split_comment_str) == 1
+    " if 'commentstring' xx%sxx contains no end part
+    let commentstart = split_comment_str[0]
+  endif
+
+  let match_comment = matchstr(&comments, '\v(,|^):\zs.{-}\ze(,|$)')
+  if match_comment != ''
+    " if 'comment' contains ',:xxx,'
+    let commentstart = match_comment
+  endif
+
+   if !exists('l:commentstart')
+     echoerr "unable to find comment leader."
+     let commentstart = ""
+   endif
 
   let commentstart = commentor#AppendSpace( commentstart )
   return commentstart
@@ -159,14 +168,22 @@ endfunction
 function! commentor#GetBlockCommentMarks()
 
   if exists("b:block_comment_marks")
-	" b:block_comment_marks should be a list containing start and end strings
-	return b:block_comment_marks
+    " b:block_comment_marks should be a list containing start and end strings
+    return b:block_comment_marks
   endif
 
   let split_comment_str = split(&commentstring, '%s')
   if len(split_comment_str) == 2
-	" if 'commentstring' xx%sxx contains start and end part
-	return split_comment_str
+    " if 'commentstring' xx%sxx contains start and end part
+    return split_comment_str
+  endif
+
+  let three_comment = matchstr(&comments, '\v(,|^)\zss[^O]{-}:.{-},m.{-}:.{-},e.{-}:.{-}\ze(,|$)')
+  if three_comment != ""
+    " if 'comments' contains s:xx,m:xx,e:xx
+    let start_comment = matchstr(three_comment, '\v^s.{-}:\zs.{-}\ze,')
+    let end_comment   = matchstr(three_comment, '\v,e.{-}:\zs.{-}\ze$')
+    return [start_comment, end_comment]
   endif
 
   echoerr "Unable to find block comment syntax markers."
