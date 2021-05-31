@@ -126,7 +126,7 @@ function! commentor#GetCommentLeader()
   endif
 
    if !exists('l:commentstart')
-     echoerr "unable to find comment leader."
+     echohl WarningMsg | echo "Unable to find comment leader." | echohl None
      let commentstart = ""
    endif
 
@@ -186,7 +186,7 @@ function! commentor#GetBlockCommentMarks()
     return [start_comment, end_comment]
   endif
 
-  echoerr "Unable to find block comment syntax markers."
+  echohl WarningMsg | echo "Unable to find block comment syntax markers." | echohl None
   return ["",""]
 
 endfunction
