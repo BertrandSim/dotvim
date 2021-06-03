@@ -151,7 +151,8 @@ Plug 'kana/vim-textobj-line',
   \ Cond(v:version >= 704)				" custom text objects
 
   " search and navigation:
-Plug 'preservim/nerdtree'				" file explorer in vim
+Plug 'preservim/nerdtree',				" file explorer in vim
+  \{ 'on': 'NERDTreeToggle' }
 Plug 'kien/ctrlp.vim'					" fuzzy finder
 Plug 'majutsushi/tagbar'				" show tags on a side margin
 Plug 'ludovicchabant/vim-gutentags'		" automatically generate tags
