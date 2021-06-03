@@ -158,10 +158,11 @@ Plug 'majutsushi/tagbar'				" show tags on a side margin
 Plug 'ludovicchabant/vim-gutentags'		" automatically generate tags
 Plug 'kshenoy/vim-signature'			" show marks in signs column (left gutter)
 
-  " git integration
-Plug 'tpope/vim-fugitive'			" Git wrapper for vim
+  " git integration:
+Plug 'tpope/vim-fugitive'				" git wrapper for vim
+Plug 'junegunn/gv.vim'					" git commit browser in vim
 
-  " misc and backups
+  " misc and backups:
 Plug 'simnalamburt/vim-mundo'			" graphical undo tree
 Plug 'haya14busa/incsearch.vim'			" improved / ? incsearch
 Plug 'chrisbra/Colorizer', 
