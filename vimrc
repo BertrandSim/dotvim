@@ -158,8 +158,11 @@ Plug 'majutsushi/tagbar'				" show tags on a side margin
 Plug 'ludovicchabant/vim-gutentags'		" automatically generate tags
 Plug 'kshenoy/vim-signature'			" show marks in signs column (left gutter)
 
+  " git integration:
+Plug 'tpope/vim-fugitive'				" git wrapper for vim
+Plug 'junegunn/gv.vim'					" git commit browser in vim
 
-  " misc and backups
+  " misc and backups:
 Plug 'simnalamburt/vim-mundo'			" graphical undo tree
 Plug 'haya14busa/incsearch.vim'			" improved / ? incsearch
 Plug 'chrisbra/Colorizer', 
@@ -483,13 +486,13 @@ if has('gui_running') &&
   nnoremap <silent> <expr> <C-S-Down> exists(":Transparency") ? ":\<C-u>Transparency -\<CR>" : ''
 endif
 
-
 " shellslash {{{1
+" ----------
 " use '/' for file paths, even on windows (instead of '\')
 set shellslash	" do so after plug#begin()
 
 " UI {{{1
-" -------------------
+" -------
 if v:version > 703 "version 7.3 or newer
   " show (absolute) current line number and relative numbers for the other lines
   set number relativenumber
