@@ -12,7 +12,13 @@ if has('win64') || has('win32')
       set winaltkeys=no
       " don't use ALT to access the gui menu
       " use :simalt <key> instead. (see :h :simalt)
+      set guioptions+=!
+      " run external commands in vim, 
+      " instead of a separate terminal window
 endif
+
+set guioptions-=m 	" don't show the menu bar
+" set guioptions-=T 	" don't show the toolbar
 
 " see also plugin for windows transparency    (.vim/plugin/*transparent.vim)
 " see also plugin for adjusting gui font size (.vim/plugin/guifont_zoom.vim)
