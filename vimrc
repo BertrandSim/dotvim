@@ -123,7 +123,7 @@ call plug#begin($VIMHOME.'/plugged')
 
   " core:
 Plug 'lifepillar/vim-solarized8'		" solarized8 colorscheme
-Plug 'tpope/vim-unimpaired'				" handy pairs of mappings
+Plug 'BertrandSim/vim-unimpaired'		" handy pairs of mappings, forked from tpope
 Plug 'itchyny/lightline.vim'			" lean status line
 Plug 'SirVer/ultisnips',
   \ Cond(v:version >= 704, { 'tag': '3.2' })		" snippets; v3.2 on Nov 2019
@@ -176,7 +176,6 @@ call plug#end()
 " plugin configs {{{1
 " --------------
 "
-" TODO: fork / add configs for unimpaired
 " TODO [2020-01-02]: setup sandwich exchange / cycle within same recipe group
 
 " vimtex settings {{{2
