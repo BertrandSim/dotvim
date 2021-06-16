@@ -145,7 +145,7 @@ Plug 'lervag/vimtex',
   " text objects:
 Plug 'b4winckler/vim-angry'				" function argument text object
 Plug 'kana/vim-textobj-user',
-  \ Cond(v:version >= 704, { 'tag': '0.7.4' })
+  \ Cond(v:version >= 704)
 Plug 'kana/vim-textobj-entire',
   \ Cond(v:version >= 704)
 Plug 'kana/vim-textobj-line',
