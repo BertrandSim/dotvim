@@ -56,13 +56,13 @@ endsnippet
 # search {{{1
 
 # VV --> \%V...\%V
-# context "cmdlinewin() in ['/','?']"
+context "cmdlinewin() in ['/','?']"
 snippet VV "search within visual selection" i
 \%V${1}\%V
 endsnippet
 
 # >< --> \%>'x...\%<'y
-# context "cmdlinewin() in ['/','?']"
+context "cmdlinewin() in ['/','?']"
 snippet >< "search between marks" i
 \%>'${1:s}${2}\%<'${3:e}
 endsnippet
