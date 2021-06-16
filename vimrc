@@ -137,7 +137,8 @@ Plug 'BertrandSim/vim-arpeggio',
 Plug 'masukomi/vim-markdown-folding'	" expr-folding of markdown files
 Plug 'vim-pandoc/vim-pandoc-syntax'		" syntax highlighting for markdown and related files
 Plug 'jalvesaq/Nvim-R',
-  \ Cond(has('patch-8.1.1705'))			" interaction between R scripts with R terminal
+  \ Cond( has('patch-8.1.1705'), 
+  \ { 'branch' : 'stable' })			" interaction between R scripts with R terminal
 Plug 'lervag/vimtex',
   \ Cond(has('patch-7.4.52'))			" plugin for tex files
 
