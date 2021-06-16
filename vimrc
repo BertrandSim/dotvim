@@ -327,6 +327,9 @@ inoremap <C-k> <Nop>
 " Open snippets file in a horizontal or vertical split, depending on context
 let g:UltiSnipsEditSplit='context'	
 
+" convenience commands
+command! USRS call UltiSnips#RefreshSnippets()
+
 " }}}
 " lightline config {{{2
 
