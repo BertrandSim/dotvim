@@ -45,6 +45,13 @@ snippet lh "helpgrep + copen list of matches" b
 execute 'tab lhelpgrep ${1:}' | lopen
 endsnippet
 
+# rdr --> redirect and paste to buffer
+# eg. rdr <tab> scriptnames
+context "cmdlinewin() == ':'"
+snippet rdr "redirect to temporary buffer" b
+redir => tmp | ${1:} | redir END | ${2:new} | put! = tmp | norm! gg"_dd
+endsnippet
+
 
 # search {{{1
 
