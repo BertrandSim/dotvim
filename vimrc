@@ -466,6 +466,7 @@ nnoremap <F6> :<C-U>MundoToggle<CR>
 let g:mundo_verbose_graph = 0	" use shorter graph to save space
 let g:mundo_inline_undo = 0		" don't show inline diffs inside graph 
 								"  (default, toggle with `i`)
+  " see also after/ftplugin/Mundo.vim
 
 set undofile        " persistent undo
 set undolevels=200
