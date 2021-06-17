@@ -7,6 +7,9 @@
 *.swp
 *.swo
 
+# vim undo files
+.*.un~
+
 # tags
 tags
 **/doc/tags
