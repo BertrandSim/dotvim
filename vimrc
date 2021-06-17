@@ -51,7 +51,6 @@ m'gv``
 "unlet s:cpo_save
 "set backup
 "set display=truncate
-"set guioptions=egmrLT
 "set helplang=En
 "set history=200
 "set langnoremap
@@ -60,7 +59,6 @@ m'gv``
 "set runtimepath=~/vimfiles,C:\\Program\ Files\\Vim/vimfiles,C:\\Program\ Files\\Vim\\vim81,C:\\Program\ Files\\Vim\\vim81\\pack\\dist\\opt\\matchit,C:\\Program\ Files\\Vim/vimfiles/after,~/vimfiles/after
 "set ttimeout
 "set ttimeoutlen=100
-"set undofile
 "" }}}
 
 " Important {{{1
@@ -465,6 +463,12 @@ let g:ctrlp_match_window = 'bottom,order:btt,min:1,max:8,results:24'
 
 " Mundo
 nnoremap <F6> :<C-U>MundoToggle<CR>
+let g:mundo_verbose_graph = 0	" use shorter graph to save space
+let g:mundo_inline_undo = 0		" don't show inline diffs inside graph 
+								"  (default, toggle with `i`)
+
+set undofile        " persistent undo
+set undolevels=200
 
 " for esv_in_vim
 source $VIMHOME/macros/esv_api_key.vim
