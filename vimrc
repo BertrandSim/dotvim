@@ -9,7 +9,6 @@
 "omap <silent> % <Plug>(MatchitOperationForward)
 "xmap <silent> % <Plug>(MatchitVisualForward)
 "nmap <silent> % <Plug>(MatchitNormalForward)
-"map Q gq
 "omap <silent> [% <Plug>(MatchitOperationMultiBackward)
 "xmap <silent> [% <Plug>(MatchitVisualMultiBackward)
 "nmap <silent> [% <Plug>(MatchitNormalMultiBackward)
