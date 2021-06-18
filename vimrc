@@ -858,12 +858,16 @@ command! -bang -nargs=? -complete=help VH vert h<bang> <args>
 command! -bang -nargs=? -complete=help Th tab h<bang> <args>
 command! -bang -nargs=? -complete=help TH tab h<bang> <args>
 
+" :Vsb, short for :vert :sb
+command! -count -nargs=* -complete=buffer Vsb vertical <count>sbuffer <args>
+command! -count -nargs=* -complete=buffer VSb vertical <count>sbuffer <args>
+
 " split view with conceal {{{2
 " -----------------------
 " eg., viewing tex source code alongside a more readable version
 command! Cview 
   \  set scrollbind 
-  \| vert split 
+  \| vertical split 
   \| set conceallevel=2 concealcursor=nc scrollbind 
   \| wincmd p
 
