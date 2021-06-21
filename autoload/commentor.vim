@@ -248,12 +248,12 @@ function! commentor#ComACop(above)
   if !a:above
     let curpos_save[1] += 1   " adjust line (row) position
   endif
-  call setpos('.', curpos_save) 
+  call setpos('.', curpos_save)
 endfunction
 
 function! commentor#VComACop(above)
 " above: boolean. if true, positions copy above line/selection, otherwise below
-  let curpos_save = getcurpos() 
+  let curpos_save = getcurpos()
   let numlines = line("'>") - line("'<") + 1
 
   if a:above
@@ -271,6 +271,6 @@ function! commentor#VComACop(above)
   if !a:above
     let curpos_save[1] += numlines   " adjust line (row) position
   endif
-  call setpos('.', curpos_save) 
+  call setpos('.', curpos_save)
 endfunction
 
