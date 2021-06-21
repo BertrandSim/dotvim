@@ -142,7 +142,7 @@ function! PairReturn()
   for [open, close] in g:pairlist
     if s:left_is(open, curpos) && s:right_is(close, curpos)
       " return 'ReturnReturnUp'
-      return "\<CR>\<CR>\<Up>"
+      return "\<CR>\<Up>\<End>\<CR>"
     endif
   endfor
   " return 'Return'
