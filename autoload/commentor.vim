@@ -111,27 +111,26 @@ endfunction
 function! commentor#GetCommentLeader()
   if exists("b:comment_leader")  " user defined
     let commentstart = b:comment_leader
+    return commentor#AppendSpace(commentstart)
   endif
 
   let split_comment_str = split(&commentstring, '%s')
   if len(split_comment_str) == 1
     " if 'commentstring' xx%sxx contains no end part
     let commentstart = split_comment_str[0]
+    return commentor#AppendSpace(commentstart)
   endif
 
   let match_comment = matchstr(&comments, '\v(,|^):\zs.{-}\ze(,|$)')
   if match_comment != ''
     " if 'comment' contains ',:xxx,'
     let commentstart = match_comment
+    return commentor#AppendSpace(commentstart)
   endif
 
-   if !exists('l:commentstart')
-     echohl WarningMsg | echo "Unable to find comment leader." | echohl None
-     let commentstart = ""
-   endif
+  echohl WarningMsg | echo "Unable to find comment leader." | echohl None
+  return ""
 
-  let commentstart = commentor#AppendSpace( commentstart )
-  return commentstart
 endfunction
 
 function! commentor#GetMinIndent(range)
