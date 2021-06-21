@@ -158,7 +158,7 @@ Plug 'kshenoy/vim-signature'			" show marks in signs column (left gutter)
 
   " git integration:
 Plug 'tpope/vim-fugitive'				" git wrapper for vim
-Plug 'junegunn/gv.vim'					" git commit browser in vim
+Plug 'BertrandSim/gv.vim'				" git commit browser in vim
 
   " misc and backups:
 Plug 'simnalamburt/vim-mundo'			" graphical undo tree
