@@ -110,22 +110,19 @@ endfunction
 "   - helpers {{{2
 function! commentor#GetCommentLeader()
   if exists("b:comment_leader")  " user defined
-    let commentstart = b:comment_leader
-    return commentor#AppendSpace(commentstart)
+    return commentor#AppendSpace(b:comment_leader)
   endif
 
   let split_comment_str = split(&commentstring, '%s')
   if len(split_comment_str) == 1
     " if 'commentstring' xx%sxx contains no end part
-    let commentstart = split_comment_str[0]
-    return commentor#AppendSpace(commentstart)
+    return commentor#AppendSpace(split_comment_str[0])
   endif
 
   let match_comment = matchstr(&comments, '\v(,|^):\zs.{-}\ze(,|$)')
   if match_comment != ''
     " if 'comment' contains ',:xxx,'
-    let commentstart = match_comment
-    return commentor#AppendSpace(commentstart)
+    return commentor#AppendSpace(match_comment)
   endif
 
   echohl WarningMsg | echo "Unable to find comment leader." | echohl None
