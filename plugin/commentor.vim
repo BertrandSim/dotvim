@@ -8,7 +8,7 @@ vnoremap <silent> <Plug>(VRmComment) :<C-U>call commentor#RemoveCommentOp(visual
 vnoremap <silent> <Plug>(VAddBlockComment) :<C-U>call commentor#AddBlockCommentOp(visualmode())<CR>
 " vnoremap <silent> <Plug>(VRmBlockComment) :<C-U>call commentor#RemoveCommentOp(visualmode())<CR>
 
-nnoremap <silent> <Plug>(VRmBlockComment) :<C-u>call commentor#RemoveBlockComment()<CR>
+nnoremap <silent> <Plug>(RmBlockComment) :<C-u>call commentor#RemoveBlockComment()<CR>
 vnoremap <silent> <Plug>(VRmBlockComment) :<C-u>call commentor#RemoveBlockComment()<CR>
 
 
