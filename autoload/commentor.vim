@@ -1,7 +1,7 @@
 " functions and operators for commenting regions " {{{1
 "   - line comments {{{2
 function! commentor#AddCommentOp(type)
-  let comleader = commentor#GetCommentLeader()
+  let comleader = s:GetCommentLeader()
 
   if a:type ==# 'char' || a:type ==# 'line' || a:type ==# 'block'
 	let startline = line("'[")
@@ -11,7 +11,7 @@ function! commentor#AddCommentOp(type)
 	let endline   = line("'>")
   endif
 
-  let minindent = commentor#GetMinIndent( range(startline, endline) )
+  let minindent = s:GetMinIndent( range(startline, endline) )
   let shiftwidth_ =  has('patch-7.3.694') ? shiftwidth() : &sw == 0 ? &ts : &sw
   let minsw = minindent / shiftwidth_
 
@@ -34,7 +34,7 @@ function! commentor#RemoveCommentOp(type)
 endfunction
 
 function! commentor#RemoveComment(startline, endline)
-  let comleader = commentor#GetCommentLeader()
+  let comleader = s:GetCommentLeader()
   silent execute a:startline . ',' a:endline . 'substitute' . '/' .
 	\ '\v(^\s*)' . '\V'.escape(comleader,'\/') . '/' .
 	\ '\1' . '/e'
@@ -46,8 +46,8 @@ endfunction
 "   - block comments {{{2
 
 function! commentor#AddBlockCommentOp(type)
-  let [markstart, markend] = commentor#GetOpMarks(a:type)
-  let [comstart, comend] = commentor#GetBlockCommentMarks()
+  let [markstart, markend] = s:GetOpMarks(a:type)
+  let [comstart, comend] = s:GetBlockCommentMarks()
   if comstart == "" && comend == "" | return | endif
 
   " get position / coordinates of start/end marks
@@ -76,7 +76,7 @@ function! commentor#AddBlockCommentOp(type)
 endfunction
 
 function! commentor#RemoveBlockComment()
-  let [comstart, comend] = commentor#GetBlockCommentMarks()
+  let [comstart, comend] = s:GetBlockCommentMarks()
   let comstart_len = len(comstart)
   let comend_len   = len(comend)
 
@@ -108,21 +108,21 @@ endfunction
 " }}}2
 
 "   - helpers {{{2
-function! commentor#GetCommentLeader()
+function! s:GetCommentLeader()
   if exists("b:comment_leader")  " user defined
-    return commentor#AppendSpace(b:comment_leader)
+    return s:AppendSpace(b:comment_leader)
   endif
 
   let split_comment_str = split(&commentstring, '%s')
   if len(split_comment_str) == 1
     " if 'commentstring' xx%sxx contains no end part
-    return commentor#AppendSpace(split_comment_str[0])
+    return s:AppendSpace(split_comment_str[0])
   endif
 
   let match_comment = matchstr(&comments, '\v(,|^):\zs.{-}\ze(,|$)')
   if match_comment != ''
     " if 'comment' contains ',:xxx,'
-    return commentor#AppendSpace(match_comment)
+    return s:AppendSpace(match_comment)
   endif
 
   echohl WarningMsg | echo "Unable to find comment leader." | echohl None
@@ -130,38 +130,34 @@ function! commentor#GetCommentLeader()
 
 endfunction
 
-function! commentor#GetMinIndent(range)
-
+function! s:GetMinIndent(range)
   let foundNonBlank = 0
-
   for lnum in a:range
 
-	" find first nonblank line as a starting comparison
+    " find first nonblank line as a starting comparison
     if !foundNonBlank
-	  if !commentor#IsBlankLine(lnum)
-		let minIndent = indent(lnum)
-		let foundNonBlank = 1
-	  elseif lnum == a:range[-1]
-	  " ie. if last line and all other lines blank
-		return 0
-	  endif
+      if !s:IsBlankLine(lnum)
+	let minIndent = indent(lnum)
+	let foundNonBlank = 1
+      elseif lnum == a:range[-1]
+	" ie. if last line and all other lines blank
+	return 0
+      endif
 
-	elseif !commentor#IsBlankLine(lnum) && indent(lnum) < minIndent
-	  let minIndent = indent(lnum)
+    elseif !s:IsBlankLine(lnum) && indent(lnum) < minIndent
+      let minIndent = indent(lnum)
 
-	endif
+    endif
 
   endfor
-
   return minIndent
-
 endfunction
 
-function! commentor#IsBlankLine(lnum)
+function! s:IsBlankLine(lnum)
   return getline(a:lnum) =~ '\v^\s*$'
 endfunction
 
-function! commentor#GetBlockCommentMarks()
+function! s:GetBlockCommentMarks()
 
   if exists("b:block_comment_marks")
     " b:block_comment_marks should be a list containing start and end strings
@@ -187,7 +183,7 @@ function! commentor#GetBlockCommentMarks()
 
 endfunction
 
-function commentor#AppendSpace(str)
+function! s:AppendSpace(str)
 " adds a space to the back of str if there isn't one
   let len=strlen(a:str)
   let outstr = a:str
@@ -198,7 +194,7 @@ function commentor#AppendSpace(str)
   return outstr
 endfunction
 
-function! commentor#GetOpMarks(type)
+function! s:GetOpMarks(type)
   " returns [start, end] `marks' of operator action
   if     a:type ==# 'char'	" character wise
 	let [_start, _end] = [ "`[", "`]" ]
