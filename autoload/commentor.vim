@@ -16,7 +16,7 @@ function! commentor#AddCommentOp(type)
   let minsw = minindent / shiftwidth_
 
   execute "silent" . startline.','.endline . repeat('<', minsw)
-  execute "silent" . startline.','.endline . 'normal 0i'.comleader."\<Esc>"
+  execute "silent" . startline.','.endline . 'normal! 0i'.comleader."\<Esc>"
   execute "silent" . startline.','.endline . repeat('>', minsw)
 endfunction
 
@@ -57,21 +57,21 @@ function! commentor#AddBlockCommentOp(type)
 
   if a:type ==# 'char' || a:type ==# 'v'
 	" character wise
-	exec 'normal' . markend . 'a'.comend."\<Esc>"
+	exec 'normal!' . markend . 'a'.comend."\<Esc>"
 	call setpos( substitute(markstart,"`","'",""), opstart)		" to recall `[ position ; setpos() only allows 'x, not `x
-	exec 'normal' . markstart .'i'.comstart."\<Esc>" . markstart
+	exec 'normal!' . markstart .'i'.comstart."\<Esc>" . markstart
   elseif a:type ==# 'line' || a:type ==# 'V'
 	" linewise
-	exec 'normal' . markend . 'o'.comend."\<Esc>"
+	exec 'normal!' . markend . 'o'.comend."\<Esc>"
 	call setpos( markstart, opstart)
-	exec 'normal' . markstart .'O'.comstart."\<Esc>" . markstart
+	exec 'normal!' . markstart .'O'.comstart."\<Esc>" . markstart
   endif
 
   " idea of the above (in visual mode):
   " if a:type ==# 'v'	" character wise
-  "   exec 'normal' . '`>'. 'a'.comend."\<Esc>" . '`<' .'i'.comstart."\<Esc>" . '`<'
+  "   exec 'normal!' . '`>'. 'a'.comend."\<Esc>" . '`<' .'i'.comstart."\<Esc>" . '`<'
   " elseif a:type ==# 'V'	" linewise
-  "   exec 'normal' . '`>'. 'o'.comend."\<Esc>" . '`<' .'O'.comstart."\<Esc>" . '`<'
+  "   exec 'normal!' . '`>'. 'o'.comend."\<Esc>" . '`<' .'O'.comstart."\<Esc>" . '`<'
   " endif
 endfunction
 
@@ -93,9 +93,9 @@ function! commentor#RemoveBlockComment()
 
 	" remove comment markers
 	call cursor(endpos)
-	exec 'norm' . comend_len.'x'
+	exec 'normal!' . comend_len.'x'
 	call cursor(startpos)
-	exec 'norm' . comstart_len.'x'
+	exec 'normal!' . comstart_len.'x'
 
 	" restore cursor position
 	let curcurpos[2] -= comstart_len  " shift left
@@ -242,7 +242,7 @@ function! commentor#ComACop(above)
 
   " comment line
   set opfunc=commentor#AddCommentOp
-  norm! g@_
+  normal! g@_
 
   " restore cursor
   if !a:above
