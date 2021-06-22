@@ -1,4 +1,36 @@
-" functions and operators for commenting regions " {{{1
+
+" further work {{{1
+
+  " TODO [2021-06-22]: save and restore cursor in a robust way
+  " requires saving of cursor position _before_ operator is initiated.
+  " and restoring of cursor _after_ operator is finished
+  " (temporory ad-hoc implementation for single lines and visual selections only)
+
+  " idea1: autocmd for custom `operatorfunc`s
+  " from https://vimways.org/2019/making-things-flow/
+  " and https://www.reddit.com/r/vim/comments/ekgy47/question_how_to_keep_cursor_position_on_yank/
+  "
+  "   function! OpfuncSteady()
+  "     if !empty(&operatorfunc)
+  "       call winrestview(w:opfuncview)
+  "       unlet w:opfuncview
+  "       noautocmd set operatorfunc=
+  "     endif
+  "   endfunction
+  " 
+  "   augroup OpfuncSteady
+  "     autocmd!
+  "     autocmd OptionSet operatorfunc let w:opfuncview = winsaveview()
+  "     autocmd CursorMoved * call OpfuncSteady()
+  "   augroup END
+
+  " idea2: save view/cursor inside mapping; restore inside operator
+  " from https://vi.stackexchange.com/questions/24850/creating-custom-text-objects-via-omap-how-to-run-functions-after-the-motion
+
+  " related issue in neovim: https://github.com/neovim/neovim/issues/12374
+
+
+" functions and operators for commenting regions {{{1
 "   - line comments {{{2
 function! commentor#AddCommentOp(type)
   let comleader = s:GetCommentLeader()
