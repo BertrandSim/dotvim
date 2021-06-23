@@ -56,11 +56,11 @@ function! commentor#AddCommentOp(type, ...)
   endif
 
   if a:type ==# 'char' || a:type ==# 'line' || a:type ==# 'block'
-	let startline = line("'[")
-	let endline   = line("']")
+    let startline = line("'[")
+    let endline   = line("']")
   else "if a:type ==# 'v' || a:type ==# 'V' || a:type ==# ''
-	let startline = line("'<")
-	let endline   = line("'>")
+    let startline = line("'<")
+    let endline   = line("'>")
   endif
 
   let minindent = s:GetMinIndent( range(startline, endline) )
@@ -97,10 +97,10 @@ function! commentor#RemoveCommentOp(type, ...)
 
   if a:type ==# 'char' || a:type ==# 'line' || a:type ==# 'block'
     let startline = line("'[")
-	let endline   = line("']")
+    let endline   = line("']")
   else "if a:type ==# 'v' || a:type ==# 'V' || a:type ==# ''
-	let startline = line("'<")
-	let endline   = line("'>")
+    let startline = line("'<")
+    let endline   = line("'>")
   endif
 
   call commentor#RemoveComment(startline, endline)
@@ -140,15 +140,15 @@ function! commentor#AddBlockCommentOp(type)
   let opend   = getpos(substitute(markend,  "`","'",""))
 
   if a:type ==# 'char' || a:type ==# 'v'
-	" character wise
-	exec 'normal!' . markend . 'a'.comend."\<Esc>"
-	call setpos( substitute(markstart,"`","'",""), opstart)		" to recall `[ position ; setpos() only allows 'x, not `x
-	exec 'normal!' . markstart .'i'.comstart."\<Esc>" . markstart
+    " character wise
+    exec 'normal!' . markend . 'a'.comend."\<Esc>"
+    call setpos( substitute(markstart,"`","'",""), opstart)		" to recall `[ position ; setpos() only allows 'x, not `x
+    exec 'normal!' . markstart .'i'.comstart."\<Esc>" . markstart
   elseif a:type ==# 'line' || a:type ==# 'V'
-	" linewise
-	exec 'normal!' . markend . 'o'.comend."\<Esc>"
-	call setpos( markstart, opstart)
-	exec 'normal!' . markstart .'O'.comstart."\<Esc>" . markstart
+    " linewise
+    exec 'normal!' . markend . 'o'.comend."\<Esc>"
+    call setpos( markstart, opstart)
+    exec 'normal!' . markstart .'O'.comstart."\<Esc>" . markstart
   endif
 
   " idea of the above (in visual mode):
@@ -172,20 +172,20 @@ function! commentor#RemoveBlockComment()
   " echo 'endpos: '   . string(endpos)
 
   if startpos != [0,0] && endpos != [0,0]
-  " ie. block comment markers found
-	let curcurpos = getcurpos()
+    " ie. block comment markers found
+    let curcurpos = getcurpos()
 
-	" remove comment markers
-	call cursor(endpos)
-	exec 'normal!' . comend_len.'x'
-	call cursor(startpos)
-	exec 'normal!' . comstart_len.'x'
+    " remove comment markers
+    call cursor(endpos)
+    exec 'normal!' . comend_len.'x'
+    call cursor(startpos)
+    exec 'normal!' . comstart_len.'x'
 
-	" restore cursor position
-	let curcurpos[2] -= comstart_len  " shift left
-	let curcurpos[4] = 0	" remove curswant
-	" echo string(curcurpos)
-	call setpos('.', curcurpos)
+    " restore cursor position
+    let curcurpos[2] -= comstart_len  " shift left
+    let curcurpos[4] = 0	" remove curswant
+    " echo string(curcurpos)
+    call setpos('.', curcurpos)
   endif
 endfunction
 
@@ -284,9 +284,9 @@ function! s:GetOpMarks(type)
 	let [_start, _end] = [ "`[", "`]" ]
   elseif a:type ==# 'line'	" linewise
 	let [_start, _end] = [ "'[", "']" ]
-  elseif a:type ==# "v"	" character wise
+  elseif a:type ==# "v"	"	character wise
 	let [_start, _end] = [ "`<", "`>" ]
-  elseif a:type ==# 'V'	" linewise
+  elseif a:type ==# 'V'	"	linewise
 	let [_start, _end] = [ "'<", "'>" ]
   endif
   return [_start, _end]
