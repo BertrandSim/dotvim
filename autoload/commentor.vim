@@ -72,6 +72,7 @@ function! commentor#AddCommentOp(type, ...)
     let saveview.col += strlen(comleader)
     let saveview.curswant += strlen(comleader)
     call winrestview(saveview)
+    unlet saveview
   endif
 endfunction
 
@@ -107,6 +108,7 @@ function! commentor#RemoveCommentOp(type, ...)
       let saveview.curswant -= strlen(comleader)
     endif
     call winrestview(saveview)
+    unlet saveview
   endif
 endfunction
 
