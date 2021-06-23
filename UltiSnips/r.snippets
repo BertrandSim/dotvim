@@ -91,6 +91,19 @@ switch( ${1:EXPR},
 )
 endsnippet
 
+snippet tryc "tryCatch" b
+tryCatch({
+	${1:${VISUAL:expr}}
+
+}, ${2:error} = function(e) {
+	$3
+
+}, finally = {
+	$4
+
+})
+endsnippet
+
 
 # modify variable and replace {{{1
 
