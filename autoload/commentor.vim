@@ -5,6 +5,8 @@
   " requires saving of cursor position _before_ operator is initiated.
   " and restoring of cursor _after_ operator is finished
   " (temporory ad-hoc implementation for single lines and visual selections only)
+  
+  " bonus: is it still dot-repeatable?
 
   " idea1: autocmd for custom `operatorfunc`s
   " from https://vimways.org/2019/making-things-flow/
@@ -42,6 +44,13 @@ function! commentor#AddCommentOp(type, ...)
 
   let comleader = s:GetCommentLeader()
 
+  " access stored cursor and window position
+  if a:0 >= 1
+    let saveview = a:1
+  elseif exists("w:commentor_saveview")
+    let saveview = w:commentor_saveview
+  endif
+
   if a:type ==# 'char' || a:type ==# 'line' || a:type ==# 'block'
 	let startline = line("'[")
 	let endline   = line("']")
@@ -58,9 +67,8 @@ function! commentor#AddCommentOp(type, ...)
   execute "silent" . startline.','.endline . 'normal! 0i'.comleader."\<Esc>"
   execute "silent" . startline.','.endline . repeat('>', minsw)
 
-  " restore cursor position
-  if a:0 >= 1
-    let saveview = a:1
+  " restore cursor and window position
+  if exists('saveview')
     let saveview.col += strlen(comleader)
     let saveview.curswant += strlen(comleader)
     call winrestview(saveview)
@@ -72,8 +80,14 @@ function! commentor#RemoveCommentOp(type, ...)
 
   let comleader = s:GetCommentLeader()
 
+  " access stored cursor and window position
   if a:0 >= 1
-    let cursorline_hascomment = getline(a:1.lnum) =~ '^\s*' . comleader
+    let saveview = a:1
+  elseif exists("w:commentor_saveview")
+    let saveview = w:commentor_saveview
+  endif
+  if exists('saveview')
+    let cursorline_hascomment = getline(saveview.lnum) =~ '^\s*' . comleader
   endif
 
   if a:type ==# 'char' || a:type ==# 'line' || a:type ==# 'block'
@@ -86,9 +100,8 @@ function! commentor#RemoveCommentOp(type, ...)
 
   call commentor#RemoveComment(startline, endline)
 
-  " restore cursor position
-  if a:0 >= 1
-    let saveview = a:1
+  " restore cursor and window position
+  if exists('saveview')
     if cursorline_hascomment
       let saveview.col -= strlen(comleader)
       let saveview.curswant -= strlen(comleader)
@@ -104,6 +117,7 @@ function! commentor#RemoveComment(startline, endline)
 	\ '\1' . '/e'
   nohlsearch
 endfunction
+
 
 " }}}2
 
