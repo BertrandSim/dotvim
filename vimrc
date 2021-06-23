@@ -424,7 +424,7 @@ map <leader>T <Plug>Sneak_T
 
 " shortcuts
 " git log --graph --all [--simplify-by-decoration]
-if exists(":GV")
+if isdirectory($VIMHOME."/plugged/gv.vim")
   command! -bang -nargs=* GVA  GV<bang> --all <args>
   command! -bang -nargs=* GVAD GV<bang> --all --simplify-by-decoration <args>
 endif
