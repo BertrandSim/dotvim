@@ -3,8 +3,8 @@ nnoremap <silent> <Plug>(AddComment) :<C-U>set opfunc=commentor#AddCommentOp<CR>
 nnoremap <silent> <Plug>(RmComment) :<C-U>set opfunc=commentor#RemoveCommentOp<CR>g@
 nnoremap <silent> <Plug>(AddBlockComment) :<C-U>set opfunc=commentor#AddBlockCommentOp<CR>g@
 " nnoremap <silent> <Plug>(RmBlockComment) :<C-U>set opfunc=commentor#RemoveCommentOp<CR>g@
-vnoremap <silent> <Plug>(VAddComment) :<C-U>call commentor#AddCommentOp(visualmode())<CR>
-vnoremap <silent> <Plug>(VRmComment) :<C-U>call commentor#RemoveCommentOp(visualmode())<CR>
+vnoremap <silent> <Plug>(VAddComment) :<C-U>call commentor#AddCommentOp(visualmode(), winsaveview())<CR>
+vnoremap <silent> <Plug>(VRmComment) :<C-U>call commentor#RemoveCommentOp(visualmode(), winsaveview())<CR>
 vnoremap <silent> <Plug>(VAddBlockComment) :<C-U>call commentor#AddBlockCommentOp(visualmode())<CR>
 " vnoremap <silent> <Plug>(VRmBlockComment) :<C-U>call commentor#RemoveCommentOp(visualmode())<CR>
 

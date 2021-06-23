@@ -26,13 +26,20 @@
 
   " idea2: save view/cursor inside mapping; restore inside operator
   " from https://vi.stackexchange.com/questions/24850/creating-custom-text-objects-via-omap-how-to-run-functions-after-the-motion
+  
+  " idea3[current]: allow optional args to opfunc, and call winsaveview() inside the additional arg.
+
+  " idea4: use neovim ext marks: drop an extmark at cursor, and restore it after the operator
 
   " related issue in neovim: https://github.com/neovim/neovim/issues/12374
 
 
 " functions and operators for commenting regions {{{1
 "   - line comments {{{2
-function! commentor#AddCommentOp(type)
+
+function! commentor#AddCommentOp(type, ...)
+  " first optional arg for winsaveview()
+
   let comleader = s:GetCommentLeader()
 
   if a:type ==# 'char' || a:type ==# 'line' || a:type ==# 'block'
@@ -50,9 +57,25 @@ function! commentor#AddCommentOp(type)
   execute "silent" . startline.','.endline . repeat('<', minsw)
   execute "silent" . startline.','.endline . 'normal! 0i'.comleader."\<Esc>"
   execute "silent" . startline.','.endline . repeat('>', minsw)
+
+  " restore cursor position
+  if a:0 >= 1
+    let saveview = a:1
+    let saveview.col += strlen(comleader)
+    let saveview.curswant += strlen(comleader)
+    call winrestview(saveview)
+  endif
 endfunction
 
-function! commentor#RemoveCommentOp(type)
+function! commentor#RemoveCommentOp(type, ...)
+  " first optional arg for winsaveview()
+
+  let comleader = s:GetCommentLeader()
+
+  if a:0 >= 1
+    let cursorline_hascomment = getline(a:1.lnum) =~ '^\s*' . comleader
+  endif
+
   if a:type ==# 'char' || a:type ==# 'line' || a:type ==# 'block'
     let startline = line("'[")
 	let endline   = line("']")
@@ -63,6 +86,15 @@ function! commentor#RemoveCommentOp(type)
 
   call commentor#RemoveComment(startline, endline)
 
+  " restore cursor position
+  if a:0 >= 1
+    let saveview = a:1
+    if cursorline_hascomment
+      let saveview.col -= strlen(comleader)
+      let saveview.curswant -= strlen(comleader)
+    endif
+    call winrestview(saveview)
+  endif
 endfunction
 
 function! commentor#RemoveComment(startline, endline)
