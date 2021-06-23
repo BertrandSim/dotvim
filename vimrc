@@ -868,8 +868,10 @@ command! -bang -nargs=? -complete=help Th tab h<bang> <args>
 command! -bang -nargs=? -complete=help TH tab h<bang> <args>
 
 " :Vsb, short for :vert :sb
-command! -count -nargs=* -complete=buffer Vsb vertical <count>sbuffer <args>
-command! -count -nargs=* -complete=buffer VSb vertical <count>sbuffer <args>
+" command! -count -addr=buffers -nargs=* -complete=buffer Vsb vertical
+" <count>sbuffer <args>	" does not work if no count given
+command! -nargs=* -complete=buffer Vsb vertical sbuffer <args>
+command! -nargs=* -complete=buffer VSb vertical sbuffer <args>
 
 " split view with conceal {{{2
 " -----------------------
