@@ -420,6 +420,16 @@ map <leader>T <Plug>Sneak_T
 
 
 " }}}
+" gv.vim {{{2
+
+" shortcuts
+" git log --graph --all [--simplify-by-decoration]
+if exists(":GV")
+  command! -bang -nargs=* GVA  GV<bang> --all <args>
+  command! -bang -nargs=* GVAD GV<bang> --all --simplify-by-decoration <args>
+endif
+
+" }}}
 
 " tex conceal settings -> superseded by vimtex 2.0
 " let g:tex_conceal = "abdgmsS"
