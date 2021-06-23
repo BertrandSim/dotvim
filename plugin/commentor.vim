@@ -2,7 +2,7 @@
 nnoremap <silent> <Plug>(AddComment) :<C-U>set opfunc=commentor#AddCommentOp<CR>:   let w:commentor_saveview = winsaveview()<CR>g@
 nnoremap <silent> <Plug>(RmComment)  :<C-U>set opfunc=commentor#RemoveCommentOp<CR>:let w:commentor_saveview = winsaveview()<CR>g@
 nnoremap <silent> <Plug>(AddBlockComment) :<C-U>set opfunc=commentor#AddBlockCommentOp<CR>g@
-" nnoremap <silent> <Plug>(RmBlockComment) :<C-U>set opfunc=commentor#RemoveCommentOp<CR>g@
+" nnoremap <silent> <Plug>(RmBlockComment) :<C-U>set opfunc=commentor#RemoveBlockCommentOp<CR>g@
 
 vnoremap <silent> <Plug>(VAddComment) :<C-U>call commentor#AddCommentOp(visualmode(), winsaveview())<CR>
 vnoremap <silent> <Plug>(VRmComment) :<C-U>call commentor#RemoveCommentOp(visualmode(), winsaveview())<CR>
@@ -10,7 +10,7 @@ vnoremap <silent> <Plug>(VRmComment) :<C-U>call commentor#RemoveCommentOp(visual
 " vnoremap <silent> <Plug>(VRmComment)  :<C-U>let w:commentor_saveview = winsaveview()<CR>:call commentor#RemoveCommentOp(visualmode())<CR>
 
 vnoremap <silent> <Plug>(VAddBlockComment) :<C-U>call commentor#AddBlockCommentOp(visualmode())<CR>
-" vnoremap <silent> <Plug>(VRmBlockComment) :<C-U>call commentor#RemoveCommentOp(visualmode())<CR>
+" vnoremap <silent> <Plug>(VRmBlockComment) :<C-U>call commentor#RemoveBlockCommentOp(visualmode())<CR>
 
 nnoremap <silent> <Plug>(RmBlockComment) :<C-u>call commentor#RemoveBlockComment()<CR>
 vnoremap <silent> <Plug>(VRmBlockComment) :<C-u>call commentor#RemoveBlockComment()<CR>
