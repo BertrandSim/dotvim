@@ -35,6 +35,10 @@
 
   " related issue in neovim: https://github.com/neovim/neovim/issues/12374
 
+  " TODO [2021-06-23]: consistency in implementation for RmBlockComment, ComACop
+  " RmBlockComment | RemoveBlockComment should be implemented via an operator
+  " ComACop should be implemented via an operator
+
 
 " functions and operators for commenting regions {{{1
 "   - line comments {{{2
