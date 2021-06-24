@@ -127,6 +127,7 @@ Plug 'SirVer/ultisnips',
 Plug 'junegunn/vim-easy-align'			" align lines by a char/regex
 Plug 'machakann/vim-sandwich'			" surroundings
 Plug 'justinmk/vim-sneak'				" 2-char f/t-like motion
+Plug 'machakann/vim-columnmove'			" column-wise w,b,e,ge,f,t motions
 Plug 'BertrandSim/vim-arpeggio', 
   \ { 'branch': 'tmap' }				" key chords, forked to support Arpeggio in terminal mode
 
@@ -430,6 +431,23 @@ if isdirectory($VIMHOME."/plugged/gv.vim")
 endif
 
 " }}}
+" vim-columnmove settings {{{2
+
+" define own mappings
+let g:columnmove_no_default_key_mappings = 1
+
+" up to the start of para
+map H <Plug>(columnmove-b)
+map L <Plug>(columnmove-e)
+" down to the end of para
+
+let g:columnmove_strict_wbege = 0 
+" only check blank lines, not keywords
+let g:columnmove_stop_on_space = 1
+" allow stopping on spaces in the first/last line of a para
+
+" }}}
+
 
 " tex conceal settings -> superseded by vimtex 2.0
 " let g:tex_conceal = "abdgmsS"
