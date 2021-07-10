@@ -137,6 +137,7 @@ Plug 'vim-pandoc/vim-pandoc-syntax'		" syntax highlighting for markdown and rela
 Plug 'jalvesaq/Nvim-R',
   \ Cond( has('patch-8.1.1705'), 
   \ { 'branch' : 'stable' })			" interaction between R scripts with R terminal
+Plug 'jalvesaq/R-Vim-runtime'			" keep vim R files up to date
 Plug 'lervag/vimtex',
   \ Cond(has('patch-7.4.52'))			" plugin for tex files
 
