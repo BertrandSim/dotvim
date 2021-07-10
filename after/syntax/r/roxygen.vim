@@ -1,8 +1,9 @@
-
 " Don't mask roxygen block rOBlock syntax highlighting
 " redefine these syntax regions again, 
 " as they have been masked by syn match rOTitle.
 " XXX [2020-03-09] PR has been submitted on github... merged!
+finish
+
 if g:r_syntax_hl_roxygen
   " When a roxygen block has a title and additional content, the title
   " consists of one or more roxygen lines (as little as possible are matched),

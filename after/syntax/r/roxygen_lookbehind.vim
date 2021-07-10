@@ -4,6 +4,7 @@
 "   move syntax definitions that start with #', ##' before rOBlock*, rOTitle*, due to :h:syn-priority
 
 " XXX [2021-07-07] PR has been submitted on github... merged!
+finish
 
 " clear these to redefine them again below
 syn clear rOTitleBlock
