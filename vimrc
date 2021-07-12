@@ -447,6 +447,13 @@ let g:columnmove_strict_wbege = 0
 let g:columnmove_stop_on_space = 1
 " allow stopping on spaces in the first/last line of a para
 
+" similar to above, but can be used to 
+"   skip over leading spaces (indent spaces)
+" probably due to columnmove-WBEgE not 
+"   being affected by g:columnmove_stop_on_space
+map gh <Plug>(columnmove-B)
+map gl <Plug>(columnmove-E)
+
 " }}}
 
 
