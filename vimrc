@@ -414,6 +414,7 @@ let g:sneak#target_labels = "fjklwetunq/SFGHLTUNRMQZ?0"
 " highlighting
 " highlight link SneakScope Cursor
 highlight link SneakLabel Folded
+" highlight link Sneak Folded
 
 " temporal testing of sneak_f/t/F/T
 map <leader>f <Plug>Sneak_f
