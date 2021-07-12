@@ -127,7 +127,8 @@ Plug 'SirVer/ultisnips',
 Plug 'junegunn/vim-easy-align'			" align lines by a char/regex
 Plug 'machakann/vim-sandwich'			" surroundings
 Plug 'justinmk/vim-sneak'				" 2-char f/t-like motion
-Plug 'machakann/vim-columnmove'			" column-wise w,b,e,ge,f,t motions
+Plug 'machakann/vim-columnmove',
+  \ { 'commit' : '21a43d8' }			" column-wise w,b,e,ge,f,t motions
 Plug 'BertrandSim/vim-arpeggio', 
   \ { 'branch': 'tmap' }				" key chords, forked to support Arpeggio in terminal mode
 
