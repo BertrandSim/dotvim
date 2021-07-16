@@ -154,7 +154,7 @@ Plug 'kana/vim-textobj-line',
   " search and navigation:
 Plug 'preservim/nerdtree',				" file explorer in vim
   \{ 'on': 'NERDTreeToggle' }
-Plug 'kien/ctrlp.vim'					" fuzzy finder
+Plug 'ctrlpvim/ctrlp.vim'				" fuzzy finder
 Plug 'majutsushi/tagbar'				" show tags on a side margin
 Plug 'ludovicchabant/vim-gutentags'		" automatically generate tags
 Plug 'kshenoy/vim-signature'			" show marks in signs column (left gutter)
