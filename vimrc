@@ -495,6 +495,8 @@ let g:SignatureMap = {'DeleteMark' : ''}	" remove normal-mode mapping
 let g:ctrlp_types = ['fil', 'buf', 'mru']
 " add search modes: search tags, tags in buffer(s)
 let g:ctrlp_extensions = ['tag', 'buffertag']
+" allow project-specific .ctrlpignore file
+let g:ctrlp_extensions += ['autoignore']
 " increase maximum number of results
 let g:ctrlp_match_window = 'bottom,order:btt,min:1,max:8,results:24'
 
