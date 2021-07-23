@@ -484,6 +484,12 @@ let g:gutentags_ctags_exclude = []
 let g:gutentags_ctags_exclude += [
   \ 'Session.vim',
   \ ]
+" exclude files in .gitignore
+let g:gutentags_file_list_command = {
+  \ 'markers': {
+  \   '.git': 'git ls-files',
+  \ },
+  \}
 
 " vim-signature: show marks in side column
 " use omap for 'dm' mapping
