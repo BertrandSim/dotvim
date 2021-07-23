@@ -496,7 +496,7 @@ let g:gutentags_file_list_command = {
 let g:SignatureMap = {'DeleteMark' : ''}	" remove normal-mode mapping
 " see 'nmaps to omaps' below 
 
-" CtrLP
+" CtrlP
 " basic search modes
 let g:ctrlp_types = ['fil', 'buf', 'mru']
 " add search modes: search tags, tags in buffer(s)
