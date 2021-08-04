@@ -544,6 +544,12 @@ endif
 " use '/' for file paths, even on windows (instead of '\')
 set shellslash	" do so after plug#begin()
 
+" file related {{{1
+" ------------
+set isfname-={
+set isfname-=}
+
+
 " UI {{{1
 " -------
 if v:version > 703 "version 7.3 or newer
