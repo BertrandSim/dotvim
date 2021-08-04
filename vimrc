@@ -539,13 +539,13 @@ if has('gui_running') &&
   nnoremap <silent> <expr> <C-S-Down> exists(":Transparency") ? ":\<C-u>Transparency -\<CR>" : ''
 endif
 
-" shellslash {{{1
-" ----------
-" use '/' for file paths, even on windows (instead of '\')
-set shellslash	" do so after plug#begin()
 
-" file related {{{1
-" ------------
+" file related settings {{{1
+" ---------------------
+" use '/' for file paths, even on windows (instead of '\')
+set shellslash	" set this after plug#begin()
+
+" do not treat '{' or '}' as part of a filename
 set isfname-={
 set isfname-=}
 
