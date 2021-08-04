@@ -338,6 +338,15 @@ $0
 endsnippet
 
 post_expand "jump_forward(snip, 3)"
+snippet subfig "\begin{subfigure}" b
+\begin{subfigure}[${1:b}]{${2:0.3\textwidth}}
+	\includegraphics[height=${3:3}cm] {${4:path/to/file}} 
+	\caption{}
+	\label{fig:${5:label}}
+\end{subfigure}
+endsnippet
+
+post_expand "jump_forward(snip, 3)"
 snippet tab "\begin{table}" b
 \begin{table}[${1:htpb!}]
 	\centering
