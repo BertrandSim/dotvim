@@ -145,11 +145,11 @@ Plug 'lervag/vimtex',
   " text objects:
 Plug 'b4winckler/vim-angry'				" function argument text object
 Plug 'kana/vim-textobj-user',
-  \ Cond(v:version >= 704)
-Plug 'kana/vim-textobj-entire',
-  \ Cond(v:version >= 704)
-Plug 'kana/vim-textobj-line',
   \ Cond(v:version >= 704)				" custom text objects
+Plug 'kana/vim-textobj-entire',
+  \ Cond(v:version >= 704)				" entire buffer 
+Plug 'kana/vim-textobj-line',
+  \ Cond(v:version >= 704)				" current line (char-wise / linewise)
 
   " search and navigation:
 Plug 'preservim/nerdtree',				" file explorer in vim
