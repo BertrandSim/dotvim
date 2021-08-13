@@ -512,9 +512,7 @@ let g:mundo_verbose_graph = 0	" use shorter graph to save space
 let g:mundo_inline_undo = 0		" don't show inline diffs inside graph 
 								"  (default, toggle with `i`)
   " see also after/ftplugin/Mundo.vim
-
-set undofile        " persistent undo
-set undolevels=200
+  " see also undo settings
 
 " for esv_in_vim
 source $VIMHOME/macros/esv_api_key.vim
@@ -549,6 +547,20 @@ set shellslash	" set this after plug#begin()
 set isfname-={
 set isfname-=}
 
+
+" undo {{{1
+" ----
+if has('persistent_undo')
+  " use persistent undo
+  set undofile        
+  set undolevels=200
+  " place undo files in ~/.vim/.undo
+  " and save them with their corresponding full paths ('//')
+  if !isdirectory($VIMHOME."/.undo")
+	call mkdir($VIMHOME."/.undo")
+  endif
+  let &undodir=$VIMHOME."/.undo//"
+endif
 
 " UI {{{1
 " -------
