@@ -9,6 +9,7 @@
 
 # vim undo files
 .*.un~
+/.undo/
 
 # tags
 tags
