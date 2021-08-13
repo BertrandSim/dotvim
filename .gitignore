@@ -19,7 +19,7 @@ tags
 *.pyc
 
 # vim-plug directory
-plugged
+/plugged/
 
 # misc
 esv_api_key.vim
