@@ -131,6 +131,7 @@ Plug 'machakann/vim-columnmove',
   \ { 'commit' : '21a43d8' }			" column-wise w,b,e,ge,f,t motions
 Plug 'BertrandSim/vim-arpeggio', 
   \ { 'branch': 'tmap' }				" key chords, forked to support Arpeggio in terminal mode
+Plug 'andymass/vim-matchup'				" navigate and highlight matching pairs
 
   " ft specific:
 Plug 'masukomi/vim-markdown-folding'	" expr-folding of markdown files
