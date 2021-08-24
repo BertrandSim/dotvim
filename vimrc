@@ -934,45 +934,6 @@ command! -bang -nargs=? -complete=help TH tab h<bang> <args>
 command! -nargs=* -complete=buffer Vsb vertical sbuffer <args>
 command! -nargs=* -complete=buffer VSb vertical sbuffer <args>
 
-" quick-fix edit {{{1
-" --------------
-" TODO: move to plugin / ftplugin
-command! QFedit call QFedit()
-command! QFupdate call QFupdate()
-command! QFstopedit call QFstopedit()
-
-function! QFedit()
-  " let qf be editable
-  if (&l:filetype ==# 'qf')
-	setlocal modifiable
-  endif
-endfunction
-
-function! QFupdate()
-  " update qf with edited qf list
-  " and preserve editability
-  if (&l:filetype ==# 'qf')
-	let l:view = winsaveview()
-
-	setlocal errorformat=%f\|%l\ col\ %c\|%m
-	if getwininfo(win_getid())[0]['loclist']
-	  lgetbuffer
-	else
-	  cgetbuffer
-	endif
-
-	call winrestview(l:view)
-	call QFedit()
-  endif
-endfunction
-
-function! QFstopedit()
-  " stop qf editabilty
-  if (&l:filetype ==# 'qf')
-	setlocal nomodifiable
-  endif
-endfunction
-
 " split view with conceal {{{1
 " -----------------------
 " eg., viewing tex source code alongside a more readable version
