@@ -259,12 +259,12 @@ let g:vimtex_include_search_enabled = 0
 
 
 " }}}
-" matchup settings
+" matchup settings {{{2
 " ----------------
 " don't show offscreen matches
 let g:matchup_matchparen_offscreen = {}
 
-
+" }}}
 " sandwich config {{{2
 " ---------------
 if isdirectory($VIMHOME."/plugged/vim-sandwich")
