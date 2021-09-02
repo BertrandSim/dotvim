@@ -194,9 +194,14 @@ let g:vimtex_view_general_options
 	  \ . ':\%l^<CR^>:normal\! zzzv^<CR^>'
 	  \ . ':call remote_foreground('''.v:servername.''')^<CR^>^<CR^>\""'
 let g:vimtex_view_general_options_latexmk = '-reuse-instance'
+" open in a new tab for a backward search
+let g:vimtex_view_reverse_search_edit_cmd = 'tabedit'
 
 " use single shot compilation instead of continuous mode
-let g:vimtex_compiler_latexmk = { 'continuous':0 }
+let g:vimtex_compiler_latexmk = {'continuous': 0}
+
+" use pplatex to preprocess latexlog output
+let g:vimtex_quickfix_method = 'pplatex'
 
 " \lw to write and compile.
 augroup vimtex_config
