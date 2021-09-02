@@ -1,3 +1,5 @@
+" facilitates editing of the quickfix list
+" see https://www.reddit.com/r/vim/comments/7dv9as/how_to_edit_the_vim_quickfix_list/
 
 function! qfedit#edit()
   " let qf be editable
