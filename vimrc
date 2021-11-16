@@ -141,7 +141,8 @@ Plug 'jalvesaq/Nvim-R',
   \ { 'branch' : 'stable' })			" interaction between R scripts with R terminal
 Plug 'jalvesaq/R-Vim-runtime'			" keep vim R files up to date
 Plug 'lervag/vimtex',
-  \ Cond(has('patch-7.4.52'))			" plugin for tex files
+  \ Cond(has('patch-7.4.52'),
+  \ { 'tag' : 'v2.8' })					" plugin for tex files; v2.8 -- inverse search
 
   " text objects:
 Plug 'b4winckler/vim-angry'				" function argument text object
@@ -187,12 +188,14 @@ let g:vimtex_view_general_viewer = 'SumatraPDF'
 " setup forward and backward search
 let g:vimtex_view_general_options
 	  \ = '-reuse-instance -forward-search @tex @line @pdf'
-	  \ . ' -inverse-search "gvim --servername ' . v:servername
-	  \ . ' --remote-send \"^<C-\^>^<C-n^>'
-	  \ . ':drop \%f^<CR^>:\%l^<CR^>:normal\! zzzv^<CR^>'
-	  \ . ':execute ''drop '' . fnameescape(''\%f'')^<CR^>'
-	  \ . ':\%l^<CR^>:normal\! zzzv^<CR^>'
-	  \ . ':call remote_foreground('''.v:servername.''')^<CR^>^<CR^>\""'
+" don't use the 5 lines below when since VimTeX 2.8
+" rather, for SumatraPDF, set the command in SumatraPDF itself
+" 	  \ . ' -inverse-search "gvim --servername ' . v:servername
+" 	  \ . ' --remote-send \"^<C-\^>^<C-n^>'
+" 	  \ . ':drop \%f^<CR^>:\%l^<CR^>:normal\! zzzv^<CR^>'
+" 	  \ . ':execute ''drop '' . fnameescape(''\%f'')^<CR^>'
+" 	  \ . ':\%l^<CR^>:normal\! zzzv^<CR^>'
+" 	  \ . ':call remote_foreground('''.v:servername.''')^<CR^>^<CR^>\""'
 let g:vimtex_view_general_options_latexmk = '-reuse-instance'
 " open in a new tab for a backward search
 let g:vimtex_view_reverse_search_edit_cmd = 'tabedit'
