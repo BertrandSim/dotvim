@@ -51,7 +51,7 @@ snippet dmo "\DeclareMathOperator{\op}{op}" b
 \DeclareMathOperator{${1:\op}}{${2:`!p snip.rv=t[1].lstrip("\\")`}}
 endsnippet
 
-snippet dmos "\DeclareMathOperator*{\op}{op}" b
+snippet dmo* "\DeclareMathOperator*{\op}{op}" bA
 \DeclareMathOperator*{${1:\op}}{${2:`!p snip.rv=t[1].lstrip("\\")`}}
 endsnippet
 
@@ -77,6 +77,13 @@ endsnippet
 
 snippet supara "\subparagraph" b
 \subparagraph{${1:name}}
+endsnippet
+
+# section headers {{{1
+# ---------------
+
+snippet texor "\texorpdfstring, using math in headers" 
+\texorpdfstring{${1:${VISUAL:math}}}{${2:ascii}}
 endsnippet
 
 
@@ -109,6 +116,13 @@ context "math()"
 snippet ^^ "^{}" iA
 ^{${1:${VISUAL}}}
 endsnippet
+
+# superscript with (.)
+context "math()"
+snippet ^( "^{(.)}" iA
+^{(${1:${VISUAL}})}
+endsnippet
+
 
 context "math()"
 snippet ,., ",\dots," iA
@@ -307,10 +321,26 @@ ${2:,}\end{equation}
 $0
 endsnippet
 
-snippet al "equation align[*]"
-\begin{align${1:*}}
-	${2:${VISUAL}}
-${3:,}\end{align$1}
+snippet al "align env"
+\begin{align}
+	${1:${VISUAL}}
+${2:,}\end{align}
+$0
+endsnippet
+
+snippet ald "aligned env"
+\begin{aligned}
+	${1:${VISUAL}}
+${2:,}\end{aligned}
+$0
+endsnippet
+
+snippet eqal "equation + aligned"
+\begin{equation}
+\begin{aligned}
+	${1:${VISUAL}}
+${2:,}\end{aligned}
+\end{equation}
 $0
 endsnippet
 
@@ -322,6 +352,30 @@ snippet fr "frame" b
 $0
 endsnippet
 
+# envs, starred variants ([{2
+# ----
+snippet eq* "equation* env" A
+\begin{equation*}
+	${1:${VISUAL}}
+${2:,}\end{equation*}
+$0
+endsnippet
+
+snippet al* "align* env" A
+\begin{align*}
+	${1:${VISUAL}}
+${2:,}\end{align*}
+$0
+endsnippet
+
+snippet eqal* "equation* + aligned" A
+\begin{equation*}
+\begin{aligned}
+	${1:${VISUAL}}
+${2:,}\end{aligned}
+\end{equation*}
+$0
+endsnippet
 
 
 # floats ([{1
