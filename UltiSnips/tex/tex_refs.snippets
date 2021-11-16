@@ -8,12 +8,12 @@ endglobal
 # ( \cite, \label, \ref, )
 # ----
 
-snippet "ci(te?)?" "\ci[te]" r
-\cite{$0}
+snippet ci "\cite"
+\cite{$1}
 endsnippet
 
-snippet "ci(te?)?p" "\ci[te]p" r
-\citep{$0}
+snippet cip "\citep"
+\citep{$1}
 endsnippet
 
 snippet lab "\label"
@@ -27,18 +27,26 @@ snippet lab "\label for numbered equation"
 \label{${1:eq:${2:name}}}
 endsnippet
 
-# post_expand "jump_forward(snip, 1)"
-# snippet eref "\eqref{}"
-# \eqref{${1:eq:${2:name}}}
-# endsnippet
-
-post_expand "vim.eval('timer_start(0, {-> feedkeys(\"\<c-x>\<c-o>\<c-p>\", \"in\")})'); jump_forward(snip, 1)"
-snippet eref "\eqref{} with vimtex omnicompletion!"
-\eqref{${1:eq:$2}}
+post_expand "jump_forward(snip, 1)"
+snippet eref "\eqref{}"
+\eqref{${1:eq:${2:name}}}
 endsnippet
-# for more details see: https://www.reddit.com/r/vim/comments/ac6cv6/an_ultisnips_functionality/
 
-post_expand "vim.eval('timer_start(0, {-> feedkeys(\"\<c-x>\<c-o>\<c-p>\", \"in\")})')" 
-snippet ref "\ref{} with vimtex omnicompletion"
+snippet ref "\ref{}"
 \ref{$1}
 endsnippet
+
+# omnicompletion causes vim to freeze,
+# due to loading of completion items.
+# TODO: Perhaps, trigger omnicompletion after, say, 3-4 keystrokes?
+
+# post_expand "vim.eval('timer_start(0, {-> feedkeys(\"\<c-x>\<c-o>\<c-p>\", \"in\")})'); jump_forward(snip, 1)"
+# snippet eref "\eqref{} with vimtex omnicompletion"
+# \eqref{${1:eq:$2}}
+# endsnippet
+# # for more details see: https://www.reddit.com/r/vim/comments/ac6cv6/an_ultisnips_functionality/
+
+# post_expand "vim.eval('timer_start(0, {-> feedkeys(\"\<c-x>\<c-o>\<c-p>\", \"in\")})')" 
+# snippet ref "\ref{} with vimtex omnicompletion"
+# \ref{$1}
+# endsnippet
