@@ -46,7 +46,6 @@ snippet newths "\newtheorem w shared counter" b
 \newtheorem{${1:env_name}}[${2:shared_counter}]{${3:text}}
 endsnippet
 
-
 snippet dmo "\DeclareMathOperator{\op}{op}" b
 \DeclareMathOperator{${1:\op}}{${2:`!p snip.rv=t[1].lstrip("\\")`}}
 endsnippet
@@ -54,6 +53,39 @@ endsnippet
 snippet dmo* "\DeclareMathOperator*{\op}{op}" bA
 \DeclareMathOperator*{${1:\op}}{${2:`!p snip.rv=t[1].lstrip("\\")`}}
 endsnippet
+
+snippet ndc "\NewDocumentCommand" b
+\NewDocumentCommand{$1}{${2:arg spec}}{%
+	$3
+}
+endsnippet
+
+snippet "if(nv|v|b)(t|f)" "If([No]Value|Boolean)(T|F|TF) xparse helper" r
+\If`!p 
+if match.group(1) == "nv":
+  str1 = "NoValue"
+elif match.group(1) == "v":
+  str1 = "Value"
+else: #match.group(1) == "b"
+  str1 = "Boolean"
+snip.rv = str1 + match.group(2).upper()
+`{${1:cond}}{${2:code}}
+endsnippet
+
+snippet "if(nv|v|b)(tf)" "If([No]Value|Boolean)(T|F|TF) xparse helper" r
+\If`!p 
+if match.group(1) == "nv":
+  str1 = "NoValue"
+elif match.group(1) == "v":
+  str1 = "Value"
+else: #match.group(1) == "b"
+  str1 = "Boolean"
+snip.rv = str1 + match.group(2).upper()
+`{${1:cond}}{${2:code_true}}{${3:code_false}}
+endsnippet
+
+
+
 
 
 # sections ([{1
