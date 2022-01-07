@@ -1,10 +1,10 @@
 # snippets for automatic filling of function arguments, of the form
 # 'arg = arg'
 
-# '.=.'  -> 'arg=arg'
-# '.=,'  -> 'arg=arg, '
-# '. =.' -> 'arg = arg'
-# '. =,' -> 'arg = arg, '
+# 'arg.=.'  or '.=.'  -> 'arg=arg'
+# 'arg.=,'  or '.=,'  -> 'arg=arg, '
+# 'arg .=.' or '. =.' -> 'arg = arg'
+# 'arg .=,' or '. =,' -> 'arg = arg, '
 #
 # if preceded by a word, 'arg' is taken to be that word
 # eg 'foo.=.' -> 'foo=foo'
@@ -26,7 +26,8 @@ ${1:arg} = $1,
 endsnippet
 
 priority 1
-snippet "(\w+)\.( ?)=\." "arg=arg" rA
+# snippet "(\w+)\.( ?)=\." "arg=arg" rA
+snippet "(\w+)( ?)\.=\." "arg=arg" rA
 `!p arg = match.group(1)
 space = match.group(2)
 snip.rv = arg + space + '=' + space + arg`
@@ -34,7 +35,7 @@ endsnippet
 # `!p snip.rv=match.group(1)` = `!p snip.rv=match.group(1)`
 
 priority 1
-snippet "(\w+)\.( ?)=," "arg=arg, " rA
+snippet "(\w+)( ?)\.=," "arg=arg, " rA
 `!p arg = match.group(1)
 space = match.group(2)
 snip.rv = arg + space + '=' + space + arg + ', '`
