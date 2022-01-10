@@ -22,7 +22,7 @@ function! qfedit#update()
     endif
 
     call winrestview(l:view)
-    call QFedit()
+    call qfedit#edit()
   endif
 endfunction
 
