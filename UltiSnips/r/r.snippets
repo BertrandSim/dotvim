@@ -135,7 +135,9 @@ endsnippet
 # plotting {{{1
 
 snippet parmf "par(mfrow=c(nr,nc))" b
-opar <- par(mfrow=c(${1:nrow},${2:ncol}))
+opar <- par(mfrow=c(${1:nrow},${2:ncol}),
+						oma = c(5,4,0,0) + 0.1,
+						mar = c(0,0,1,1) + 0.1)
 	${3:# plot1}
 	${4:# plot2}
 par(opar)
