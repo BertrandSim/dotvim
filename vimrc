@@ -344,6 +344,7 @@ let g:UltiSnipsEditSplit='context'
 
 " convenience commands
 command! USRS call UltiSnips#RefreshSnippets()
+command! USEdit UltiSnipsEdit
 
 " }}}
 " lightline config {{{2
