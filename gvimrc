@@ -24,3 +24,30 @@ set guioptions-=m 	" don't show the menu bar
 " see also plugin for windows transparency    (.vim/plugin/*transparent.vim)
 " see also plugin for adjusting gui font size (.vim/plugin/guifont_zoom.vim)
 
+
+" custom 'guitablabel'
+" 1 | fileame (3+)
+" --------------------
+function! GuiTabWinCountModifiedLabel()
+  let wincount = tabpagewinnr(v:lnum, '$')
+  if wincount == 1
+    let wincountlabel = ''
+  else 
+    let wincountlabel = wincount
+  endif
+
+  let modifiedlabel = ''
+  let bufnrlist = tabpagebuflist(v:lnum)
+  for bufnr in bufnrlist
+    if getbufvar(bufnr, "&modified")
+      let modifiedlabel = '+'
+      break
+    endif
+  endfor
+
+  let label = wincountlabel .. modifiedlabel
+  return (label == '' ? '' : '('..label..')')
+endfunction
+
+set guitablabel=%N\ \|\ %f\ %{GuiTabWinCountModifiedLabel()}
+

@@ -392,6 +392,36 @@ function! LightlineFilenameFlags()
   return filename . (mods ==# '' ? '' : ' ' . mods)
 endfunction
 
+" tabline
+let g:lightline.tab = {
+		    \ 'active': [ 'tabnum', 'filename', 'modified' ],
+		    \ 'inactive': [ 'tabnum', 'filename', 'numsplitmodified' ] }
+
+let g:lightline.tab_component_function = {
+		      \ 'modified': 'LightlineTabModified', 
+		      \ 'numsplitmodified': 'LightlineTabNumSplitModified' }
+
+function! LightlineTabModified_0(tabnum)
+  let bufnrlist = tabpagebuflist(a:tabnum)
+  for bufnr in bufnrlist
+    if getbufvar(bufnr, "&modified")
+      return v:true
+	  " break
+    endif
+  endfor
+  return v:false
+endfunction
+
+function! LightlineTabModified(tabnum)
+  return LightlineTabModified_0(a:tabnum) ? '+' : ''
+endfunction
+
+function! LightlineTabNumSplitModified(tabnum)
+  let tabnumwin = tabpagewinnr(a:tabnum, '$')
+  let tabmodified = LightlineTabModified_0(a:tabnum)
+  return (tabnumwin == 1 ? '' : '<'..tabnumwin..'>') .. (tabmodified ? '+' : '')
+endfunction
+
 " }}}
 " vim-pandoc-syntax {{{2
 
