@@ -419,7 +419,7 @@ endfunction
 function! LightlineTabNumSplitModified(tabnum)
   let tabnumwin = tabpagewinnr(a:tabnum, '$')
   let tabmodified = LightlineTabModified_0(a:tabnum)
-  return (tabnumwin == 1 ? '' : '<'..tabnumwin..'>') .. (tabmodified ? '+' : '')
+  return (tabnumwin == 1 ? '' : '<'.tabnumwin.'>') . (tabmodified ? '+' : '')
 endfunction
 
 " }}}
