@@ -26,7 +26,7 @@ set guioptions-=m 	" don't show the menu bar
 
 
 " custom 'guitablabel'
-" 1 | fileame (3+)
+"   1: fileame (3+)
 " --------------------
 function! GuiTabWinCountModifiedLabel()
   let wincount = tabpagewinnr(v:lnum, '$')
@@ -47,7 +47,9 @@ function! GuiTabWinCountModifiedLabel()
 
   let label = wincountlabel .. modifiedlabel
   return (label == '' ? '' : '('..label..')')
+  " return (label == '' ? '' : '/'..label)
 endfunction
 
-set guitablabel=%N\ \|\ %f\ %{GuiTabWinCountModifiedLabel()}
+set guitablabel=%N:\ %{pathshorten(expand('%:.'))}\ %{GuiTabWinCountModifiedLabel()}
+" set guitablabel=%N\ \|\ %f\ %{GuiTabWinCountModifiedLabel()}
 
