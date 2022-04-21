@@ -1,0 +1,27 @@
+global !p
+from usnip_helpers import *
+from usnip_tex_contexts import * 	
+from usnip_pos_contexts import *
+endglobal
+
+# figures and subfigures
+# ----------------------
+post_expand "jump_forward(snip, 3)"
+snippet fig "\begin{figure}" b
+\begin{figure}[${1:htpb}]
+	\centering
+	\includegraphics${2:[width=${3:0.7}\textwidth]}{${4:path/to/file}}
+	\caption{${5:caption text}}
+	\label{fig:${6:label}}
+\end{figure}
+$0
+endsnippet
+
+post_expand "jump_forward(snip, 3)"
+snippet sfig "\begin{subfigure}" b
+\begin{subfigure}[${1:b}]{${2:0.3\textwidth}}
+	\includegraphics[height=${3:3}cm] {${4:path/to/file}} 
+	\caption{}
+	\label{fig:${5:label}}
+\end{subfigure}
+endsnippet
