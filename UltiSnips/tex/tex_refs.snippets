@@ -6,7 +6,6 @@ endglobal
 
 # snippets for references
 # ( \cite, \label, \ref, )
-# ----
 
 snippet ci "\cite"
 \cite{$1}
@@ -35,6 +34,17 @@ endsnippet
 snippet ref "\ref{}"
 \ref{$1}
 endsnippet
+
+snippet cr "\cref{}" w
+\cref{$1}
+endsnippet
+
+# refer to subfigure, (eg. a, b, c)
+snippet sref "\subref{}" w
+\subref{$1}
+endsnippet
+
+
 
 # omnicompletion causes vim to freeze,
 # due to loading of completion items.
