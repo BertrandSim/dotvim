@@ -25,3 +25,27 @@ snippet sfig "\begin{subfigure}" b
 	\label{fig:${5:label}}
 \end{subfigure}
 endsnippet
+
+post_expand "jump_forward(snip, 4)"
+snippet fsf "figure with subfig within" b
+\begin{figure}[${1:htpb}]
+	\centering
+	\begin{subfigure}[${2:b}]{${3:0.3\textwidth}}
+		\includegraphics[height=${4:3}cm] {${5:path/to/file}} 
+		\caption{}
+		\label{fig:${6:label}}
+	\end{subfigure}
+	\caption{${7:caption text}}
+	\label{fig:${8:label}}
+\end{figure}
+$0
+endsnippet
+
+
+# refer to a subfigure in the main figure's caption text,
+#   and add its description.
+# see also snippet 'sref'
+post_expand "jump_forward(snip, 1)"
+snippet sreF "\subref{}: text"
+\textbf{\subref{${1:fig:${2:label}}}:} ${3:text};
+endsnippet
