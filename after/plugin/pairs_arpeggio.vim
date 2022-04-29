@@ -1,11 +1,12 @@
-" Arpeggio bracket key combis
-" ---------------------------
+" Arpeggio key chords 
+" for brackets and pairs
+" ----------------------
 
 " map key chords {{{1
 " ==============
 " { jk:() , df:{} , fj:[] , dj:<> , dk:"" , gk:'' , bk:`` }
 "
-" (see also .vim/after/ftplugin/tex/brackets_arpeggio_tex.vim for tex-specific chords)
+" (see also .vim/after/ftplugin/tex/pairs_arpeggio_tex.vim for tex-specific chords)
 
 
 call arpeggio#load()
