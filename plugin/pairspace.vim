@@ -3,11 +3,11 @@
 
 " Similar to the behavior of (Space, CR, BS) in (github.com/jiangmiao/auto-pairs), but without the bloat
 
-" - customize list of pairs by modifying g:pairlist, default [['(',')'], ['[',']'], ['{','}']]
+" - specify the list of pairs with g:pairlist or b:pairlist, default [['(',')'], ['[',']'], ['{','}']]
 " - supports pairs with strings of len > 1, eg. [['\{','\}']]
 " - supports insert and terminal modes
+" - supports buffer-local pairs (eg. for specific filetypes)
 
-" TODO [2021-05-20]: buffer-local pairlist
 
 
 " Main ideas {{{1
@@ -24,10 +24,13 @@
 " return default_here
 
 
+" Alternatively, use `search(open..'\%#'..close,'n')`
+
+
 " Presets {{{1
 " ----------
 
-let g:pairlist = [
+let g:pairlist_default = [
   \ ['(', ')'],
   \ ['[', ']'],
   \ ['{', '}'],
@@ -45,6 +48,18 @@ tnoremap <expr> <BS>    PairBS('t')
 
 " Helpers {{{1
 " -------
+
+" return the list of pairs
+" depending on whether b:pairlist, or g:pairlist exists
+function! s:get_pairs() abort
+  if exists('b:pairlist')
+    return b:pairlist
+  elseif exists('g:pairlist')
+    return g:pairlist
+  else
+    return g:pairlist_default
+endfunction
+
 
 " checks if string exists to the left of pos
 function! s:left_is(string, pos)
@@ -122,7 +137,7 @@ endfunction
 
 function! PairSpace(mode)
   let curpos = s:get_cursor_pos(a:mode)
-  for [open, close] in g:pairlist
+  for [open, close] in s:get_pairs()
     if s:left_is(open, curpos) && s:right_is(close, curpos)
       " return 'SpaceSpaceLeft'
       if a:mode == 'i' && has('patch-7.4.849')
@@ -139,7 +154,7 @@ endfunction
 function! PairReturn()
   " change behavior of <CR>, for insert mode only
   let curpos = s:get_cursor_pos('i')
-  for [open, close] in g:pairlist
+  for [open, close] in s:get_pairs()
     if s:left_is(open, curpos) && s:right_is(close, curpos)
       " return 'ReturnReturnUp'
       return "\<CR>\<Up>\<End>\<CR>"
@@ -151,7 +166,7 @@ endfunction
 
 function! PairBS(mode)
   let curpos = s:get_cursor_pos(a:mode)
-  for [open, close] in g:pairlist
+  for [open, close] in s:get_pairs()
     " Handle the case (|)
     if s:left_is(open, curpos) && s:right_is(close, curpos)
       " return 'BsDel'
