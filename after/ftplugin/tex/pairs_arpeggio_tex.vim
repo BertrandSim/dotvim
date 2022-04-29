@@ -1,12 +1,13 @@
-" key chords for tex-specific delimiter pairs
-" ===========================================
+" Arpeggio key chords 
+" for tex-specific delimiter pairs
+" ================================
 " { 
-"   mk  : $...$ , 
-"   dm  : \[...\] , 
-"   sdf : \{...\} ,
+"   mk : $...$ , 
+"   dm : \[...\] , 
+"   zf : \{...\} ,
 " }
 "
-" (see also .vim/after/plugin/brackets_arpeggio.vim for non-tex-specific chords)
+" (see also .vim/after/plugin/pairs_arpeggio.vim for non-tex-specific chords)
 
 call arpeggio#load()
 
@@ -31,11 +32,13 @@ Arpeggioinoremap <buffer><silent> mk <C-r>=UltiSnips#Anon(snip_str_teqn)<CR>
 
 Arpeggioinoremap <buffer><silent> dm <C-r>=UltiSnips#Anon(snip_str_deqn)<CR>
 
-Arpeggioinoremap <buffer><silent> sdf <C-r>=UltiSnips#Anon(snip_str_math_braces)<CR>
+Arpeggioinoremap <buffer><silent> zf <C-r>=UltiSnips#Anon(snip_str_math_braces)<CR>
 
-" fixes masking of df -> {} mapping.
-inoremap <buffer><silent> <Plug>(arpeggio-default:df) <C-r>=UltiSnips#Anon( '{'.'$1'.'}' )<CR>
-inoremap <buffer><silent> <Plug>(arpeggio-default:fd) <C-r>=UltiSnips#Anon( '{'.'$1'.'}' )<CR>
+" " before 2022-04-29, this chord was 'sdf' ...
+" Arpeggioinoremap <buffer><silent> sdf <C-r>=UltiSnips#Anon(snip_str_math_braces)<CR>
+" " which needed a fix to the masking of df -> {} mapping.
+" inoremap <buffer><silent> <Plug>(arpeggio-default:df) <C-r>=UltiSnips#Anon( '{'.'$1'.'}' )<CR>
+" inoremap <buffer><silent> <Plug>(arpeggio-default:fd) <C-r>=UltiSnips#Anon( '{'.'$1'.'}' )<CR>
 
 " Example to show that python interpolation can even be coded inside :)
 " let snip_str_eg = '\['.
@@ -77,9 +80,11 @@ endif
 function! Arp_unmap()
   silent! Arpeggioiunmap <buffer> mk
   silent! Arpeggioiunmap <buffer> dm
-  silent! Arpeggioiunmap <buffer> sdf
-  silent! iunmap <buffer> <Plug>(arpeggio-default:df)
-  silent! iunmap <buffer> <Plug>(arpeggio-default:fd)
+  silent! Arpeggioiunmap <buffer> zf
+  " " not needed since 2022-04-29, when 'sdf' was replaced with 'zf'
+  " silent! Arpeggioiunmap <buffer> sdf
+  " silent! iunmap <buffer> <Plug>(arpeggio-default:df)
+  " silent! iunmap <buffer> <Plug>(arpeggio-default:fd)
 endfunction
 
 let b:undo_ftplugin .= 'call Arp_unmap() | '
