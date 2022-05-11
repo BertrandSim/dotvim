@@ -62,16 +62,20 @@ def str_col_inner(nrow, starttabnum=1):
 	return ' \\\\\\\\ '.join(tabstops) 				# [$1 \\ $2 \\ ... \\ $n]
 
 def create_matrix(snip):
-	nrow_ncol = snip.buffer[snip.line].split("by")
-	nrow = nrow_ncol[0]
-	ncol = nrow_ncol[1]
-	
-	nrow = int(nrow)
-	ncol = int(ncol)
+
+	args = snip.buffer[snip.line].split(',')
+
+	matrix_type = args[0][:-6]
+	nrow = int(args[1])
+	ncol = int(args[2])
 
 	snip.buffer[snip.line] = ''
+	# snip.cursor.set( snip.snippet_start[0], snip.snippet_start[1]-1 )
 
-	mat_str = "\\begin\{${1:p}matrix\}\n" + \
+	if matrix_type == 's':
+		matrix_type = 'small'
+
+	mat_str = "\\begin\{${1:"+ matrix_type +"}matrix\}\n" + \
 	          "\t" + str_matrix_inner(nrow, ncol, starttabnum=2) + "\n" + \
 			  "\\end\{$1matrix\}"
 	snip.expand_anon(mat_str)
@@ -95,15 +99,15 @@ def str_matrix_inner(nrow, ncol, starttabnum=1, shiftwidth=1):
 endglobal
 
 post_jump "create_matrix(snip)"
-snippet "mat(?:r(?:ix?)?)?(\d)\D(\d)" ".?mat[rix] mxn" rb
-`!p snip.rv = match.group(1) + 'by' + match.group(2)  # ok!`
+snippet "(\w?)mat(\d)\D(\d)" "[?]matrix mxn" rb
+`!p 
+snip.rv = match.group(1)`matrix,`!p 
+snip.rv = match.group(2)`,`!p 
+snip.rv = match.group(3)`
 endsnippet
 
-# [TODO] same indentation for each row
-# [TODO] add options for [pbB...]matrix
-# [TODO] allow expansions within line
-# 		eg. via snip.snippet_start / _end
-
+# [NOTE] this only expands on a line on its own.
+# To allow expansions within line, use snip.snippet_start / _end
 
 post_jump "create_row_vec(snip)" 
 snippet "rowv(?:ec?)?(\d)?" "row vector with optional number of components" rb
