@@ -21,10 +21,23 @@ if not snip.c:
 endsnippet
 
 snippet VIS "{VISUAL}" i
-\$\{VISUAL${1::default_text}\}$0
+\$\{VISUAL${1::${VISUAL:default_text}}\}$0
 endsnippet
 
 snippet VIST "{VISUAL} with transformation" i
 \$\{VISUAL${1::${2:default}/${3:search}/${4:replace}/${5:option}}\}$0
 endsnippet
+
+snippet py "python interp" w
+\`!p $1\`
+endsnippet
+
+snippet prv "python interp with return value" w
+\`!p snip.rv = $1\`
+endsnippet
+
+snippet mg "match.group()" w
+match.group($1)
+endsnippet
+
 
