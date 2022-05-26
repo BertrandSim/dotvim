@@ -630,6 +630,11 @@ set scrolloff=1		" keep n line(s) above and below the cursor
 
 syntax enable		" enable syntax processing
 
+" spell {{{1
+" ----------
+nnoremap sp [s1z=<C-O>
+" quickly fix last word before cursor with 'sp' 
+" and return to previous position
 " colorschemes	{{{1
 " ------------
 " toggle background light/dark
