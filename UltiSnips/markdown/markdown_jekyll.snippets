@@ -1,4 +1,4 @@
-# YAML metadata snippets
+# jekyll specific snippets for markdown
 
 global !p
 import vim
@@ -25,4 +25,10 @@ $0
 endsnippet
 # use snip.c to prevent recursive update 0->1->2...
 # date: ${2:`!v strftime('%Y-%m-%d')`} ${3:`!v strftime('%H:%M:%S')`} +0800
+
+
+snippet posturl "post_url" w
+{% post_url ${1:name-of-post} %}
+endsnippet
+
 
