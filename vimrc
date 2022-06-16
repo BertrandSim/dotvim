@@ -455,7 +455,8 @@ let g:sneak#use_ic_scs = 1
 
 " label mode
 let g:sneak#label = 1
-let g:sneak#target_labels = "fjklwetunq/SFGHLTUNRMQZ?0"
+" let g:sneak#target_labels = 'fjklwetunq/SFGHLTUNRMQZ?0'
+let g:sneak#target_labels = '234567890'
 
 " highlighting
 " highlight link SneakScope Cursor
