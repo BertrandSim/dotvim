@@ -1026,15 +1026,6 @@ function! SnippetOp(type)
 endfunction
 
 " }}}
-" tex delims insert [TODO] {{{1
-" ------------------
-
-" augroup ft_tex
-"   autocmd!
-"   autocmd Filetype tex
-"   " add \(, \[, \{ pairs
-"   " ...
-" augroup END
 
 
 " terminal {{{1
