@@ -574,6 +574,7 @@ syntax enable		" enable syntax processing
 nnoremap sp [s1z=<C-O>
 " quickly fix last word before cursor with 'sp' 
 " and return to previous position
+
 " colorschemes	{{{1
 " ------------
 " toggle background light/dark
@@ -964,8 +965,6 @@ function! SnippetOp(type)
 endfunction
 
 " }}}
-
-
 " terminal {{{1
 " --------
 
