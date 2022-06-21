@@ -571,9 +571,17 @@ syntax enable		" enable syntax processing
 
 " spell {{{1
 " ----------
-nnoremap sp [s1z=<C-O>
+
+" limit the number of spelling suggestions
+" (so that `z=` does not take up the whole screen  )
+set spellsuggest+=12 
+" For a script shows results on the cli (not on the pager),
+" see https://vi.stackexchange.com/a/19681/21495
+
 " quickly fix last word before cursor with 'sp' 
 " and return to previous position
+nnoremap sp [s1z=<C-O>
+
 
 " colorschemes	{{{1
 " ------------
