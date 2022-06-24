@@ -112,6 +112,9 @@ Plug 'BertrandSim/auto-pairs',
   \{ 'on': [] }							" pairs of delims, forked from jiangmiao/auto-pairs.
 										"   superceded by brackets_arpeggio.vim, and pairspace.vim
 
+  " trials:
+Plug 'rhysd/clever-f.vim'				" highlight f matches and repeat with f/F
+
 call plug#end()
 
 " plugin configs {{{1
@@ -393,7 +396,9 @@ let g:sneak#use_ic_scs = 1
 
 " label mode
 let g:sneak#label = 1
+" " use labels that are unlikely to be used in the next command
 " let g:sneak#target_labels = 'fjklwetunq/SFGHLTUNRMQZ?0'
+" use numeric labels, which will mostly not be used in the next command (unless a count is needed)
 let g:sneak#target_labels = '234567890'
 
 " highlighting
@@ -401,11 +406,38 @@ let g:sneak#target_labels = '234567890'
 highlight link SneakLabel Folded
 " highlight link Sneak Folded
 
-" temporal testing of sneak_f/t/F/T
-map <leader>f <Plug>Sneak_f
-map <leader>F <Plug>Sneak_F
-map <leader>t <Plug>Sneak_t
-map <leader>T <Plug>Sneak_T
+" }}}
+" clever-f settings {{{2
+
+" let f always go forward, F always backward
+let g:clever_f_fix_key_direction = 1
+
+" " exit ongoing f-search after some time
+" let g:clever_f_timeout_ms = 2000
+" let g:clever_f_highlight_timeout_ms = 2000
+
+" exit ongoing f-search with <Esc>
+nnoremap <silent> <Esc> :<C-u>call clever_f#reset()<CR>
+
+" show matching chars, with a specific color/highlighting
+let g:clever_f_mark_char = 1 
+let g:clever_f_mark_char_color = 'CleverFDefaultLabel'
+
+" show directly reachable chars, with a specific color/highlighting
+let g:clever_f_mark_direct = 1 
+let g:clever_f_mark_direct_color = 'CleverFChar1'
+
+augroup plugin-clever-f-char-hl
+  autocmd!
+  autocmd ColorScheme * :call s:clever_f_mark_char_hl_init()
+augroup END
+
+function! s:clever_f_mark_char_hl_init()
+  let s:guifg = synIDattr(synIDtrans(hlID('Underlined')), 'fg', 'gui')  "purple fg #6c71c4
+  let s:guibg = synIDattr(synIDtrans(hlID('Pmenu')), 'bg', 'gui')  " greyish bg #eee8d5
+  let s:gui = 'bold,underline'
+  exe 'hi CleverFChar1 guifg='.s:guifg.' guibg='.s:guibg.' gui='.s:gui
+endfunction
 
 
 " }}}
