@@ -417,7 +417,10 @@ let g:clever_f_fix_key_direction = 1
 " let g:clever_f_highlight_timeout_ms = 2000
 
 " exit ongoing f-search with <Esc>
-nnoremap <silent> <Esc> :<C-u>call clever_f#reset()<CR>
+exe '
+  \nnoremap <silent> <Esc> :<C-u>call clever_f#reset()<CR>
+  \' . maparg('<Esc>', 'n')
+  " maparg() extends an existing mapping (if any)
 
 " show matching chars, with a specific color/highlighting
 let g:clever_f_mark_char = 1 
@@ -792,9 +795,14 @@ endif
 " search related mappings {{{1
 " -----------------------
 
-" turn off search highlighting with \<space>
+" turn off search highlighting with \<space> or <Esc>
 nnoremap <leader><space> :nohlsearch<CR>
 " nnoremap <leader><space> :let @/=""<CR>
+
+exe '
+  \nnoremap <silent> <Esc> :<C-u>nohlsearch<CR>
+  \' . maparg('<Esc>', 'n')
+  " maparg() extends an existing mapping (if any)
 
 " n/N always searches forward/backward. 
 " respects 'foldopen' and shows search count [n/nn]
