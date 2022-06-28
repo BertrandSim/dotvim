@@ -91,6 +91,11 @@ Plug 'kana/vim-textobj-entire',
 Plug 'kana/vim-textobj-line',
   \ Cond(v:version >= 704)				" current line (char-wise / linewise)
 
+  " git integration:
+Plug 'tpope/vim-fugitive'				" git wrapper for vim
+Plug 'BertrandSim/gv.vim'				" git commit browser in vim
+Plug 'itchyny/vim-gitbranch'			" show current git branch
+
   " search and navigation:
 Plug 'preservim/nerdtree',				" file explorer in vim
   \{ 'on': 'NERDTreeToggle' }
@@ -98,10 +103,6 @@ Plug 'ctrlpvim/ctrlp.vim'				" fuzzy finder
 Plug 'majutsushi/tagbar'				" show tags on a side margin
 Plug 'ludovicchabant/vim-gutentags'		" automatically generate tags
 Plug 'kshenoy/vim-signature'			" show marks in signs column (left gutter)
-
-  " git integration:
-Plug 'tpope/vim-fugitive'				" git wrapper for vim
-Plug 'BertrandSim/gv.vim'				" git commit browser in vim
 
   " misc and backups:
 Plug 'simnalamburt/vim-mundo'			" graphical undo tree
@@ -296,16 +297,18 @@ let g:lightline = {}
 let g:lightline.colorscheme = 'solarized_nomode'
 let g:lightline.active = {
   \   'left': [ [ 'mode' ],
-  \             [ 'readonly', 'filename', 'modified'] ],
+  \             [ 'gitbranch',
+  \               'readonly', 'filename', 'modified'] ],
   \ }
 let g:lightline.inactive = {
   \   'left': [ [ 'filename_flags' ] ],
   \ }
 let g:lightline.component_function = {
-  \   'fileformat'   : 'LightlineFileformat',
-  \   'fileencoding' : 'LightlineFileencoding',
-  \   'filetype'     : 'LightlineFiletype',
+  \   'gitbranch'      : 'gitbranch#name',
   \   'filename_flags' : 'LightlineFilenameFlags',
+  \   'fileformat'     : 'LightlineFileformat',
+  \   'fileencoding'   : 'LightlineFileencoding',
+  \   'filetype'       : 'LightlineFiletype',
   \ }
 
 
