@@ -108,7 +108,7 @@ Plug 'kshenoy/vim-signature'			" show marks in signs column (left gutter)
 Plug 'simnalamburt/vim-mundo'			" graphical undo tree
 Plug 'haya14busa/incsearch.vim'			" improved / ? incsearch
 Plug 'chrisbra/Colorizer', 
-  \{ 'on': [] }							" show color codes and names in vim
+  \{ 'on': ['ColorHighlight'] }			" show color codes and names in vim
 Plug 'BertrandSim/auto-pairs',
   \{ 'on': [] }							" pairs of delims, forked from jiangmiao/auto-pairs.
 										"   superceded by brackets_arpeggio.vim, and pairspace.vim
@@ -444,7 +444,7 @@ let g:clever_f_mark_char_color = 'CleverFDefaultLabel'
 let g:clever_f_mark_direct = 1 
 let g:clever_f_mark_direct_color = 'CleverFChar1'
 
-augroup plugin-clever-f-char-hl
+augroup hl-clever-f
   autocmd!
   autocmd ColorScheme * :call s:clever_f_mark_char_hl_init()
 augroup END
@@ -636,7 +636,6 @@ nnoremap sp [s1z=<C-O>
 " ------------
 " toggle background light/dark
 map <F5> :set background=<C-R>=&background == "dark" ? "light" : "dark"<CR><CR>
-" TODO [2020-05-13]: change statusline and Folded guibg with solarized background swap
 
 colorscheme darkblue		" fallback to preinstalled colorscheme (if others unavailable)
 
