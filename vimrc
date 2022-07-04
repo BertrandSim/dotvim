@@ -641,10 +641,27 @@ silent! colorscheme solarized8
 
 if g:colors_name == 'solarized8'
   set background=light
-  " use 'base01.5' solarized color to distinguish folded lines
-  " from 'base02' in lightline's statusline
   highlight Folded guibg=#dcd7c8
 endif
+
+augroup hl-solarized-folded-bg
+  autocmd!
+  autocmd OptionSet background call s:hl_solarized_folded()
+  autocmd ColorScheme solarized8* call s:hl_solarized_folded()
+augroup END
+
+
+function! s:hl_solarized_folded()
+  " use 'base01.5' solarized color to distinguish folded lines
+  "   vs 'base02' in lightline's statusline
+  if g:colors_name =~ 'solarized8'
+    if &background == 'light'
+      highlight Folded guibg=#dcd7c8
+    else
+      highlight Folded guibg=#204554
+    endif
+  endif
+endfunction
 
 "" }}}
 
