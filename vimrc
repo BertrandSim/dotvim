@@ -336,6 +336,17 @@ function! LightlineFilenameFlags()
   return filename . (mods ==# '' ? '' : ' ' . mods)
 endfunction
 
+" update lightline colorscheme when background is changed 
+" to use light/dark variant.
+" see github issue #424
+augroup lightline-bg
+  autocmd!
+  autocmd OptionSet background
+	\ execute 'source' globpath(&rtp, 'autoload/lightline/colorscheme/'.g:lightline.colorscheme.'.vim')
+	\ | call lightline#colorscheme() 
+	\ | call lightline#update()
+augroup END
+
 " tabline
 let g:lightline.tab = {
 		    \ 'active': [ 'tabnum', 'filename', 'modified' ],
