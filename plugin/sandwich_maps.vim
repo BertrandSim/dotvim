@@ -41,4 +41,8 @@ nmap sl <Plug>(operator-sandwich-add)<Plug>(operator-sandwich-release-count)l
 " cycle forward / backward with sf/sF
 " nmap sfo   " TODO [2020-01-02]: cycle quotes
 
+" WIP in plugin/sandwich_cycle.vim, 
+" pack/usr/start/sandwichext/autoload/textobj/sandwichext.vim, 
+"                            autoload/operator/sandwichext.vim
+
 " TODO [2020-01-02]: modify with sm
