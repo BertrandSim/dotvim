@@ -80,7 +80,7 @@ Plug 'jalvesaq/Nvim-R',
 Plug 'jalvesaq/R-Vim-runtime'			" keep vim R files up to date
 Plug 'lervag/vimtex',
   \ Cond(has('patch-7.4.52'),
-  \ { 'tag' : 'v2.8' })					" plugin for tex files; v2.8 -- inverse search
+  \ { 'tag' : 'v2.10' })					" plugin for tex files
 
   " text objects:
 Plug 'b4winckler/vim-angry'				" function argument text object
@@ -127,18 +127,12 @@ call plug#end()
 
 " use Sumatra as pdfviewer
 let g:vimtex_view_general_viewer = 'SumatraPDF'
-" setup forward and backward search
+" setup forward search
 let g:vimtex_view_general_options
 	  \ = '-reuse-instance -forward-search @tex @line @pdf'
-" don't use the 5 lines below when since VimTeX 2.8
-" rather, for SumatraPDF, set the command in SumatraPDF itself
-" 	  \ . ' -inverse-search "gvim --servername ' . v:servername
-" 	  \ . ' --remote-send \"^<C-\^>^<C-n^>'
-" 	  \ . ':drop \%f^<CR^>:\%l^<CR^>:normal\! zzzv^<CR^>'
-" 	  \ . ':execute ''drop '' . fnameescape(''\%f'')^<CR^>'
-" 	  \ . ':\%l^<CR^>:normal\! zzzv^<CR^>'
-" 	  \ . ':call remote_foreground('''.v:servername.''')^<CR^>^<CR^>\""'
-let g:vimtex_view_general_options_latexmk = '-reuse-instance'
+" for inverse search (backward search), enter this in SumatraPDF:
+"   `vim -v --not-a-term -T dumb -c "VimtexInverseSearch %l '%f'"`
+"   as seen in :h :VimtexInverseSearch .
 " open in a new tab for a backward search
 let g:vimtex_view_reverse_search_edit_cmd = 'tabedit'
 
