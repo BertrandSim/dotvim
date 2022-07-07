@@ -439,21 +439,27 @@ exe '
 " show matching chars, with a specific color/highlighting
 let g:clever_f_mark_char = 1 
 let g:clever_f_mark_char_color = 'CleverFDefaultLabel'
+highlight link CleverFDefaultLabel MatchParen
 
 " show directly reachable chars, with a specific color/highlighting
 let g:clever_f_mark_direct = 1 
-let g:clever_f_mark_direct_color = 'CleverFChar1'
+let g:clever_f_mark_direct_color = 'CleverFDirectLabel'
 
 augroup hl-clever-f
   autocmd!
-  autocmd ColorScheme * :call s:clever_f_mark_char_hl_init()
+  autocmd ColorScheme * :call s:clever_f_mark_direct_hl_init()
 augroup END
 
-function! s:clever_f_mark_char_hl_init()
+function! s:clever_f_mark_direct_hl_init()
   let s:guifg = synIDattr(synIDtrans(hlID('Underlined')), 'fg', 'gui')  "purple fg #6c71c4
   let s:guibg = synIDattr(synIDtrans(hlID('Pmenu')), 'bg', 'gui')  " greyish bg #eee8d5
-  let s:gui = 'bold,underline'
-  exe 'hi CleverFChar1 guifg='.s:guifg.' guibg='.s:guibg.' gui='.s:gui
+  " let s:gui = 'bold,underline'
+  if &background ==# 'light'
+    let s:gui = 'underline'
+  else 
+    let s:gui = 'bold'
+  endif
+  exe 'highlight CleverFDirectLabel guifg='.s:guifg.' guibg='.s:guibg.' gui='.s:gui
 endfunction
 
 
