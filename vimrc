@@ -122,6 +122,9 @@ call plug#end()
 " --------------
 "
 " TODO [2020-01-02]: setup sandwich exchange / cycle within same recipe group
+" TODO [2022-07-07]: find a map (or a command) for toggling frac. current: 'stf'
+" TODO [2022-07-07]: decide which text-objects to keep (see :h vimtex-features)
+"   [c]ommands/ [d]elimiters/ [e]nvironments/ math environments [$]/ sections [P]/ items [m]
 
 " vimtex settings {{{2
 
@@ -157,6 +160,17 @@ let g:vimtex_delim_toggle_mod_list = [
 	  \ ['\Biggl', '\Biggr'],
 	  \]
 
+" st$ cycles through math envs 
+"   $ -> \[ -> equation -> $
+let g:vimtex_env_toggle_math_map = {
+  \ '$': '\[',
+  \ '\[': 'equation',
+  \ 'equation': '$',
+  \ '\(': '$',
+  \ '$$': '\[',
+  \}
+
+
 " Use sandwich.vim-style mappings for ds,cs,ts --> sd, se, st/sT
 " temporary solution while transiting to sandwich.vim [TODO]
 if isdirectory($VIMHOME."/plugged/vimtex")
@@ -173,16 +187,23 @@ if isdirectory($VIMHOME."/plugged/vimtex")
 	" autocmd Filetype tex nmap sed <plug>(vimtex-delim-change-math)
 	autocmd Filetype tex nmap ste <plug>(vimtex-env-toggle-star)
 	autocmd Filetype tex nmap stc <plug>(vimtex-cmd-toggle-star)
+	autocmd Filetype tex nmap st$ <plug>(vimtex-env-toggle-math)
 	autocmd Filetype tex nmap std <plug>(vimtex-delim-toggle-modifier)
 	autocmd Filetype tex xmap std <plug>(vimtex-delim-toggle-modifier)
 	autocmd Filetype tex nmap sTd <plug>(vimtex-delim-toggle-modifier-reverse)
 	autocmd Filetype tex xmap sTd <plug>(vimtex-delim-toggle-modifier-reverse)
+	autocmd Filetype tex nmap stf <plug>(vimtex-cmd-toggle-frac)
+	autocmd Filetype tex xmap stf <plug>(vimtex-cmd-toggle-frac)
   augroup END
 endif
 
 let g:vimtex_mappings_disable = {
-  \   'n': ['dse', 'dsc', 'ds$', 'dsd', 'cse', 'csc', 'cs$', 'csd', 'tse', 'tsc', 'tsd', 'tsD'],
-  \   'x': ['tsd', 'tsD']
+  \   'n': [
+  \      'dse', 'dsc', 'ds$', 'dsd', 
+  \      'cse', 'csc', 'cs$', 'csd', 
+  \      'tse', 'tsc', 'ts$', 'tsd', 'tsD', 'tsf',
+  \   ],
+  \   'x': ['tsd', 'tsD', 'tsf']
   \ }
 
 
