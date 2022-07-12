@@ -337,12 +337,10 @@ let g:lightline.inactive = {
 
 " truncate _after_ the displayed mode and filename
 let g:lightline.component = {
-  \   'gitbranch' : '%<%{LightlineGitBranch()}',
   \   'filename_commit'       : '%{%LightlineFilenameCommit()%}',
   \   'filename_commit_flags' : '%{%LightlineFilenameCommitFlags()%}',
+  \   'gitbranch' : '%<%{LightlineGitBranch()}',
   \ }
-  " \   'gitbranch' : '%<%{gitbranch#name()}',
-  " \   'gitbranch' : '%<%{fugitive#head()}'
 
 let g:lightline.component_function = {
   \   'fileformat'   : 'LightlineFileformat',
@@ -366,7 +364,11 @@ endfunction
 
 
 " filename, git HEAD, and related components {{{
-function! LightlineFilename()
+
+" helpers {{{
+
+" current filename without dir | [No Name]
+function! s:llfilename()
   return '%t'
 endfunction
 
@@ -377,22 +379,16 @@ function! s:isFugitiveCommit(string, partial)
   return a:string =~ '^fugitive://.\{-}\.git//\x\+'.endchar
 endfunction
 
-" return current file's commit dir, otherwise current HEAD
-function! LightlineGitBranch()
-  let filename = expand('%')
-  if s:isFugitiveCommit(filename, 1)
-    return matchstr(filename, '\.git//\zs\x\+')[0:6]
-  else
-    return fugitive#head(7)
-endfunction
+" }}}
 
-" return shortened commit hash, otherwise filename
+" shortened commit hash, otherwise filename
 function! LightlineFilenameCommit()
   let filename = expand('%')
   if s:isFugitiveCommit(filename, 0)
     return matchstr(filename, '\x\+$')[0:6]
   else
-    return LightlineFilename()
+    return s:llfilename()
+endfunction
 endfunction
 
 " join filename/commit hash with its modifi(ed|able) flags
@@ -404,6 +400,17 @@ function! LightlineFilenameCommitFlags()
   let mods .= !&modifiable ? '-'  : ''
   return filename . (mods ==# '' ? '' : ' ' . mods)
 endfunction
+
+" current file's commit dir, otherwise current HEAD
+function! LightlineGitBranch()
+  let filename = expand('%')
+  if s:isFugitiveCommit(filename, 1)
+    return matchstr(filename, '\.git//\zs\x\+')[0:6]
+  else
+    " return gitbranch#name()
+    return fugitive#head(7)
+endfunction
+
 " }}}
 
 " update lightline colorscheme when background is changed 
