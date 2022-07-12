@@ -153,7 +153,10 @@ let g:vimtex_view_general_options
 let g:vimtex_view_reverse_search_edit_cmd = 'tabedit'
 
 " use single shot compilation instead of continuous mode
-let g:vimtex_compiler_latexmk = {'continuous': 0}
+if !exists('g:vimtex_compiler_latexmk') |
+  let g:vimtex_compiler_latexmk = {}
+endif
+let g:vimtex_compiler_latexmk.continuous = 0
 
 " use pplatex to preprocess latexlog output
 let g:vimtex_quickfix_method = 'pplatex'
