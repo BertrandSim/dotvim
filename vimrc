@@ -328,9 +328,10 @@ let g:lightline = {}
 let g:lightline.colorscheme = 'solarized_nomode'
 let g:lightline.active = {
   \   'left': [ [ 'mode' ],
-  \             [ 'readonly', 'filename_commit', 'modified'],
+  \             [ 'filename_commit', 'flags'],
   \             [ 'gitbranch' ] ],
   \ }
+
 let g:lightline.inactive = {
   \   'left': [ [ 'filename_commit_flags' ] ],
   \ }
@@ -343,6 +344,8 @@ let g:lightline.component = {
   \ }
 
 let g:lightline.component_function = {
+  \   'flags'        : 'LightlineFlags',
+  \
   \   'fileformat'   : 'LightlineFileformat',
   \   'fileencoding' : 'LightlineFileencoding',
   \   'filetype'     : 'LightlineFiletype',
@@ -372,6 +375,17 @@ function! s:llfilename()
   return '%t'
 endfunction
 
+" readonly and modifi(ed|able) flags
+function! s:llflags(active)
+  let flags = ''
+  if a:active
+    let flags .= &readonly    ? 'RO' : ''
+  endif
+  let flags .= &modified    ? '+'  : ''
+  let flags .= !&modifiable ? '-'  : ''
+  return flags
+endfunction
+
 " check if filename string matches a fugitive commit
 " 'fugitive://{dir_path}.git//{commit_hash}[/{file_name}]'
 function! s:isFugitiveCommit(string, partial)
@@ -389,16 +403,17 @@ function! LightlineFilenameCommit()
   else
     return s:llfilename()
 endfunction
+
+" RO+-
+function! LightlineFlags()
+  return s:llflags(1) 
 endfunction
 
 " join filename/commit hash with its modifi(ed|able) flags
 function! LightlineFilenameCommitFlags()
   let filename = LightlineFilenameCommit()
-  let mods = ''
-  " let mods .= &readonly    ? 'RO' : ''
-  let mods .= &modified    ? '+'  : ''
-  let mods .= !&modifiable ? '-'  : ''
-  return filename . (mods ==# '' ? '' : ' ' . mods)
+  let flags = s:llflags(0) " +-, no RO shown
+  return filename . (flags ==# '' ? '' : ' ' . flags)
 endfunction
 
 " current file's commit dir, otherwise current HEAD
