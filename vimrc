@@ -328,8 +328,8 @@ let g:lightline = {}
 let g:lightline.colorscheme = 'solarized_nomode'
 let g:lightline.active = {
   \   'left': [ [ 'mode' ],
-  \             [ 'gitbranch',
-  \               'readonly', 'filename', 'modified'] ],
+  \             [ 'readonly', 'filename_commit', 'modified'],
+  \             [ 'gitbranch' ] ],
   \ }
 let g:lightline.inactive = {
   \   'left': [ [ 'filename_flags' ] ],
