@@ -27,6 +27,19 @@ let $VIMHOME = expand('<sfile>:p:h')
 " _c_hange _d_irectory to that of _c_urrent file with :CDC
 command CDC lcd %:p:h
 
+
+" localvim settings {{{1
+" -----------------
+" add .localvim to rtp if it exists
+" and source .localvim/localvimrc if it exists
+if isdirectory('.localvim')
+  let &rtp .= ','.getcwd().'/.localvim'
+  if filereadable('.localvim/localvimrc')
+	source .localvim/localvimrc
+  endif
+endif
+
+
 " use wsl as shell {{{1
 " ----------------
 " if has('win32') || has('win64')
