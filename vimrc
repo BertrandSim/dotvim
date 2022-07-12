@@ -27,6 +27,19 @@ let $VIMHOME = expand('<sfile>:p:h')
 " _c_hange _d_irectory to that of _c_urrent file with :CDC
 command CDC lcd %:p:h
 
+
+" localvim settings {{{1
+" -----------------
+" add .localvim to rtp if it exists
+" and source .localvim/localvimrc if it exists
+if isdirectory('.localvim')
+  let &rtp .= ','.getcwd().'/.localvim'
+  if filereadable('.localvim/localvimrc')
+	source .localvim/localvimrc
+  endif
+endif
+
+
 " use wsl as shell {{{1
 " ----------------
 " if has('win32') || has('win64')
@@ -140,7 +153,10 @@ let g:vimtex_view_general_options
 let g:vimtex_view_reverse_search_edit_cmd = 'tabedit'
 
 " use single shot compilation instead of continuous mode
-let g:vimtex_compiler_latexmk = {'continuous': 0}
+if !exists('g:vimtex_compiler_latexmk') |
+  let g:vimtex_compiler_latexmk = {}
+endif
+let g:vimtex_compiler_latexmk.continuous = 0
 
 " use pplatex to preprocess latexlog output
 let g:vimtex_quickfix_method = 'pplatex'
