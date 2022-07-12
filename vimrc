@@ -332,14 +332,22 @@ let g:lightline.active = {
   \             [ 'gitbranch' ] ],
   \ }
 let g:lightline.inactive = {
-  \   'left': [ [ 'filename_flags' ] ],
+  \   'left': [ [ 'filename_commit_flags' ] ],
   \ }
+
+" truncate _after_ the displayed mode and filename
+let g:lightline.component = {
+  \   'gitbranch' : '%<%{LightlineGitBranch()}',
+  \   'filename_commit'       : '%{%LightlineFilenameCommit()%}',
+  \   'filename_commit_flags' : '%{%LightlineFilenameCommitFlags()%}',
+  \ }
+  " \   'gitbranch' : '%<%{gitbranch#name()}',
+  " \   'gitbranch' : '%<%{fugitive#head()}'
+
 let g:lightline.component_function = {
-  \   'gitbranch'      : 'gitbranch#name',
-  \   'filename_flags' : 'LightlineFilenameFlags',
-  \   'fileformat'     : 'LightlineFileformat',
-  \   'fileencoding'   : 'LightlineFileencoding',
-  \   'filetype'       : 'LightlineFiletype',
+  \   'fileformat'   : 'LightlineFileformat',
+  \   'fileencoding' : 'LightlineFileencoding',
+  \   'filetype'     : 'LightlineFiletype',
   \ }
 
 
@@ -356,16 +364,47 @@ function! LightlineFiletype()
   return winwidth(0) > 50 ? (&filetype !=# '' ? &filetype : 'no ft') : ''
 endfunction
 
-" join filename with its modifi(ed|able) flags
-function! LightlineFilenameFlags()
-  let filename = expand('%:t')
-  if filename ==# '' | let filename = '[No Name]' | endif
+
+" filename, git HEAD, and related components {{{
+function! LightlineFilename()
+  return '%t'
+endfunction
+
+" check if filename string matches a fugitive commit
+" 'fugitive://{dir_path}.git//{commit_hash}[/{file_name}]'
+function! s:isFugitiveCommit(string, partial)
+  let endchar = a:partial ? '[\/]' : '$'
+  return a:string =~ '^fugitive://.\{-}\.git//\x\+'.endchar
+endfunction
+
+" return current file's commit dir, otherwise current HEAD
+function! LightlineGitBranch()
+  let filename = expand('%')
+  if s:isFugitiveCommit(filename, 1)
+    return matchstr(filename, '\.git//\zs\x\+')[0:6]
+  else
+    return fugitive#head(7)
+endfunction
+
+" return shortened commit hash, otherwise filename
+function! LightlineFilenameCommit()
+  let filename = expand('%')
+  if s:isFugitiveCommit(filename, 0)
+    return matchstr(filename, '\x\+$')[0:6]
+  else
+    return LightlineFilename()
+endfunction
+
+" join filename/commit hash with its modifi(ed|able) flags
+function! LightlineFilenameCommitFlags()
+  let filename = LightlineFilenameCommit()
   let mods = ''
   " let mods .= &readonly    ? 'RO' : ''
   let mods .= &modified    ? '+'  : ''
   let mods .= !&modifiable ? '-'  : ''
   return filename . (mods ==# '' ? '' : ' ' . mods)
 endfunction
+" }}}
 
 " update lightline colorscheme when background is changed 
 " to use light/dark variant.
