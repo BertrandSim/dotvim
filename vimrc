@@ -354,15 +354,15 @@ let g:lightline.component_function = {
 
 " truncate ff, fenc, ft for narrow windows
 function! LightlineFileformat()
-  return winwidth(0) > 70 ? &fileformat : ''
+  return winwidth(0) > 80 ? &fileformat : ''
 endfunction
 
 function! LightlineFileencoding()
-  return winwidth(0) > 60 ? (&fenc !=# '' ? &fenc : &enc) : ''
+  return winwidth(0) > 70 ? (&fenc !=# '' ? &fenc : &enc) : ''
 endfunction
 
 function! LightlineFiletype()
-  return winwidth(0) > 50 ? (&filetype !=# '' ? &filetype : 'no ft') : ''
+  return winwidth(0) > 60 ? (&filetype !=# '' ? &filetype : 'no ft') : ''
 endfunction
 
 
