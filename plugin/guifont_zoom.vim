@@ -51,11 +51,14 @@ endfunction
 
 " set font size
 function! s:fontSizeSet(num)
-  if match(&guifont, '^.*:h\zs[^:]*\ze.*$') == -1
-    " if 'guifont' does not contain :h option, add it in.
-    let &guifont .= ':h' . a:num
-  else 
-    let &guifont = substitute(&guifont, ':h\([^:]*\)', ':h' . a:num, '')
+  " check if font size > 0, otherwise do not modify it
+  if a:num > 0  
+    if match(&guifont, '^.*:h\zs[^:]*\ze.*$') == -1
+      " if 'guifont' does not contain :h option, add it in.
+      let &guifont .= ':h' . a:num
+    else 
+      let &guifont = substitute(&guifont, ':h\([^:]*\)', ':h' . a:num, '')
+    endif
   endif
 
   " show new guifont
