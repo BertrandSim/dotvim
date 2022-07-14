@@ -38,8 +38,9 @@ function! operator#sandwichext#cycle(recipes, count, direction) abort
   let mode = 'n'
 
   " perform normal keymap sr{old}{new}
+  " without passing count to the textobject
   execute "normal \<Plug>(operator-sandwich-replace)
-    \\<Plug>(operator-sandwich-release-count)
+    \\<Plug>(operator-sandwich-squash-count)
     \\<Plug>(textobj-sandwich-query-a)" 
     \. input_cur . input_new
 
