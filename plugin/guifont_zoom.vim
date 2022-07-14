@@ -66,7 +66,7 @@ endfunction
 " guifont size + 1
 function! s:fontSizePlus()
   let l:fsize = s:fontSizeGet()
-  echo 'size: ' . l:fsize
+  " echo 'size: ' . l:fsize
   call s:fontSizeSet(l:fsize + 1)
 endfunction
 
