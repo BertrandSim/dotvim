@@ -8,9 +8,9 @@
 "   find the recipe next on the list
 "   do the mapping sr{cur}{next}
 
-function! operator#sandwichext#cycle(recipes, count, dir) abort
+function! operator#sandwichext#cycle(recipes, count, direction) abort
   " recipes is a list of recipes to cycle through
-  " dir can be +1 (foward) or -1 (backward)
+  " direction can be +1 (forward) or -1 (backward)
 
   let elected = textobj#sandwichext#elect(a:recipes)
   let recipe_cur = elected.recipe
@@ -20,7 +20,7 @@ function! operator#sandwichext#cycle(recipes, count, dir) abort
     echoerr 'recipe not found.'
   endif
   let length = len(a:recipes)
-  let index_new = ((index_cur + a:dir * a:count) % length + length) % length
+  let index_new = ((index_cur + a:direction * a:count) % length + length) % length
   let recipe_new = a:recipes[index_new]
 
   let input_cur = s:getinput(recipe_cur)
