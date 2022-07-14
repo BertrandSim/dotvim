@@ -109,7 +109,9 @@ function! commentor#RemoveCommentOp(type, ...)
   if exists('saveview')
     if cursorline_hascomment
       let saveview.col -= strlen(comleader)
+      if saveview.col < 0 | let saveview.col = 0 | endif
       let saveview.curswant -= strlen(comleader)
+      if saveview.curswant < 0 | let saveview.curswant = 0 | endif
     endif
     call winrestview(saveview)
     unlet saveview
