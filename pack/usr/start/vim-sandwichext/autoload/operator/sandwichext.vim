@@ -23,15 +23,19 @@ function! operator#sandwichext#cycle(recipes) abort
 
   let input_cur = s:getinput(recipe_cur)
   let input_new = s:getinput(recipe_new)
+
   """ debug
-  echo "index_cur:". index_cur
-  echo "index_new:". index_new
-  echo "input_cur:". input_cur
-  echo "input_new:". input_new
+  if get(g:, "sandwichext_debug")
+    echo "index_cur:". index_cur
+    echo "index_new:". index_new
+    echo "input_cur:". input_cur
+    echo "input_new:". input_new
+  endif
 
   let kind = 'replace'
   let mode = 'n'
 
+  " perform normal keymap sr{old}{new}
   execute "normal \<Plug>(operator-sandwich-replace)
     \\<Plug>(operator-sandwich-release-count)
     \\<Plug>(textobj-sandwich-query-a)" 
