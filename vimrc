@@ -390,7 +390,7 @@ endfunction
 " 'fugitive://{dir_path}.git//{commit_hash}[/{file_name}]'
 function! s:isFugitiveCommit(string, partial)
   let endchar = a:partial ? '[\/]' : '$'
-  return a:string =~ '^fugitive://.\{-}\.git//\x\+'.endchar
+  return a:string =~ '^fugitive:///\=.\{-}\.git//\x\+'.endchar
 endfunction
 
 " }}}
@@ -422,8 +422,8 @@ function! LightlineGitBranch()
   if s:isFugitiveCommit(filename, 1)
     return matchstr(filename, '\.git//\zs\x\+')[0:6]
   else
-    " return gitbranch#name()
-    return fugitive#head(7)
+    return gitbranch#name()
+    " return FugitiveHead(7)
 endfunction
 
 " }}}
