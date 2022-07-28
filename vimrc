@@ -512,6 +512,11 @@ let g:sneak#target_labels = '234567890'
 highlight link SneakLabel Folded
 " highlight link Sneak Folded
 
+augroup hl-vim-sneak
+  autocmd!
+  autocmd ColorScheme * highlight link SneakLabel Folded
+augroup END
+
 " }}}
 " clever-f settings {{{2
 
