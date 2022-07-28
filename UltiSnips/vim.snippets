@@ -60,3 +60,9 @@ endif
 let b:undo_ftplugin .= '${1:cmd_string}'
 endsnippet
 
+snippet augr "augroup" b
+augroup ${1:groupname}
+	autocmd!
+	${2}
+augroup END
+endsnippet
