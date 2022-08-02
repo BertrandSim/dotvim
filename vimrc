@@ -911,6 +911,10 @@ vnoremap u t
 vnoremap gu u
 vnoremap gU U
 
+" yp / yP to yank and paste cur line 
+" (short for yyp / yyP)
+" see 'nmaps to omaps' below 
+
 
 " search options {{{1
 " -------------------
@@ -1221,14 +1225,21 @@ xmap iE <Plug>(textobj-entire-i)
 
 " cm/cx -> comment/uncomment line
 " cp/cP -> comment line and put below/above
+" yp/yP -> yank line and put below/above
 " dm -> remove mark (vim-signature)
 omap <expr> <silent> m 
   \ v:operator ==# 'c' ? "\<Esc>"."\<Plug>(AddComment)".'_' : 
   \ v:operator ==# 'd' ? "\<Esc>".":\<C-U>call signature#utils#Remove(v:count)\<CR>" : 
   \ 'm'
 omap <expr> x v:operator ==# 'c' ? "\<Esc>"."\<Plug>(RmComment)".'_' : 'x'
-omap <expr> p v:operator ==# 'c' ? "\<Esc>"."\<Plug>(ComACop)"  : 'p'
-omap <expr> P v:operator ==# 'c' ? "\<Esc>"."\<Plug>(ComACopA)" : 'P'
+omap <expr> p 
+  \ v:operator ==# 'c' ? "\<Esc>"."\<Plug>(ComACop)" : 
+  \ v:operator ==# 'y' ? "\<Esc>"."yy".v:count1."p" : 
+  \ 'p'
+omap <expr> P 
+  \ v:operator ==# 'c' ? "\<Esc>"."\<Plug>(ComACopA)" : 
+  \ v:operator ==# 'y' ? "\<Esc>"."yy".v:count1."P" : 
+  \ 'P'
 
 " misc {{{1
 " ----
