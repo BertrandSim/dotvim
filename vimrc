@@ -77,6 +77,8 @@ Plug 'SirVer/ultisnips',
   \ Cond(v:version >= 704, { 'tag': '3.2' })		" snippets; v3.2 on Nov 2019
 Plug 'junegunn/vim-easy-align'			" align lines by a char/regex
 Plug 'machakann/vim-sandwich'			" surroundings
+Plug 'rhysd/clever-f.vim',
+  \ { 'commit' : 'e852984' }			" highlight f matches and repeat with f/F
 Plug 'justinmk/vim-sneak'				" 2-char f/t-like motion
 Plug 'machakann/vim-columnmove',
   \ { 'commit' : '21a43d8' }			" column-wise w,b,e,ge,f,t motions
@@ -125,9 +127,6 @@ Plug 'chrisbra/Colorizer',
 Plug 'BertrandSim/auto-pairs',
   \{ 'on': [] }							" pairs of delims, forked from jiangmiao/auto-pairs.
 										"   superceded by brackets_arpeggio.vim, and pairspace.vim
-
-  " trials:
-Plug 'rhysd/clever-f.vim'				" highlight f matches and repeat with f/F
 
 call plug#end()
 
