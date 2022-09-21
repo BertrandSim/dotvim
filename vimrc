@@ -337,19 +337,23 @@ let g:lightline.inactive = {
 
 " truncate _after_ the displayed mode and filename
 let g:lightline.component = {
-  \   'filename_commit'       : '%{%LightlineFilenameCommit()%}',
-  \   'filename_commit_flags' : '%{%LightlineFilenameCommitFlags()%}',
   \   'gitbranch' : '%<%{LightlineGitBranch()}',
+  \
+  \   'lineinfo'  : '%3l:%-2(%c%V%)',
   \ }
+  " if statusline {% re-evaluation is supported,
+  " \   'filename_commit'       : '%{%LightlineFilenameCommit()%}',
+  " \   'lineinfo'  : '%3l:%-2(%{%"%c%V"%}%)',
 
 let g:lightline.component_function = {
-  \   'flags'        : 'LightlineFlags',
+  \   'filename_commit'       : 'LightlineFilenameCommit',
+  \   'filename_commit_flags' : 'LightlineFilenameCommitFlags',
+  \   'flags'                 : 'LightlineFlags',
   \
   \   'fileformat'   : 'LightlineFileformat',
   \   'fileencoding' : 'LightlineFileencoding',
   \   'filetype'     : 'LightlineFiletype',
   \ }
-
 
 " truncate ff, fenc, ft for narrow windows
 function! LightlineFileformat()
@@ -371,7 +375,8 @@ endfunction
 
 " current filename without dir | [No Name]
 function! s:llfilename()
-  return '%t'
+  " simply return '%t' if vim supports {% re-evaluation
+  return expand('%:t') !=# '' ? expand('%:t') : '[No Name]'
 endfunction
 
 " readonly and modifi(ed|able) flags
