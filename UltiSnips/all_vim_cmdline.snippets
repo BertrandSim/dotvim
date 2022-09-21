@@ -24,7 +24,10 @@ endsnippet
 # vg --> vimgrep
 context "cmdlinewin() == ':'"
 snippet vg "vimgrep + copen list of matches" b
-vimgrep /${1:}/${2:gj} ${3:**/*} | copen
+vimgrep /${1:}/${2:gj} ${3:**/*${4:`!p
+file_ext = vim.eval("expand('#:e')")
+snip.rv = '.' + file_ext if file_ext else ''
+`}} | copen
 endsnippet
 
 # lv --> lvimgrep
@@ -44,6 +47,7 @@ context "cmdlinewin() == ':'"
 snippet lh "helpgrep + copen list of matches" b
 execute 'tab lhelpgrep ${1:}' | lopen
 endsnippet
+
 
 # rdr --> redirect and paste to buffer
 # eg. rdr <tab> scriptnames
