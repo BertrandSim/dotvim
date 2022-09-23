@@ -96,11 +96,13 @@ Plug 'masukomi/vim-markdown-folding'	" expr-folding of markdown files
 Plug 'vim-pandoc/vim-pandoc-syntax'		" syntax highlighting for markdown and related files
 Plug 'jalvesaq/Nvim-R',
   \ Cond( has('patch-8.1.1705'), 
-  \ { 'branch' : 'stable' })			" interaction between R scripts with R terminal
+  \ { 'branch' : 'master' })			" interaction between R scripts with R terminal
+  " \ { 'branch' : 'stable' })			
 Plug 'jalvesaq/R-Vim-runtime'			" keep vim R files up to date
 Plug 'lervag/vimtex',
   \ Cond(has('patch-7.4.52'),
-  \ { 'tag' : 'v2.10' })					" plugin for tex files
+  \ { 'tag' : 'v2.10' })				" plugin for tex
+Plug 'sersorrel/vim-lilypond'			" lilypond runtime files 
 
   " text objects:
 Plug 'b4winckler/vim-angry'				" function argument text object
