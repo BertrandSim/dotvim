@@ -13,6 +13,11 @@ set fileencoding=utf-8	" the encoding written to file.
 set fileformats=unix,dos	" use unix (line endings) by default, o/w try dos
 
 set nrformats=bin,hex	" get rid of octal annoyance for ^a/^x 
+" also consider absolute values only, eg. -2 gets treated as 2. Useful for dates
+if has('patch-8.2.0860')
+  set nrformats+=unsigned	
+endif
+  
 
 if has('patch-7.4.793')
   set belloff=all	" turn off audio error bells
