@@ -78,6 +78,9 @@ function! commentor#AddCommentOp(type, ...)
     call winrestview(saveview)
     unlet saveview
   endif
+  " if exists("w:commentor_saveview")
+  "   unlet w:commentor_saveview
+  " endif
 endfunction
 
 function! commentor#RemoveCommentOp(type, ...)
@@ -116,6 +119,9 @@ function! commentor#RemoveCommentOp(type, ...)
     call winrestview(saveview)
     unlet saveview
   endif
+  " if exists("w:commentor_saveview")
+  "   unlet w:commentor_saveview
+  " endif
 endfunction
 
 function! commentor#RemoveComment(startline, endline)
