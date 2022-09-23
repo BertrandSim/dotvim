@@ -57,6 +57,21 @@ redir => tmp | ${1:} | redir END | ${2:new} | put! = tmp | norm! gg"_dd
 endsnippet
 
 
+# %% --> expand('%:.')
+# snippet body uses '#' instead of '%', since '%' is the cmdline window
+context "cmdlinewin() == ':'"
+snippet %% "current file relative to current directory"
+`!v fnamemodify(expand('#'), ":~:.")`
+endsnippet
+
+# %p --> expand('%:p')
+# snippet body uses '#' instead of '%', since '%' is the cmdline window
+context "cmdlinewin() == ':'"
+snippet %%p "full path of current file"
+`!v expand('#:p')`
+endsnippet
+
+
 # search {{{1
 
 # VV --> \%V...\%V
