@@ -1160,6 +1160,10 @@ function! SnippetOp(type)
   call feedkeys('gvs', 'n')
 endfunction
 
+
+" 2022-09-22: also consider wrapping with some ultisnips snippet custom {trigger}:
+" vnoremap <c-e> :<c-u>call UltiSnips#SaveLastVisualSelection()<CR>gvs{trigger}<C-R>=UltiSnips#ExpandSnippet()<CR>
+
 " }}}
 " terminal {{{1
 " --------
