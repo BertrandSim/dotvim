@@ -1126,7 +1126,7 @@ command! Cview
 " cmdline + Ultisnips {{{1
 " -------------------
 " quick expand snippet via cmdline window
-cnoremap ;: <C-r>=&cedit<CR>:call UltiSnips#ExpandSnippet()<CR>
+cnoremap ;: <C-r>=&cedit<CR>:startinsert<CR><C-r>=UltiSnips#ExpandSnippet()<CR>
 
 " change <Tab> from cmdline-completion to snippet expansion
 " by unmapping <Tab>.
