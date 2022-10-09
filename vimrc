@@ -1114,6 +1114,17 @@ command! -bang -nargs=? -complete=help TH tab h<bang> <args>
 command! -nargs=* -complete=buffer Vsb vertical sbuffer <args>
 command! -nargs=* -complete=buffer VSb vertical sbuffer <args>
 
+" :Less, a better vim pager
+" from https://www.reddit.com/r/vim/comments/xvhw4w/comment/ir5pljt/
+" -------------------------
+command! -nargs=+ -complete=command Less call Less(win_getid(), <q-mods>, <q-args>)
+
+function! Less(winid, mods, args) abort
+  execute (len(a:mods) ? a:mods . ' new' : 'botr 20new')
+  call setline(1,split(win_execute(a:winid, a:args),"\n"))
+  setl bt=nofile bh=wipe nobl nomod
+endfunction
+
 " split view with conceal {{{1
 " -----------------------
 " eg., viewing tex source code alongside a more readable version
