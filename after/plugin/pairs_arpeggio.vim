@@ -36,6 +36,10 @@ Arpeggioinoremap <silent> bk <C-r>=UltiSnips#Anon(
   \ '\`'.'$1'.'\`'
   \)<CR>
 
+" command mode
+" ------------
+Arpeggiocnoremap jk ()<Left>
+
 " terminal mode
 " -------------
 Arpeggiotnoremap jk ()<Left>
