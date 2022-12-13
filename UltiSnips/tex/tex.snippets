@@ -9,7 +9,7 @@ endglobal
 
 context "top_of_file(snip, 2)"
 post_expand "jump_forward(snip, 1)"
-snippet doc "Basic template" b
+snippet doc "basic template" b
 \documentclass[${1:opt}]{${2:article}}
 
 \usepackage{amsmath, amssymb}
@@ -21,12 +21,25 @@ snippet doc "Basic template" b
 \end{document}
 endsnippet
 
+context "top_of_file(snip, 2)"
+post_expand "jump_forward(snip, 1)"
+snippet beamerdoc "Beamer template" b
+\documentclass[${1:}]{beamer}
+
+\usepackage{amsmath, amssymb}
+
+\begin{document}
+
+	${0:${VISUAL}}
+
+\end{document}
+endsnippet
 
 # preamble ([{1
 # --------
 
 post_expand "jump_forward(snip, 2)"
-snippet  usep "\usepackage" b
+snippet usep "\usepackage" b
 \usepackage${1:[${2:opt}]}{${3:name}}
 endsnippet
 
@@ -111,7 +124,7 @@ snippet supara "\subparagraph" b
 \subparagraph{${1:name}}
 endsnippet
 
-# section headers {{{1
+# section headers ([{1
 # ---------------
 
 snippet texor "\texorpdfstring, using math in headers" 
@@ -164,6 +177,12 @@ context "math()"
 snippet ,., ",\dots," iA
 , \dots, 
 endsnippet
+
+context "math()"
+snippet ~~ "~" A
+\sim
+endsnippet
+
 
 # Use arpeggio mapping instead, see 
 #   .vim/after/ftplugin/tex/brackets_arpeggio_tex.vim
@@ -226,6 +245,12 @@ context "math()"
 snippet te "\text" i
 \text{${1:${VISUAL}}}
 endsnippet
+
+context "math()"
+snippet nft "\infty" w
+\infty
+endsnippet
+
 
 # math autosubscripts ([{1
 # --------------
@@ -413,4 +438,4 @@ ${2:,}\end{aligned}
 $0
 endsnippet
 
-
+# vim: set foldmarker=([{,}]) :
