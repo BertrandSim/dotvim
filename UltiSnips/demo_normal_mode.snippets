@@ -1,0 +1,20 @@
+# expanding, but end in normal mode?
+
+## these don't work (timing conflicts? snippet_manager._jump() -> vim_helper.select() -> vim_helper.feedkeys() -> :startinsert)
+# post_expand "vim.command('stopinsert')"
+# post_expand "vim.eval('feedkeys("\<Esc>o")')"
+
+## adding a timer works!
+# post_expand "vim.eval('timer_start(0,{-> feedkeys("\<cmd>stopinsert\<CR>")})')"
+post_expand "vim.eval('timer_start(0,{-> feedkeys("\<Esc>")})')"
+snippet aaaa "test" b
+abcdef
+endsnippet
+
+## exiting to normal mode at a certain tabstop 
+## or at the end of a snippet
+post_jump "if snip.tabstop == 0: vim.eval('timer_start(0,{-> feedkeys("\<Esc>")})')"
+snippet bbbb "test" b
+bc ${1:def} ghi $0
+endsnippet
+
